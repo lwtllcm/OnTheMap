@@ -12,6 +12,8 @@
 		5B0FD74C1C94CE310050AA72 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5B0FD74A1C94CE310050AA72 /* Main.storyboard */; };
 		5B0FD74E1C94CE310050AA72 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5B0FD74D1C94CE310050AA72 /* Assets.xcassets */; };
 		5B0FD7511C94CE310050AA72 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5B0FD74F1C94CE310050AA72 /* LaunchScreen.storyboard */; };
+		5B0FD75D1C94D40C0050AA72 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B0FD75C1C94D40C0050AA72 /* MapViewController.swift */; };
+		5B0FD75F1C94D4280050AA72 /* TableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B0FD75E1C94D4280050AA72 /* TableViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +24,8 @@
 		5B0FD74D1C94CE310050AA72 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		5B0FD7501C94CE310050AA72 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		5B0FD7521C94CE310050AA72 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		5B0FD75C1C94D40C0050AA72 /* MapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
+		5B0FD75E1C94D4280050AA72 /* TableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,6 +64,8 @@
 				5B0FD74D1C94CE310050AA72 /* Assets.xcassets */,
 				5B0FD74F1C94CE310050AA72 /* LaunchScreen.storyboard */,
 				5B0FD7521C94CE310050AA72 /* Info.plist */,
+				5B0FD75C1C94D40C0050AA72 /* MapViewController.swift */,
+				5B0FD75E1C94D4280050AA72 /* TableViewController.swift */,
 			);
 			path = OnTheMap;
 			sourceTree = "<group>";
@@ -136,7 +142,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				5B0FD7491C94CE310050AA72 /* ViewController.swift in Sources */,
+				5B0FD75D1C94D40C0050AA72 /* MapViewController.swift in Sources */,
 				5B0FD7471C94CE310050AA72 /* AppDelegate.swift in Sources */,
+				5B0FD75F1C94D4280050AA72 /* TableViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
