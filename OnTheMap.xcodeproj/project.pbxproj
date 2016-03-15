@@ -14,6 +14,7 @@
 		5B0FD7511C94CE310050AA72 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5B0FD74F1C94CE310050AA72 /* LaunchScreen.storyboard */; };
 		5B0FD75D1C94D40C0050AA72 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B0FD75C1C94D40C0050AA72 /* MapViewController.swift */; };
 		5B0FD75F1C94D4280050AA72 /* TableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B0FD75E1C94D4280050AA72 /* TableViewController.swift */; };
+		5B0FD7611C9609680050AA72 /* Student.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B0FD7601C9609680050AA72 /* Student.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +27,7 @@
 		5B0FD7521C94CE310050AA72 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5B0FD75C1C94D40C0050AA72 /* MapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		5B0FD75E1C94D4280050AA72 /* TableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewController.swift; sourceTree = "<group>"; };
+		5B0FD7601C9609680050AA72 /* Student.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Student.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -66,6 +68,7 @@
 				5B0FD7521C94CE310050AA72 /* Info.plist */,
 				5B0FD75C1C94D40C0050AA72 /* MapViewController.swift */,
 				5B0FD75E1C94D4280050AA72 /* TableViewController.swift */,
+				5B0FD7601C9609680050AA72 /* Student.swift */,
 			);
 			path = OnTheMap;
 			sourceTree = "<group>";
@@ -144,6 +147,7 @@
 				5B0FD7491C94CE310050AA72 /* ViewController.swift in Sources */,
 				5B0FD75D1C94D40C0050AA72 /* MapViewController.swift in Sources */,
 				5B0FD7471C94CE310050AA72 /* AppDelegate.swift in Sources */,
+				5B0FD7611C9609680050AA72 /* Student.swift in Sources */,
 				5B0FD75F1C94D4280050AA72 /* TableViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
