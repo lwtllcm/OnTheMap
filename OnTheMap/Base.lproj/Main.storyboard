@@ -3,6 +3,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
         <!--On The Map-->
@@ -61,22 +62,16 @@
                                 <rect key="frame" x="-25" y="-30" width="97" height="30"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
-                                <variation key="widthClass=compact" fixedFrame="YES">
-                                    <rect key="frame" x="53" y="145" width="278" height="30"/>
-                                </variation>
                             </textField>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="dgq-rd-CKm">
                                 <rect key="frame" x="-25" y="-30" width="97" height="30"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
-                                <variation key="widthClass=compact" fixedFrame="YES">
-                                    <rect key="frame" x="53" y="245" width="278" height="30"/>
-                                </variation>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cEH-nD-anQ">
                                 <rect key="frame" x="-23" y="-15" width="46" height="30"/>
                                 <state key="normal" title="Login"/>
-                                <variation key="widthClass=compact" fixedFrame="YES">
+                                <variation key="widthClass=compact" ambiguous="YES" misplaced="YES">
                                     <rect key="frame" x="53" y="397" width="278" height="30"/>
                                 </variation>
                                 <connections>
@@ -86,11 +81,29 @@
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="cEH-nD-anQ" firstAttribute="top" secondItem="dgq-rd-CKm" secondAttribute="bottom" constant="122" id="6bY-QZ-deU"/>
+                            <constraint firstItem="SqZ-Jv-dVt" firstAttribute="leading" secondItem="Umn-qr-XMs" secondAttribute="leadingMargin" constant="33" id="7fO-va-Y62"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="SqZ-Jv-dVt" secondAttribute="trailing" constant="49" id="Lyi-fl-NC7"/>
+                            <constraint firstItem="dgq-rd-CKm" firstAttribute="leading" secondItem="Umn-qr-XMs" secondAttribute="leadingMargin" constant="33" id="Oh3-jj-6JD"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="dgq-rd-CKm" secondAttribute="trailing" constant="49" id="PYo-1B-gyh"/>
+                            <constraint firstItem="dgq-rd-CKm" firstAttribute="top" secondItem="SqZ-Jv-dVt" secondAttribute="bottom" constant="70" id="gJs-FM-mrQ"/>
+                            <constraint firstItem="SqZ-Jv-dVt" firstAttribute="top" secondItem="cdM-6N-P3I" secondAttribute="bottom" constant="125" id="pnr-0P-p3Y"/>
+                        </constraints>
                         <variation key="default">
                             <mask key="subviews">
                                 <exclude reference="SqZ-Jv-dVt"/>
                                 <exclude reference="dgq-rd-CKm"/>
                                 <exclude reference="cEH-nD-anQ"/>
+                            </mask>
+                            <mask key="constraints">
+                                <exclude reference="7fO-va-Y62"/>
+                                <exclude reference="Lyi-fl-NC7"/>
+                                <exclude reference="pnr-0P-p3Y"/>
+                                <exclude reference="Oh3-jj-6JD"/>
+                                <exclude reference="PYo-1B-gyh"/>
+                                <exclude reference="gJs-FM-mrQ"/>
+                                <exclude reference="6bY-QZ-deU"/>
                             </mask>
                         </variation>
                         <variation key="widthClass=compact">
@@ -98,6 +111,15 @@
                                 <include reference="SqZ-Jv-dVt"/>
                                 <include reference="dgq-rd-CKm"/>
                                 <include reference="cEH-nD-anQ"/>
+                            </mask>
+                            <mask key="constraints">
+                                <include reference="7fO-va-Y62"/>
+                                <include reference="Lyi-fl-NC7"/>
+                                <include reference="pnr-0P-p3Y"/>
+                                <include reference="Oh3-jj-6JD"/>
+                                <include reference="PYo-1B-gyh"/>
+                                <include reference="gJs-FM-mrQ"/>
+                                <include reference="6bY-QZ-deU"/>
                             </mask>
                         </variation>
                     </view>

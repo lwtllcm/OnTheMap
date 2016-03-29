@@ -12,6 +12,11 @@ import UIKit
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
+    var sharedSession = NSURLSession.sharedSession()
+    var requestToken: String? = nil
+    var sessionID: String? = nil
+    var userEmail : String? = nil
+    
 
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
