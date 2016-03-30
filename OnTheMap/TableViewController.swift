@@ -12,6 +12,10 @@ class TableViewController: UITableViewController {
     
     var student: Student?
     
+    @IBOutlet weak var pinButton: UIBarButtonItem!
+    
+    @IBOutlet weak var refreshButton: UIBarButtonItem!
+    
     let testTable = ["test1", "test2", "test3"]
     let testStudent = Student(dictionary: ["name": "aaa", "location":"bbb"])
     
@@ -44,4 +48,6 @@ class TableViewController: UITableViewController {
         cell.textLabel?.text = testStudent.name
         return cell
             }
+    
+    
 }
