@@ -163,7 +163,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="StudentCell" id="sBe-OE-lfe">
-                                <rect key="frame" x="0.0" y="28" width="600" height="44"/>
+                                <rect key="frame" x="0.0" y="92" width="600" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="sBe-OE-lfe" id="bSR-cj-klB">
                                     <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
@@ -182,7 +182,7 @@
                             <barButtonItem title="Pin" id="Re9-MA-Wgh">
                                 <connections>
                                     <action selector="pinButtonPressed:" destination="heb-Dd-g3d" id="ngL-CO-T3y"/>
-                                    <segue destination="3t7-SW-61E" kind="show" id="ccB-0S-D5d"/>
+                                    <segue destination="3t7-SW-61E" kind="presentation" id="ccB-0S-D5d"/>
                                 </connections>
                             </barButtonItem>
                         </rightBarButtonItems>

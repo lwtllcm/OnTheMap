@@ -31,17 +31,17 @@ class LoginViewController: UIViewController {
     
     @IBAction func loginPressed(sender: AnyObject) {
         print("loginPressed")
-        getRequestToken()
         if emailTextField.text!.isEmpty || passwordTextField.text!.isEmpty {
             print("Username or Password Empty")
         }
         else {
             print("Username or Password not empty")
             
-            print(emailTextField.text)
-            print(passwordTextField.text)
+           // print(emailTextField.text)
+           // print(passwordTextField.text)
 
-            
+            getRequestToken()
+
             
         }
         
@@ -49,114 +49,92 @@ class LoginViewController: UIViewController {
     }
     
     private func getRequestToken() {
+        print("getRequestToken")
+        
+        
         // set parameters
-       // let methodParameters = [UdacityConstants.UdacityParameterKeys.ApiKey: UdacityConstants.UdacityParameterValues.ApiKey]
+        
+
+        
+        let methodParameters : [String:AnyObject] =  [
+            
+            UdacityParameterKeys.Username:emailTextField.text!,
+            UdacityParameterKeys.Password:passwordTextField.text!,
+            UdacityParameterKeys.Format: UdacityParameterValues.ResponseFormat
+        ]
+        
         
         //build url, configure request
-       // let request = NSURLRequest(URL: AppDelegate.tmdbURLFromParameters(methodParameters, withPathExtension: "/authentication/token/new"))
+        
+        
+        let request = NSMutableURLRequest(URL: udacityURLFromParameters(methodParameters,withPathExtension: nil))
+        
+        
         /*
         let request = NSMutableURLRequest(URL: NSURL(string: "https://www.udacity.com/api/session")!)
-        
         request.HTTPMethod = "POST"
         request.addValue("application/json", forHTTPHeaderField: "Accept")
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-        request.HTTPBody = "{\"udacity\": {\"username\": \"username\", \"password\": \"********\"}".dataUsingEncoding(NSUTF8StringEncoding)
-        */
-        
-        let methodParameters = UdacityParameterKeys.Parameter
-        let request = NSURLRequest(URL: udacityURLFromParameters(methodParameters,withPathExtension: nil))
+        request.HTTPBody = "{\"udacity\": {\"username\": \"account@domain.com\", \"password\": \"********\"}}".dataUsingEncoding(NSUTF8StringEncoding)
         
         print(request)
-        
-        
-      /*
-        let components = NSURLComponents()
-        components.scheme = "https"
-        components.host = "udacity.com"
-        components.path = "/api/session"
-        
-        components.queryItems =[NSURLQueryItem]()
-        for (key,value) in parameters {
-            let queryItem = NSURLQueryItem(name: key, value: "\(value)")
-            components.queryItems!.append(queryItem)
-        }
-            UdacityParameterKeys.udacity
-      */
-        
-        //components.user = "***"
-        //components.password = "!!!"
-
-        //let componentsRequest = NSMutableURLRequest(URL: components.URL!)
-        //print(componentsRequest)
-        
-    
-        
-        //print(components.URL!)
-        
-        
-       // let url = NSURL(string: "https://www.udacity.com/api/session?method%20POST&user%20***&password&20!!!")!
-        
+*/
         
         //make request
-       // let task = appDelegate.sharedSession.dataTaskWithRequest(request) { (data, response, error) in
-        /*
-        func displayError(error: String) {
-            print(error)
-            performUIUpdatesOnMain {
-                self.setUIEnabled(true)
-                self.debugTextLabel.text = "Login Failed (Request Token)."
-            }
-        }
         
-        guard (error == nil) else {
-            displayError("There was an error with your request: \(error)")
-            return
+        
+        
+        let task = appDelegate.sharedSession.dataTaskWithRequest(request) { (data, response, error) in
+            
+            print("error" , error)
+            print("data", data)
+            print("response", response)
+            
+            //func displayError(error: String) {
+            //    print("error" , error)
+                
+           // }
+            
+            //parse data
+            let parsedResult: AnyObject!
+            do {
+                let newData = data?.subdataWithRange(NSMakeRange(5, (data?.length)! - 5))
+                print(NSString(data: newData!, encoding: NSUTF8StringEncoding))
+                parsedResult = try NSJSONSerialization.JSONObjectWithData(data!, options: .AllowFragments)
+                print("parsedResult", parsedResult)
+            }
+            catch {
+                //displayError("Could not parse the data as JSON: '\(data)'")
+                print("Could not parse the data as JSON: '\(data)'")
+
+                return
+            }
 
         }
         
-        guard let statusCode = (response as? NSHTTPURLResponse)?.statusCode where
-            statusCode >= 200 && statusCode <= 299 else {
-                displayError("Your request returned a status code other than 2xx!")
-                return
-        }
-        
-        guard let date = data else {
-                displayError("No data was returned by the request!")
-                return
-        }
        
-*/
-       // }
         
-        //parse data
-        /*
-        let parsedResult: AnyObject!
-        do {
-            parsedResult = try NSJSONSerialization.JSONObjectWithData(data, options: .AllowFragments)
-        } catch {
-            displayError("Could not parse the data as JSON: '\(data)'")
-            return
-        }
         
-        guard let requestToken = parsedResult[Constants.TMDBResponseKeys.RequestToken] as? String else {
-            displayError("Cannot find key '\(Constants.TMDBResponseKeys.RequestToken)' in \(parsedResult)")
-            return
-        }
-        */
+        
         //use data
-        //print(requestToken)
+        
+        
+        
         
         //start request
-        //task.resume()
-       // task.resume()
+        
+        
+        
+        
+        task.resume()
     }
     
     private func loginWithToken(requestToken:String) {
         
     }
     
-     func udacityURLFromParameters(parameters: [String:AnyObject], withPathExtension: String? = nil) -> NSURL {
-        
+    func udacityURLFromParameters(parameters: [String:AnyObject], withPathExtension: String? = nil) -> NSURL {
+        print("udacityURLFromParameters")
         let components = NSURLComponents()
         
         components.scheme = "https"
@@ -169,6 +147,7 @@ class LoginViewController: UIViewController {
             components.queryItems!.append(queryItem)
         }
         
+       // print(components.URL!)
         return components.URL!
     }
 

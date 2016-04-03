@@ -8,12 +8,13 @@
 
     struct UdacityConstants {
     
-        static let ApiKey : String = "***"
-        static let ApiPassword : String = "*****"
+        //static let ApiKey : String = "***"
+        //static let ApiPassword : String = "*****"
         
         static let ApiScheme = "http"
         static let ApiHost = "udacity.com"
         static let ApiPath = "/student"
+        
         static let AuthorizationURL : String = "****"
     }
     
@@ -23,8 +24,7 @@
         static let SessionID = "session_id"
         static let Username = "username"
         static let Password = "password"
-        static let Parameter = ["udacity":["username":"***", "password":"!!!!"]]
-        static let udacity = ["username":"***", "password":"!!!!"]
+        static let Format = "format"
         
     }
     
@@ -34,6 +34,7 @@
         static let SessionID = "session_id"
         static let Username = "username"
         static let Password = "password"
+        static let ResponseFormat = "json"
     }
     
     
