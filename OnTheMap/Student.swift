@@ -17,14 +17,14 @@ init(dictionary: [String:AnyObject]) {
     name = "name"
     location = "location"
     
-    print(dictionary)
-    print(dictionary[name])
-    print(dictionary[location])
+    //print(dictionary)
+    //print(dictionary[name])
+    //print(dictionary[location])
     
     name = (dictionary["name"] as? String)!
     location = (dictionary["location"] as? String)!
-    print("name ", name)
-    print("location ", location)
+    //print("name ", name)
+    //print("location ", location)
     
  
     }

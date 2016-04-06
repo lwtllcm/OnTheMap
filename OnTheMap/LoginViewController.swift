@@ -35,8 +35,9 @@ class LoginViewController: UIViewController {
             print("Username or Password Empty")
         }
         else {
+            //setUIEnabled(false)
             print("Username or Password not empty")
-            
+            //setUIEnabled(false)
            // print(emailTextField.text)
            // print(passwordTextField.text)
 
@@ -52,40 +53,36 @@ class LoginViewController: UIViewController {
         print("getRequestToken")
         
         
-        // set parameters
+        // **** 1) set parameters - create dictionary with name/value pairs for parameters needed in final URL
         
 
-        
         let methodParameters : [String:AnyObject] =  [
             
             UdacityParameterKeys.Username:emailTextField.text!,
             UdacityParameterKeys.Password:passwordTextField.text!,
-            UdacityParameterKeys.Format: UdacityParameterValues.ResponseFormat
+            //UdacityParameterKeys.Format: UdacityParameterValues.ResponseFormat
+            
+            
         ]
         
+        print("methodParameters", methodParameters)
         
-        //build url, configure request
+        //  ****** 2) build url - use app delegate's ...URLFromParameters, ***** 3) configure request
         
         
         let request = NSMutableURLRequest(URL: udacityURLFromParameters(methodParameters,withPathExtension: nil))
-        
+        //let request = NSMutableURLRequest(URL: NSURL(string: "https://www.udacity.com/api/session")!)
         request.HTTPMethod = "POST"
         request.addValue("application/json", forHTTPHeaderField: "Accept")
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
         
         request.HTTPBody = "{\"udacity\": {\"username\": \"\(emailTextField.text)\", \"password\": \"\(passwordTextField.text)\"}}".dataUsingEncoding(NSUTF8StringEncoding)
         
-        //let parameters = [TMDBClient.ParameterKeys.SessionID : TMDBClient.sharedInstance().sessionID!]
         
-        //var mutableMethod: String = Methods.AccountIDFavorite
-        
-        //mutableMethod = subtituteKeyInMethod(mutableMethod, key: TMDBClient.URLKeys.UserID, value: String(TMDBClient.sharedInstance().userID!))!
-        //let jsonBody = "{\"\(TMDBClient.JSONBodyKeys.MediaType)\": \"movie\",\"\(TMDBClient.JSONBodyKeys.MediaID)\": \"\(movie.id)\",\"\(TMDBClient.JSONBodyKeys.Favorite)\": \(favorite)}"        request.HTTPBody = jsonBody.dataUsingEncoding(NSUTF8StringEncoding
-        
-                print(request)
+                print("request",request)
 
         
-        //make request
+        //   ***** 4) make request
         
         
         
@@ -100,12 +97,14 @@ class LoginViewController: UIViewController {
                 
            // }
             
-            //parse data
+        //  ****** 5) parse data
             let parsedResult: AnyObject!
             do {
+                print("data to parse", data)
                 let newData = data?.subdataWithRange(NSMakeRange(5, (data?.length)! - 5))
-                print(NSString(data: newData!, encoding: NSUTF8StringEncoding))
-                parsedResult = try NSJSONSerialization.JSONObjectWithData(data!, options: .AllowFragments)
+                print("newData", NSString(data: newData!, encoding: NSUTF8StringEncoding))
+                
+                parsedResult = try NSJSONSerialization.JSONObjectWithData(newData!, options: .AllowFragments)
                 print("parsedResult", parsedResult)
             }
             catch {
@@ -114,29 +113,28 @@ class LoginViewController: UIViewController {
 
                 return
             }
+            
+            //  ****** 6) use data
 
         }
         
        
         
-        
-        
-        //use data
-        
-        
-        
-        
-        //start request
-        
-        
+        //  ****** 7) start request
         
         
         task.resume()
     }
+ 
+    
+    
     
     private func loginWithToken(requestToken:String) {
         
     }
+
+    
+    
     
     func udacityURLFromParameters(parameters: [String:AnyObject], withPathExtension: String? = nil) -> NSURL {
         print("udacityURLFromParameters")

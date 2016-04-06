@@ -17,6 +17,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var requestToken: String? = nil
     var sessionID: String? = nil
     var userEmail : String? = nil
+    var userPassword: String? = nil
     
     //var config = Config()
 
