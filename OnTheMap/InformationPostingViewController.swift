@@ -15,5 +15,6 @@ class InformationPostingViewController: UIViewController {
     }
     
     override func viewWillAppear(animated: Bool) {
+        
     }
 }
