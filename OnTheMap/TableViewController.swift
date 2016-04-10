@@ -23,8 +23,7 @@ class TableViewController: UITableViewController {
     var testStudents = [NSDictionary]()
 
     
-    
-    
+        
     override func viewDidLoad() {
         super.viewDidLoad()
         print("TableViewController")
