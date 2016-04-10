@@ -20,6 +20,8 @@ class TableViewController: UITableViewController {
     
     let testTable = ["test1", "test2", "test3"]
     let testStudent = Student(dictionary: ["name": "aaa", "location":"bbb"])
+    var testStudents = [NSDictionary]()
+
     
     
     
@@ -42,8 +44,13 @@ class TableViewController: UITableViewController {
     }
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        print("numberOfRowsInSection")
+        print("testStudent.count",self.testStudents.count)
+
         return testTable.count
-    }
+        
+        //return self.testStudents.count
+            }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("StudentCell") as UITableViewCell!
@@ -57,34 +64,10 @@ class TableViewController: UITableViewController {
         print("getStudentLocations")
         
         
-        // set parameters
-        
-        
-        /*
-        let methodParameters : [String:AnyObject] =  [
-        
-        UdacityParameterKeys.Username:emailTextField.text!,
-        UdacityParameterKeys.Password:passwordTextField.text!,
-        UdacityParameterKeys.Format: UdacityParameterValues.ResponseFormat
-        ]
-        */
-        
-        //build url, configure request
-        
-        
         let request = NSMutableURLRequest(URL: NSURL(string: "https://api.parse.com/1/classes/StudentLocation")!)
         
         request.addValue("QrX47CA9cyuGewLdsL7o5Eb8iug6Em8ye0dnAbIr", forHTTPHeaderField: "X-Parse-Application-Id")
         request.addValue("QuWThTdiRmTux3YaDseUSEpUKo7aBYM737yKd4gY", forHTTPHeaderField: "X-Parse-REST-API-Key")
-        
-        //request.HTTPBody = "{\"udacity\": {\"username\": \"\(emailTextField.text)\", \"password\": \"\(passwordTextField.text)\"}}".dataUsingEncoding(NSUTF8StringEncoding)
-        
-        //let parameters = [TMDBClient.ParameterKeys.SessionID : TMDBClient.sharedInstance().sessionID!]
-        
-        //var mutableMethod: String = Methods.AccountIDFavorite
-        
-        //mutableMethod = subtituteKeyInMethod(mutableMethod, key: TMDBClient.URLKeys.UserID, value: String(TMDBClient.sharedInstance().userID!))!
-        //let jsonBody = "{\"\(TMDBClient.JSONBodyKeys.MediaType)\": \"movie\",\"\(TMDBClient.JSONBodyKeys.MediaID)\": \"\(movie.id)\",\"\(TMDBClient.JSONBodyKeys.Favorite)\": \(favorite)}"        request.HTTPBody = jsonBody.dataUsingEncoding(NSUTF8StringEncoding
         
         print("request", request)
         
@@ -107,6 +90,18 @@ class TableViewController: UITableViewController {
                 print(NSString(data: newData!, encoding: NSUTF8StringEncoding))
                 parsedResult = try NSJSONSerialization.JSONObjectWithData(data!, options: .AllowFragments)
                 print("parsedResult", parsedResult)
+                
+                let thisParsedResultGroup = parsedResult.objectForKey("results")
+                print("thisParsedResultGroup", thisParsedResultGroup)
+                
+                
+                let thisParsedResult = thisParsedResultGroup![0]
+                print("thisParsedResult firstName", thisParsedResult.objectForKey("firstName"))
+                print("thisParsedResult mapString", thisParsedResult.objectForKey("mapString"))
+                let newTestStudent = ["name": thisParsedResult.objectForKey("firstName"), "location":thisParsedResult.objectForKey("mapString")]
+                self.testStudents.append(["name": thisParsedResult.objectForKey("firstName")!, "location":thisParsedResult.objectForKey("mapString")!])
+                print("self.testStudents",self.testStudents)
+
             }
             catch {
 
@@ -117,8 +112,6 @@ class TableViewController: UITableViewController {
 
             
         }
-        
-        
         
         
         
@@ -135,6 +128,7 @@ class TableViewController: UITableViewController {
         task.resume()
     }
     
+    /*
     private func loginWithToken(requestToken:String) {
         
     }
@@ -156,7 +150,7 @@ class TableViewController: UITableViewController {
         // print(components.URL!)
         return components.URL!
     }
-
+*/
     
     
 }

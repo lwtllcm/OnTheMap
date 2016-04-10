@@ -31,16 +31,14 @@ class LoginViewController: UIViewController {
     
     @IBAction func loginPressed(sender: AnyObject) {
         print("loginPressed")
+        
         if emailTextField.text!.isEmpty || passwordTextField.text!.isEmpty {
             print("Username or Password Empty")
         }
         else {
-            //setUIEnabled(false)
-            print("Username or Password not empty")
-            //setUIEnabled(false)
-           // print(emailTextField.text)
-           // print(passwordTextField.text)
 
+            print("Username or Password not empty")
+ 
             getRequestToken()
 
             
@@ -59,19 +57,16 @@ class LoginViewController: UIViewController {
         let methodParameters : [String:AnyObject] =  [
             
             UdacityParameterKeys.Username:emailTextField.text!,
-            UdacityParameterKeys.Password:passwordTextField.text!,
-            //UdacityParameterKeys.Format: UdacityParameterValues.ResponseFormat
-            
-            
+            UdacityParameterKeys.Password:passwordTextField.text!
         ]
         
-        print("methodParameters", methodParameters)
+            print("methodParameters", methodParameters)
         
         //  ****** 2) build url - use app delegate's ...URLFromParameters, ***** 3) configure request
         
         
         let request = NSMutableURLRequest(URL: udacityURLFromParameters(methodParameters,withPathExtension: nil))
-        //let request = NSMutableURLRequest(URL: NSURL(string: "https://www.udacity.com/api/session")!)
+
         request.HTTPMethod = "POST"
         request.addValue("application/json", forHTTPHeaderField: "Accept")
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
@@ -85,19 +80,15 @@ class LoginViewController: UIViewController {
         //   ***** 4) make request
         
         
-        
         let task = appDelegate.sharedSession.dataTaskWithRequest(request) { (data, response, error) in
             
             print("error" , error)
             print("data", data)
             print("response", response)
             
-            //func displayError(error: String) {
-            //    print("error" , error)
-                
-           // }
             
         //  ****** 5) parse data
+            
             let parsedResult: AnyObject!
             do {
                 print("data to parse", data)
@@ -108,7 +99,7 @@ class LoginViewController: UIViewController {
                 print("parsedResult", parsedResult)
             }
             catch {
-                //displayError("Could not parse the data as JSON: '\(data)'")
+
                 print("Could not parse the data as JSON: '\(data)'")
 
                 return
@@ -150,7 +141,6 @@ class LoginViewController: UIViewController {
             components.queryItems!.append(queryItem)
         }
         
-       // print(components.URL!)
         return components.URL!
     }
 
