@@ -70,9 +70,10 @@ class LoginViewController: UIViewController {
         request.HTTPMethod = "POST"
         request.addValue("application/json", forHTTPHeaderField: "Accept")
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        let httpBodyString = "{\"udacity\": {\"username\": \"\(emailTextField.text!)\", \"password\": \"\(passwordTextField.text!)\"}}"
+         print("request httpbody: \(httpBodyString)")
         
-        request.HTTPBody = "{\"udacity\": {\"username\": \"\(emailTextField.text)\", \"password\": \"\(passwordTextField.text)\"}}".dataUsingEncoding(NSUTF8StringEncoding)
-        
+        request.HTTPBody = httpBodyString.dataUsingEncoding(NSUTF8StringEncoding)
         
                 print("request",request)
 
