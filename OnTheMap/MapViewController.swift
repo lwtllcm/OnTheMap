@@ -15,7 +15,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        print("MapViewController")
+        print("MapViewController viewDidLoad")
         
         let locations = testLocationData()
         
