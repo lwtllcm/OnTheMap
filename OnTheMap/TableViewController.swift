@@ -19,6 +19,7 @@ class TableViewController: UITableViewController {
     @IBOutlet weak var refreshButton: UIBarButtonItem!
     
     let testTable = ["test1", "test2", "test3"]
+    
    // let testStudent = Student(dictionary: ["name": "Student 1", "location":"Location 1"])
    // let testStudent2 = Student(dictionary: ["name" : "Student 2", "location":"Location 2"])
    // let testStudent3 = Student(dictionary: ["name" : "Student 3", "location":"Location 3"])
@@ -54,7 +55,6 @@ class TableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         print("TableViewController")
-        // Do any additional setup after loading the view, typically from a nib.
     }
     
     override func viewWillAppear(animated: Bool) {    
@@ -62,6 +62,7 @@ class TableViewController: UITableViewController {
         print("TableViewController viewWillAppear")
         
         testStudents.append(testStudent1)
+        
        // testStudents.append(testStudent2
        // testStudents.append(testStudent3)
         
@@ -88,7 +89,7 @@ class TableViewController: UITableViewController {
         
         //cell.textLabel?.text = individual
         //cell.textLabel?.text = testStudent.name
-        
+        print("testStudents", testStudents)
         let individual = testStudents[indexPath.row]
         print("individual",individual)
         //cell.textLabel?.text = individual.location
@@ -159,10 +160,35 @@ class TableViewController: UITableViewController {
                 parsedResult = try NSJSONSerialization.JSONObjectWithData(data, options: .AllowFragments)
                 print("parsedResult", parsedResult)
                 
+                
+                
+                
+                
                 let thisParsedResultGroup = parsedResult.objectForKey("results")
                 print("thisParsedResultGroup", thisParsedResultGroup)
+                print("thisParsedResultGroup count",thisParsedResultGroup?.count)
+                print("thisParsedResultGroup type",thisParsedResultGroup?.typeIdentifier)
+                let thisParsedResultArray = [thisParsedResultGroup!] as NSArray
+                print("thisParsedResultArray", thisParsedResultArray)
                 
                 
+                for result in parsedResult.objectForKey("results") as! NSArray {
+                    print("result", result)
+                    print("result firstName", result.objectForKey("firstName"))
+                    print("result location", result.objectForKey("mapString"))
+                    let resultName = result.objectForKey("firstName")
+                    print("resultName", resultName)
+                    let resultLocation = result.objectForKey("updatedAt")
+                    print("resultLocation", resultLocation)
+
+                    let newTestStudent = Student(name:resultName as! String, location:resultLocation as! String)
+                    print("newTestStudent", newTestStudent)
+                    self.testStudents.append(newTestStudent)
+                    print(self.testStudents)
+                    
+                }
+                
+                /*
                 let thisParsedResult = thisParsedResultGroup![0]
                 print("thisParsedResult firstName", thisParsedResult.objectForKey("firstName"))
                 let thisParsedResultFirstName = thisParsedResult.objectForKey("firstName")
@@ -170,16 +196,21 @@ class TableViewController: UITableViewController {
                 print("thisParsedResult mapString", thisParsedResult.objectForKey("mapString"))
                 let thisParsedResultmapString = thisParsedResult.objectForKey("mapString")
 
-                
-                //let newTestStudent = ["name": thisParsedResult.objectForKey("firstName"), "location":thisParsedResult.objectForKey("mapString")]
-               // self.testStudents.append(["name": thisParsedResult.objectForKey("firstName")!, "location":thisParsedResult.objectForKey("mapString")!])
-                
+
                 
                 let newTestStudent = Student(name:thisParsedResultFirstName as! String, location:thisParsedResultmapString as! String)
                 self.testStudents.append(newTestStudent)
                 print("self.testStudents",self.testStudents)
+*/
+              
+                /*
+                if let parsedResultArray = parsedResult as? NSArray {
+                for newTest in parsedResultArray {
+                    print("newTest", newTest)
+                }
+                }
+                */
                 
-                //self.tableView.reloadData()
                 
                 self.performUIUpdatesOnMain { () -> Void in
                     self.tableView.reloadData()
@@ -218,6 +249,16 @@ class TableViewController: UITableViewController {
             updates()
         }
 }
+   /*
+    static func studentFromResults(results: [[String:AnyObject]] )-> [Student] {
+        var students = [Student] ()
+        for result in results {
+            students.append(Student(dictionary: result))
+        }
+        
+        return students
+    }
+   */
 
 }
 
