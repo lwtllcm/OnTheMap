@@ -9,14 +9,18 @@
 import UIKit
 
 struct Student {
-   var name: String
-   var location: String
-    
+   var name: String?
+   var location: String?
 
+
+    
+    /*
 init(dictionary: [String:AnyObject]) {
     name = "name"
     location = "location"
+ 
     
+   
     //print(dictionary)
     //print(dictionary[name])
     //print(dictionary[location])
@@ -39,4 +43,6 @@ init(dictionary: [String:AnyObject]) {
         
         return students
     }
+*/
+
 }

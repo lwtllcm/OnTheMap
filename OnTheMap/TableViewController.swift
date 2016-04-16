@@ -19,10 +19,37 @@ class TableViewController: UITableViewController {
     @IBOutlet weak var refreshButton: UIBarButtonItem!
     
     let testTable = ["test1", "test2", "test3"]
-    let testStudent = Student(dictionary: ["name": "aaa", "location":"bbb"])
-    var testStudents = [NSDictionary]()
+   // let testStudent = Student(dictionary: ["name": "Student 1", "location":"Location 1"])
+   // let testStudent2 = Student(dictionary: ["name" : "Student 2", "location":"Location 2"])
+   // let testStudent3 = Student(dictionary: ["name" : "Student 3", "location":"Location 3"])
+
+    var testStudents = [Student]()
+    
+    let studentValue1 = "s1"
+    let studentValue2 = "s2"
+    let locationValue1 = "l1"
+    let locationValue2 = "l2"
+    
+    var testStudent1 = Student(name:"s1", location:"l1")
+    var testStudent2 = Student(name:"s2", location:"l2")
+    var testStudent3 = Student(name:"s3", location:"l3")
 
     
+    
+    
+   // var testStudent1 = Student(name:studentValue1, location:locationValue1)
+    //testStudent1.
+    //testStudent1 = Student("name":"name1", "location":"location1")
+   
+    
+    //location = (dictionary["location"] as? String)!
+    
+    
+    //testStudents.append(["name": "Student 1", "location":"Location 1"])
+    //testStudents.append(["name" : "Student 2", "location":"Location 2"])
+    //testStudents.append(["name" : "Student 3", "location":"Location 3"])
+
+    //print("testStudents", testStudents)
         
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,11 +60,15 @@ class TableViewController: UITableViewController {
     override func viewWillAppear(animated: Bool) {    
         super.viewDidLoad()
         print("TableViewController viewWillAppear")
-        print("testStudent ", testStudent)
         
-        getStudentLocations()
+        testStudents.append(testStudent1)
+       // testStudents.append(testStudent2
+       // testStudents.append(testStudent3)
+        
 
-  
+        getStudentLocations()
+        self.tableView.reloadData()
+        
        
         // Do any additional setup after loading the view, typically from a nib.
     }
@@ -46,16 +77,26 @@ class TableViewController: UITableViewController {
         print("numberOfRowsInSection")
         print("testStudent.count",self.testStudents.count)
 
-        return testTable.count
+        //return testTable.count
         
-        //return self.testStudents.count
+        return self.testStudents.count
             }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("StudentCell") as UITableViewCell!
         //let individual = testTable[indexPath.row]
+        
         //cell.textLabel?.text = individual
-        cell.textLabel?.text = testStudent.name
+        //cell.textLabel?.text = testStudent.name
+        
+        let individual = testStudents[indexPath.row]
+        print("individual",individual)
+        //cell.textLabel?.text = individual.location
+        
+        performUIUpdatesOnMain { () -> Void in
+            cell.textLabel?.text = individual.location
+        }
+        
         return cell
             }
     
@@ -75,19 +116,47 @@ class TableViewController: UITableViewController {
         
         let session = NSURLSession.sharedSession()
         let task = session.dataTaskWithRequest(request) { data, response, error in
+            /*
             if error != nil { // Handle error...
                 return
             }
             print(NSString(data: data!, encoding: NSUTF8StringEncoding))
-       
+       */
+            func displayError(error: String) {
+                print(error)
+                //print("URL at time of error: \(url)")
+                self.performUIUpdatesOnMain {
+                   // self.setUIEnabled(true)
+                }
+            }
+            
+            /* GUARD: Was there an error? */
+            guard (error == nil) else {
+                displayError("There was an error with your request: \(error)")
+                return
+            }
+            
+            /* GUARD: Did we get a successful 2XX response? */
+            guard let statusCode = (response as? NSHTTPURLResponse)?.statusCode where statusCode >= 200 && statusCode <= 299 else {
+                displayError("Your request returned a status code other than 2xx!")
+                return
+            }
+            
+            /* GUARD: Was there any data returned? */
+            guard let data = data else {
+                displayError("No data was returned by the request!")
+                return
+            }
+
         
             
             //parse data
             let parsedResult: AnyObject!
             do {
-                let newData = data?.subdataWithRange(NSMakeRange(5, (data?.length)! - 5))
-                print(NSString(data: newData!, encoding: NSUTF8StringEncoding))
-                parsedResult = try NSJSONSerialization.JSONObjectWithData(data!, options: .AllowFragments)
+                
+                let newData = data.subdataWithRange(NSMakeRange(5, (data.length) - 5))
+                print(NSString(data: newData, encoding: NSUTF8StringEncoding))
+                parsedResult = try NSJSONSerialization.JSONObjectWithData(data, options: .AllowFragments)
                 print("parsedResult", parsedResult)
                 
                 let thisParsedResultGroup = parsedResult.objectForKey("results")
@@ -96,10 +165,26 @@ class TableViewController: UITableViewController {
                 
                 let thisParsedResult = thisParsedResultGroup![0]
                 print("thisParsedResult firstName", thisParsedResult.objectForKey("firstName"))
+                let thisParsedResultFirstName = thisParsedResult.objectForKey("firstName")
+                
                 print("thisParsedResult mapString", thisParsedResult.objectForKey("mapString"))
-                let newTestStudent = ["name": thisParsedResult.objectForKey("firstName"), "location":thisParsedResult.objectForKey("mapString")]
-                self.testStudents.append(["name": thisParsedResult.objectForKey("firstName")!, "location":thisParsedResult.objectForKey("mapString")!])
+                let thisParsedResultmapString = thisParsedResult.objectForKey("mapString")
+
+                
+                //let newTestStudent = ["name": thisParsedResult.objectForKey("firstName"), "location":thisParsedResult.objectForKey("mapString")]
+               // self.testStudents.append(["name": thisParsedResult.objectForKey("firstName")!, "location":thisParsedResult.objectForKey("mapString")!])
+                
+                
+                let newTestStudent = Student(name:thisParsedResultFirstName as! String, location:thisParsedResultmapString as! String)
+                self.testStudents.append(newTestStudent)
                 print("self.testStudents",self.testStudents)
+                
+                //self.tableView.reloadData()
+                
+                self.performUIUpdatesOnMain { () -> Void in
+                    self.tableView.reloadData()
+                }
+                
 
             }
             catch {
@@ -127,29 +212,12 @@ class TableViewController: UITableViewController {
         task.resume()
     }
     
-    /*
-    private func loginWithToken(requestToken:String) {
-        
-    }
     
-    func parseURLFromParameters(parameters: [String:AnyObject], withPathExtension: String? = nil) -> NSURL {
-        print("parseURLFromParameters")
-        let components = NSURLComponents()
-        
-        components.scheme = "https"
-        components.host = "udacity.com"
-        components.path = "/api/session" + (withPathExtension ?? "")
-        components.queryItems = [NSURLQueryItem]()
-        
-        for (key, value) in parameters {
-            let queryItem = NSURLQueryItem(name: key, value: "\(value)")
-            components.queryItems!.append(queryItem)
+    func performUIUpdatesOnMain(updates: () -> Void) {
+        dispatch_async(dispatch_get_main_queue()) {
+            updates()
         }
-        
-        // print(components.URL!)
-        return components.URL!
-    }
-*/
-    
-    
 }
+
+}
+
