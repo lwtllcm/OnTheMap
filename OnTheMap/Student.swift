@@ -14,7 +14,7 @@ struct Student {
 
 
     
-    /*
+ /*
 init(dictionary: [String:AnyObject]) {
     name = "name"
     location = "location"
@@ -30,19 +30,34 @@ init(dictionary: [String:AnyObject]) {
     //print("name ", name)
     //print("location ", location)
     
+    
+    print("init dictionary", dictionary)
  
     }
 
-
+*/
     
     static func studentFromResults(results: [[String:AnyObject]] )-> [Student] {
-        var students = [Student] ()
-        for result in results {
-        students.append(Student(dictionary: result))
+        var testStudents = [Student] ()
+        for result in results as NSArray {
+            print("result", result)
+            print("result firstName", result.objectForKey("firstName"))
+            print("result location", result.objectForKey("mapString"))
+            let resultName = result.objectForKey("firstName")
+            print("resultName", resultName)
+            let resultLocation = result.objectForKey("updatedAt")
+            print("resultLocation", resultLocation)
+            
+            let newTestStudent = Student(name:resultName as? String, location:resultLocation as? String)
+            print("newTestStudent", newTestStudent)
+            testStudents.append(newTestStudent)
+            print(testStudents)
         }
-        
-        return students
+        return testStudents
     }
-*/
+
+    
+
 
 }
+

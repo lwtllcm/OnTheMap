@@ -24,7 +24,9 @@ class TableViewController: UITableViewController {
    // let testStudent2 = Student(dictionary: ["name" : "Student 2", "location":"Location 2"])
    // let testStudent3 = Student(dictionary: ["name" : "Student 3", "location":"Location 3"])
 
-    var testStudents = [Student]()
+   // var testStudents = [Student]()
+    
+    var testStudents:[Student] = [Student]()
     
     let studentValue1 = "s1"
     let studentValue2 = "s2"
@@ -152,6 +154,9 @@ class TableViewController: UITableViewController {
         
             
             //parse data
+            
+            
+            
             let parsedResult: AnyObject!
             do {
                 
@@ -172,6 +177,15 @@ class TableViewController: UITableViewController {
                 print("thisParsedResultArray", thisParsedResultArray)
                 
                 
+                let results = parsedResult.objectForKey("results") as! NSArray
+                //self.studentFromResults(results as! [[String : AnyObject]])
+                 
+                self.testStudents = Student.studentFromResults(results as! [[String : AnyObject]])
+                
+                //let movies = TMDBMovie.moviesFromResults(results)
+                
+                
+                /*
                 for result in parsedResult.objectForKey("results") as! NSArray {
                     print("result", result)
                     print("result firstName", result.objectForKey("firstName"))
@@ -187,6 +201,7 @@ class TableViewController: UITableViewController {
                     print(self.testStudents)
                     
                 }
+*/
                 
                 /*
                 let thisParsedResult = thisParsedResultGroup![0]
@@ -249,16 +264,33 @@ class TableViewController: UITableViewController {
             updates()
         }
 }
-   /*
-    static func studentFromResults(results: [[String:AnyObject]] )-> [Student] {
+    
+    
+    func studentFromResults(results: [[String:AnyObject]] )-> [Student] {
+        /*
         var students = [Student] ()
         for result in results {
-            students.append(Student(dictionary: result))
+            testStudents.append(result)
         }
+        */
         
-        return students
+        for result in results as NSArray {
+            print("result", result)
+            print("result firstName", result.objectForKey("firstName"))
+            print("result location", result.objectForKey("mapString"))
+            let resultName = result.objectForKey("firstName")
+            print("resultName", resultName)
+            let resultLocation = result.objectForKey("updatedAt")
+            print("resultLocation", resultLocation)
+            
+            let newTestStudent = Student(name:resultName as! String, location:resultLocation as! String)
+            print("newTestStudent", newTestStudent)
+            self.testStudents.append(newTestStudent)
+            print(self.testStudents)
+        }
+        return testStudents
     }
-   */
+  
 
 }
 
