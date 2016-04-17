@@ -32,10 +32,12 @@ class TableViewController: UITableViewController {
     let studentValue2 = "s2"
     let locationValue1 = "l1"
     let locationValue2 = "l2"
+   // let studentURL:NSURL = NSURL(fileURLWithPath: "www.google.com")
+    let studentURL = "www.google.com"
     
-    var testStudent1 = Student(name:"s1", location:"l1")
-    var testStudent2 = Student(name:"s2", location:"l2")
-    var testStudent3 = Student(name:"s3", location:"l3")
+    var testStudent1 = Student(name:"s1", location:"l1",url: "www.google.com")
+   // var testStudent2 = Student(name:"s2", location:"l2",url:NSURL(fileURLWithPath: "www.google.com"))
+    //var testStudent3 = Student(name:"s3", location:"l3",url:NSURL(fileURLWithPath: "www.google.com"))
 
     
     
@@ -97,8 +99,10 @@ class TableViewController: UITableViewController {
         //cell.textLabel?.text = individual.location
         
         performUIUpdatesOnMain { () -> Void in
-            cell.textLabel?.text = individual.location
-        }
+            //cell.textLabel?.text = individual.location!
+            
+            cell.textLabel?.text = individual.url!
+            }
         
         return cell
             }
@@ -282,8 +286,11 @@ class TableViewController: UITableViewController {
             print("resultName", resultName)
             let resultLocation = result.objectForKey("updatedAt")
             print("resultLocation", resultLocation)
+            let resultURL = result.objectForKey("mediaURL")
+            print("resultURL", resultURL)
+
             
-            let newTestStudent = Student(name:resultName as! String, location:resultLocation as! String)
+            let newTestStudent = Student(name:resultName as! String, location:resultLocation as! String, url:resultURL as! String)
             print("newTestStudent", newTestStudent)
             self.testStudents.append(newTestStudent)
             print(self.testStudents)
