@@ -117,7 +117,7 @@ class TableViewController: UITableViewController {
         request.addValue("QuWThTdiRmTux3YaDseUSEpUKo7aBYM737yKd4gY", forHTTPHeaderField: "X-Parse-REST-API-Key")
         
         print("request", request)
-        
+         
         
         //make request
         
@@ -186,49 +186,6 @@ class TableViewController: UITableViewController {
                  
                 self.testStudents = Student.studentFromResults(results as! [[String : AnyObject]])
                 
-                //let movies = TMDBMovie.moviesFromResults(results)
-                
-                
-                /*
-                for result in parsedResult.objectForKey("results") as! NSArray {
-                    print("result", result)
-                    print("result firstName", result.objectForKey("firstName"))
-                    print("result location", result.objectForKey("mapString"))
-                    let resultName = result.objectForKey("firstName")
-                    print("resultName", resultName)
-                    let resultLocation = result.objectForKey("updatedAt")
-                    print("resultLocation", resultLocation)
-
-                    let newTestStudent = Student(name:resultName as! String, location:resultLocation as! String)
-                    print("newTestStudent", newTestStudent)
-                    self.testStudents.append(newTestStudent)
-                    print(self.testStudents)
-                    
-                }
-*/
-                
-                /*
-                let thisParsedResult = thisParsedResultGroup![0]
-                print("thisParsedResult firstName", thisParsedResult.objectForKey("firstName"))
-                let thisParsedResultFirstName = thisParsedResult.objectForKey("firstName")
-                
-                print("thisParsedResult mapString", thisParsedResult.objectForKey("mapString"))
-                let thisParsedResultmapString = thisParsedResult.objectForKey("mapString")
-
-
-                
-                let newTestStudent = Student(name:thisParsedResultFirstName as! String, location:thisParsedResultmapString as! String)
-                self.testStudents.append(newTestStudent)
-                print("self.testStudents",self.testStudents)
-*/
-              
-                /*
-                if let parsedResultArray = parsedResult as? NSArray {
-                for newTest in parsedResultArray {
-                    print("newTest", newTest)
-                }
-                }
-                */
                 
                 
                 self.performUIUpdatesOnMain { () -> Void in
