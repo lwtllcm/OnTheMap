@@ -8,6 +8,7 @@
 
 import UIKit
 
+
 class TableViewController: UITableViewController {
     
     var appDelegate: AppDelegate!
@@ -32,10 +33,10 @@ class TableViewController: UITableViewController {
     let studentValue2 = "s2"
     let locationValue1 = "l1"
     let locationValue2 = "l2"
-   // let studentURL:NSURL = NSURL(fileURLWithPath: "www.google.com")
+
     let studentURL = "www.google.com"
     
-    var testStudent1 = Student(name:"s1", location:"l1",url: "www.google.com")
+   // var testStudent1 = Student(name:"s1", location:"l1",url: "www.google.com")
    // var testStudent2 = Student(name:"s2", location:"l2",url:NSURL(fileURLWithPath: "www.google.com"))
     //var testStudent3 = Student(name:"s3", location:"l3",url:NSURL(fileURLWithPath: "www.google.com"))
 
@@ -65,7 +66,7 @@ class TableViewController: UITableViewController {
         super.viewDidLoad()
         print("TableViewController viewWillAppear")
         
-        testStudents.append(testStudent1)
+        //testStudents.append(testStudent1)
         
        // testStudents.append(testStudent2
        // testStudents.append(testStudent3)
@@ -74,8 +75,6 @@ class TableViewController: UITableViewController {
         getStudentLocations()
         self.tableView.reloadData()
         
-       
-        // Do any additional setup after loading the view, typically from a nib.
     }
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -94,6 +93,7 @@ class TableViewController: UITableViewController {
         //cell.textLabel?.text = individual
         //cell.textLabel?.text = testStudent.name
         print("testStudents", testStudents)
+        
         let individual = testStudents[indexPath.row]
         print("individual",individual)
         //cell.textLabel?.text = individual.location
@@ -269,7 +269,7 @@ class TableViewController: UITableViewController {
         }
 }
     
-    
+/*
     func studentFromResults(results: [[String:AnyObject]] )-> [Student] {
         /*
         var students = [Student] ()
@@ -290,14 +290,15 @@ class TableViewController: UITableViewController {
             print("resultURL", resultURL)
 
             
-            let newTestStudent = Student(name:resultName as! String, location:resultLocation as! String, url:resultURL as! String)
+            //let newTestStudent = Student(name:resultName as? String, location:resultLocation as! String, url:resultURL as? String)
+            let newTestStudent = Student(name:resultName as? cl, location:resultLocation as! String, url:resultURL as? String)
             print("newTestStudent", newTestStudent)
             self.testStudents.append(newTestStudent)
             print(self.testStudents)
         }
         return testStudents
     }
-  
+*/
 
 }
 
