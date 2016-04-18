@@ -10,11 +10,11 @@ import UIKit
 import MapKit
 
 struct Student {
-   //var name: String?
-   //var location: String?
+   var name: String?
+   var location: String?
     
-    var name: CLLocationDegrees
-    var location: CLLocationDegrees
+    var latitude: CLLocationDegrees
+    var longitude: CLLocationDegrees
     //var location: String?
    //var url:NSURL?
     var url:String?
@@ -52,14 +52,11 @@ init(dictionary: [String:AnyObject]) {
             print("result location", result.objectForKey("mapString"))
             
             
-            //let resultName = result.objectForKey("firstName")
-            let resultName = result.objectForKey("latitude") as! CLLocationDegrees
-            print("resultName", resultName)
             
-            
-            //let resultLocation = result.objectForKey("mapString")
-            let resultLocation = result.objectForKey("longitude") as! CLLocationDegrees
-            print("resultLocation", resultLocation)
+            let resultName = result.objectForKey("firstName")
+            let resultLocation = result.objectForKey("mapString")
+            let resultLatitude = result.objectForKey("latitude") as! CLLocationDegrees
+            let resultLongitude = result.objectForKey("longitude") as! CLLocationDegrees
 
             
             let resultURL = result.objectForKey("mediaURL") as! String
@@ -67,7 +64,8 @@ init(dictionary: [String:AnyObject]) {
             
            
             //let newTestStudent = Student(name:resultName as? String, location:resultLocation as? String,url: resultURL as String)
-            let newTestStudent = Student(name:resultName , location:resultLocation ,url: resultURL as String)
+            let newTestStudent =
+            Student(name:resultName as! String , location:resultLocation as! String ,latitude: resultLatitude, longitude: resultLongitude, url: resultURL as String)
                        
             print("newTestStudent", newTestStudent)
             testStudents.append(newTestStudent)

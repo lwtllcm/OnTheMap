@@ -104,12 +104,12 @@ class MapViewController: UIViewController, MKMapViewDelegate {
             
             //let lat = CLLocationDegrees(dictionary["latititude"] as! Double)
             //let lat1 = CLLocationDegrees(38.1461248)
-            let lat1 = CLLocationDegrees(student.name)
+            let lat1 = CLLocationDegrees(student.latitude)
             print("lat1", lat1)
             
             //let long = CLLocationDegrees(dictionary["longititude"] as! Double)
             //let long1 = CLLocationDegrees(-92.75676799999999)
-            let long1 = CLLocationDegrees(student.location)
+            let long1 = CLLocationDegrees(student.longitude)
             
             let coordinate1 = CLLocationCoordinate2D(latitude: lat1, longitude: long1)
             
