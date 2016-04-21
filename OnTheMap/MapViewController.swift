@@ -82,7 +82,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         request.addValue("QrX47CA9cyuGewLdsL7o5Eb8iug6Em8ye0dnAbIr", forHTTPHeaderField: "X-Parse-Application-Id")
         request.addValue("QuWThTdiRmTux3YaDseUSEpUKo7aBYM737yKd4gY", forHTTPHeaderField: "X-Parse-REST-API-Key")
         
-        print("request", request)
+       // print("request", request)
         
         
         //make request
@@ -133,7 +133,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
                 let newData = data.subdataWithRange(NSMakeRange(5, (data.length) - 5))
                 print(NSString(data: newData, encoding: NSUTF8StringEncoding))
                 parsedResult = try NSJSONSerialization.JSONObjectWithData(data, options: .AllowFragments)
-                print("parsedResult", parsedResult)
+                //print("parsedResult", parsedResult)
                 
                 
                 
