@@ -165,7 +165,7 @@ class TableViewController: UITableViewController {
             do {
                 
                 let newData = data.subdataWithRange(NSMakeRange(5, (data.length) - 5))
-                print(NSString(data: newData, encoding: NSUTF8StringEncoding))
+                //print(NSString(data: newData, encoding: NSUTF8StringEncoding))
                 parsedResult = try NSJSONSerialization.JSONObjectWithData(data, options: .AllowFragments)
                 //print("parsedResult", parsedResult)
                 
@@ -174,11 +174,11 @@ class TableViewController: UITableViewController {
                 
                 
                 let thisParsedResultGroup = parsedResult.objectForKey("results")
-                print("thisParsedResultGroup", thisParsedResultGroup)
-                print("thisParsedResultGroup count",thisParsedResultGroup?.count)
-                print("thisParsedResultGroup type",thisParsedResultGroup?.typeIdentifier)
+                //print("thisParsedResultGroup", thisParsedResultGroup)
+                //print("thisParsedResultGroup count",thisParsedResultGroup?.count)
+                //print("thisParsedResultGroup type",thisParsedResultGroup?.typeIdentifier)
                 let thisParsedResultArray = [thisParsedResultGroup!] as NSArray
-                print("thisParsedResultArray", thisParsedResultArray)
+                //print("thisParsedResultArray", thisParsedResultArray)
                 
                 
                 let results = parsedResult.objectForKey("results") as! NSArray

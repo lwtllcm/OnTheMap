@@ -258,38 +258,57 @@
                                     <rect key="frame" x="37" y="28" width="279" height="119"/>
                                 </variation>
                             </label>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="PF2-gW-k7j">
-                                <rect key="frame" x="-25" y="-30" width="97" height="30"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
-                                <variation key="widthClass=compact" fixedFrame="YES">
-                                    <rect key="frame" x="37" y="170" width="279" height="30"/>
-                                </variation>
-                            </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="n4d-an-hKK">
                                 <rect key="frame" x="-23" y="-15" width="46" height="30"/>
                                 <state key="normal" title="Find on the Map"/>
                                 <variation key="widthClass=compact" fixedFrame="YES">
                                     <rect key="frame" x="37" y="473" width="279" height="30"/>
                                 </variation>
+                                <connections>
+                                    <action selector="findOnTheMapButtonPressed:" destination="3t7-SW-61E" eventType="touchUpInside" id="8CE-Na-KEN"/>
+                                </connections>
                             </button>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="HfR-WP-dEm">
+                                <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
+                                <variation key="widthClass=compact" fixedFrame="YES">
+                                    <rect key="frame" x="0.0" y="161" width="400" height="462"/>
+                                </variation>
+                            </mapView>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="PF2-gW-k7j">
+                                <rect key="frame" x="-25" y="-30" width="97" height="30"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                                <variation key="widthClass=compact" fixedFrame="YES">
+                                    <rect key="frame" x="37" y="123" width="279" height="30"/>
+                                </variation>
+                                <connections>
+                                    <action selector="studentLocationTextAction:" destination="3t7-SW-61E" eventType="touchUpInside" id="9Ev-9H-weQ"/>
+                                </connections>
+                            </textField>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <variation key="default">
                             <mask key="subviews">
                                 <exclude reference="SX9-EI-oNb"/>
-                                <exclude reference="PF2-gW-k7j"/>
                                 <exclude reference="n4d-an-hKK"/>
+                                <exclude reference="HfR-WP-dEm"/>
+                                <exclude reference="PF2-gW-k7j"/>
                             </mask>
                         </variation>
                         <variation key="widthClass=compact">
                             <mask key="subviews">
                                 <include reference="SX9-EI-oNb"/>
-                                <include reference="PF2-gW-k7j"/>
                                 <include reference="n4d-an-hKK"/>
+                                <include reference="HfR-WP-dEm"/>
+                                <include reference="PF2-gW-k7j"/>
                             </mask>
                         </variation>
                     </view>
+                    <connections>
+                        <outlet property="findOnTheMapButton" destination="n4d-an-hKK" id="jEM-vP-oAO"/>
+                        <outlet property="mapView" destination="HfR-WP-dEm" id="3SQ-Or-RUe"/>
+                        <outlet property="studentLocationText" destination="PF2-gW-k7j" id="TGO-z9-Y29"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="CLQ-XL-jW4" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
