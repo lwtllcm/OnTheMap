@@ -47,9 +47,9 @@ init(dictionary: [String:AnyObject]) {
         print("Student studentFromResults")
         var testStudents = [Student] ()
         for result in results as NSArray {
-            print("result", result)
-            print("result firstName", result.objectForKey("firstName"))
-            print("result location", result.objectForKey("mapString"))
+            //print("result", result)
+            //print("result firstName", result.objectForKey("firstName"))
+            //print("result location", result.objectForKey("mapString"))
             
             
             
@@ -60,16 +60,16 @@ init(dictionary: [String:AnyObject]) {
 
             
             let resultURL = result.objectForKey("mediaURL") as! String
-            print("resultURL", resultURL)
+            //print("resultURL", resultURL)
             
            
             //let newTestStudent = Student(name:resultName as? String, location:resultLocation as? String,url: resultURL as String)
             let newTestStudent =
             Student(name:resultName as! String , location:resultLocation as! String ,latitude: resultLatitude, longitude: resultLongitude, url: resultURL as String)
                        
-            print("newTestStudent", newTestStudent)
+            //print("newTestStudent", newTestStudent)
             testStudents.append(newTestStudent)
-            print(testStudents)
+            //print(testStudents)
             
         }
         return testStudents
