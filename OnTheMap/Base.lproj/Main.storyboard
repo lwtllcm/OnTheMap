@@ -249,15 +249,17 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Where are you studying today?" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SX9-EI-oNb">
-                                <rect key="frame" x="-42" y="-21" width="42" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="enter location " borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="PF2-gW-k7j">
+                                <rect key="frame" x="-25" y="-30" width="97" height="30"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
                                 <variation key="widthClass=compact" fixedFrame="YES">
-                                    <rect key="frame" x="37" y="28" width="279" height="119"/>
+                                    <rect key="frame" x="37" y="123" width="279" height="30"/>
                                 </variation>
-                            </label>
+                                <connections>
+                                    <action selector="studentLocationTextAction:" destination="3t7-SW-61E" eventType="touchUpInside" id="9Ev-9H-weQ"/>
+                                </connections>
+                            </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="n4d-an-hKK">
                                 <rect key="frame" x="-23" y="-15" width="46" height="30"/>
                                 <state key="normal" title="Find on the Map"/>
@@ -274,40 +276,63 @@
                                     <rect key="frame" x="0.0" y="161" width="400" height="462"/>
                                 </variation>
                             </mapView>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="PF2-gW-k7j">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="enter link" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="b3W-bX-kdL">
                                 <rect key="frame" x="-25" y="-30" width="97" height="30"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                                 <variation key="widthClass=compact" fixedFrame="YES">
-                                    <rect key="frame" x="37" y="123" width="279" height="30"/>
+                                    <rect key="frame" x="37" y="77" width="279" height="30"/>
+                                </variation>
+                            </textField>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tza-c2-jNw">
+                                <rect key="frame" x="-23" y="-15" width="46" height="30"/>
+                                <state key="normal" title="Submit"/>
+                                <variation key="widthClass=compact" fixedFrame="YES">
+                                    <rect key="frame" x="152" y="499" width="49" height="30"/>
                                 </variation>
                                 <connections>
-                                    <action selector="studentLocationTextAction:" destination="3t7-SW-61E" eventType="touchUpInside" id="9Ev-9H-weQ"/>
+                                    <action selector="submitButtonPressed:" destination="3t7-SW-61E" eventType="touchUpInside" id="eyD-8W-seg"/>
                                 </connections>
-                            </textField>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Where are you studying today?" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SX9-EI-oNb">
+                                <rect key="frame" x="-42" y="-21" width="42" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                                <variation key="widthClass=compact" fixedFrame="YES">
+                                    <rect key="frame" x="37" y="13" width="279" height="42"/>
+                                </variation>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <variation key="default">
                             <mask key="subviews">
-                                <exclude reference="SX9-EI-oNb"/>
+                                <exclude reference="PF2-gW-k7j"/>
                                 <exclude reference="n4d-an-hKK"/>
                                 <exclude reference="HfR-WP-dEm"/>
-                                <exclude reference="PF2-gW-k7j"/>
+                                <exclude reference="b3W-bX-kdL"/>
+                                <exclude reference="tza-c2-jNw"/>
+                                <exclude reference="SX9-EI-oNb"/>
                             </mask>
                         </variation>
                         <variation key="widthClass=compact">
                             <mask key="subviews">
-                                <include reference="SX9-EI-oNb"/>
+                                <include reference="PF2-gW-k7j"/>
                                 <include reference="n4d-an-hKK"/>
                                 <include reference="HfR-WP-dEm"/>
-                                <include reference="PF2-gW-k7j"/>
+                                <include reference="b3W-bX-kdL"/>
+                                <include reference="tza-c2-jNw"/>
+                                <include reference="SX9-EI-oNb"/>
                             </mask>
                         </variation>
                     </view>
                     <connections>
                         <outlet property="findOnTheMapButton" destination="n4d-an-hKK" id="jEM-vP-oAO"/>
                         <outlet property="mapView" destination="HfR-WP-dEm" id="3SQ-Or-RUe"/>
+                        <outlet property="studentLinkText" destination="b3W-bX-kdL" id="P4i-11-Iqx"/>
+                        <outlet property="studentLocationPromptLabel" destination="SX9-EI-oNb" id="92L-em-eOF"/>
                         <outlet property="studentLocationText" destination="PF2-gW-k7j" id="TGO-z9-Y29"/>
+                        <outlet property="submitButton" destination="tza-c2-jNw" id="DWc-Sl-lJf"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="CLQ-XL-jW4" userLabel="First Responder" sceneMemberID="firstResponder"/>

@@ -10,15 +10,25 @@ import UIKit
 import MapKit
 
 class InformationPostingViewController: UIViewController, MKMapViewDelegate {
+   
+    @IBOutlet weak var studentLocationPromptLabel: UILabel!
+    
     
     @IBOutlet weak var studentLocationText: UITextField!
+    
+    @IBOutlet weak var studentLinkText: UITextField!
+    
     @IBOutlet weak var findOnTheMapButton: UIButton!
     
+    @IBOutlet weak var submitButton: UIButton!
     @IBOutlet weak var mapView: MKMapView!
     override func viewDidLoad() {
         super.viewDidLoad()
         mapView.delegate = self
         mapView.hidden = true
+        studentLinkText.hidden = true
+        submitButton.hidden = true
+        
         
     }
     
@@ -102,8 +112,17 @@ class InformationPostingViewController: UIViewController, MKMapViewDelegate {
         //studentLocationText.text.
             
         mapView.hidden = false
+        studentLocationPromptLabel.hidden = true
+        studentLocationText.hidden = true
+        findOnTheMapButton.hidden = true
+        studentLinkText.hidden = false
+        submitButton.hidden = false
     }
     
     
+    @IBAction func submitButtonPressed(sender: AnyObject) {
+        print(studentLinkText.text)
+        print("submitButtonPressed")
+    }
     
 }
