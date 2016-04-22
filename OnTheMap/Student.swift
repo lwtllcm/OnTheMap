@@ -65,7 +65,7 @@ init(dictionary: [String:AnyObject]) {
            
             //let newTestStudent = Student(name:resultName as? String, location:resultLocation as? String,url: resultURL as String)
             let newTestStudent =
-            Student(name:resultName as! String , location:resultLocation as! String ,latitude: resultLatitude, longitude: resultLongitude, url: resultURL as String)
+            Student(name:resultName as? String , location:resultLocation as? String ,latitude: resultLatitude, longitude: resultLongitude, url: resultURL as String)
                        
             //print("newTestStudent", newTestStudent)
             testStudents.append(newTestStudent)

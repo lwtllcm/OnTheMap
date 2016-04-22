@@ -21,13 +21,19 @@ class InformationPostingViewController: UIViewController, MKMapViewDelegate {
     @IBOutlet weak var findOnTheMapButton: UIButton!
     
     @IBOutlet weak var submitButton: UIButton!
+   
+    @IBOutlet weak var cancelButton: UIBarButtonItem!
+   
+    
     @IBOutlet weak var mapView: MKMapView!
     override func viewDidLoad() {
         super.viewDidLoad()
         mapView.delegate = self
         mapView.hidden = true
+        studentLocationPromptLabel.hidden = false
         studentLinkText.hidden = true
         submitButton.hidden = true
+       // cancelButton.hidden = false
         
         
     }
@@ -44,16 +50,16 @@ class InformationPostingViewController: UIViewController, MKMapViewDelegate {
         print("Find on the Map pressed")
         print(studentLocationText)
         
-        var geocoder = CLGeocoder()
+        let geocoder = CLGeocoder()
         var placemarks = [CLPlacemark]()
         
 
         geocoder.geocodeAddressString(studentLocationText.text!, completionHandler: {placemarks, error in
             //print(placemarks)
-            var thisPlacemark = placemarks![0]
+            let thisPlacemark = placemarks![0]
             print(thisPlacemark)
             print(thisPlacemark.location)
-            var thisCoordinate:CLLocationCoordinate2D = (thisPlacemark.location?.coordinate)!
+            let thisCoordinate:CLLocationCoordinate2D = (thisPlacemark.location?.coordinate)!
             print(thisCoordinate)
             
             
@@ -117,6 +123,7 @@ class InformationPostingViewController: UIViewController, MKMapViewDelegate {
         findOnTheMapButton.hidden = true
         studentLinkText.hidden = false
         submitButton.hidden = false
+       // cancelButton.hidden = false
     }
     
     
@@ -125,4 +132,8 @@ class InformationPostingViewController: UIViewController, MKMapViewDelegate {
         print("submitButtonPressed")
     }
     
+    @IBAction func cancelButtonPressed(sender: AnyObject) {
+        print("cancelButtonPressed")
+        navigationController?.dismissViewControllerAnimated(true, completion: {})
+    }
 }

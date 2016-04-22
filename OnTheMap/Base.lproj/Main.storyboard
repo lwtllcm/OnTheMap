@@ -182,7 +182,7 @@
                             <barButtonItem title="Pin" id="Re9-MA-Wgh">
                                 <connections>
                                     <action selector="pinButtonPressed:" destination="heb-Dd-g3d" id="ngL-CO-T3y"/>
-                                    <segue destination="3t7-SW-61E" kind="presentation" id="ccB-0S-D5d"/>
+                                    <segue destination="UQs-ys-U8S" kind="presentation" id="ccB-0S-D5d"/>
                                 </connections>
                             </barButtonItem>
                         </rightBarButtonItems>
@@ -254,7 +254,7 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                                 <variation key="widthClass=compact" fixedFrame="YES">
-                                    <rect key="frame" x="37" y="123" width="279" height="30"/>
+                                    <rect key="frame" x="37" y="136" width="279" height="30"/>
                                 </variation>
                                 <connections>
                                     <action selector="studentLocationTextAction:" destination="3t7-SW-61E" eventType="touchUpInside" id="9Ev-9H-weQ"/>
@@ -264,7 +264,7 @@
                                 <rect key="frame" x="-23" y="-15" width="46" height="30"/>
                                 <state key="normal" title="Find on the Map"/>
                                 <variation key="widthClass=compact" fixedFrame="YES">
-                                    <rect key="frame" x="37" y="473" width="279" height="30"/>
+                                    <rect key="frame" x="54" y="496" width="279" height="30"/>
                                 </variation>
                                 <connections>
                                     <action selector="findOnTheMapButtonPressed:" destination="3t7-SW-61E" eventType="touchUpInside" id="8CE-Na-KEN"/>
@@ -273,7 +273,7 @@
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="HfR-WP-dEm">
                                 <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
                                 <variation key="widthClass=compact" fixedFrame="YES">
-                                    <rect key="frame" x="0.0" y="161" width="400" height="462"/>
+                                    <rect key="frame" x="0.0" y="174" width="400" height="306"/>
                                 </variation>
                             </mapView>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="enter link" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="b3W-bX-kdL">
@@ -281,26 +281,26 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                                 <variation key="widthClass=compact" fixedFrame="YES">
-                                    <rect key="frame" x="37" y="77" width="279" height="30"/>
+                                    <rect key="frame" x="37" y="103" width="279" height="30"/>
                                 </variation>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tza-c2-jNw">
                                 <rect key="frame" x="-23" y="-15" width="46" height="30"/>
                                 <state key="normal" title="Submit"/>
                                 <variation key="widthClass=compact" fixedFrame="YES">
-                                    <rect key="frame" x="152" y="499" width="49" height="30"/>
+                                    <rect key="frame" x="164" y="543" width="49" height="30"/>
                                 </variation>
                                 <connections>
                                     <action selector="submitButtonPressed:" destination="3t7-SW-61E" eventType="touchUpInside" id="eyD-8W-seg"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Where are you studying today?" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SX9-EI-oNb">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Where are you studying today?" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3Vw-LE-ig7">
                                 <rect key="frame" x="-42" y="-21" width="42" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                                 <variation key="widthClass=compact" fixedFrame="YES">
-                                    <rect key="frame" x="37" y="13" width="279" height="42"/>
+                                    <rect key="frame" x="29" y="72" width="237" height="21"/>
                                 </variation>
                             </label>
                         </subviews>
@@ -312,7 +312,7 @@
                                 <exclude reference="HfR-WP-dEm"/>
                                 <exclude reference="b3W-bX-kdL"/>
                                 <exclude reference="tza-c2-jNw"/>
-                                <exclude reference="SX9-EI-oNb"/>
+                                <exclude reference="3Vw-LE-ig7"/>
                             </mask>
                         </variation>
                         <variation key="widthClass=compact">
@@ -322,22 +322,30 @@
                                 <include reference="HfR-WP-dEm"/>
                                 <include reference="b3W-bX-kdL"/>
                                 <include reference="tza-c2-jNw"/>
-                                <include reference="SX9-EI-oNb"/>
+                                <include reference="3Vw-LE-ig7"/>
                             </mask>
                         </variation>
                     </view>
+                    <navigationItem key="navigationItem" id="M3u-i0-UOM">
+                        <barButtonItem key="rightBarButtonItem" title="Cancel" id="eGI-6M-Psn">
+                            <connections>
+                                <action selector="cancelButtonPressed:" destination="3t7-SW-61E" id="Kb0-ln-WSe"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
+                        <outlet property="cancelButton" destination="eGI-6M-Psn" id="IUR-lz-Deb"/>
                         <outlet property="findOnTheMapButton" destination="n4d-an-hKK" id="jEM-vP-oAO"/>
                         <outlet property="mapView" destination="HfR-WP-dEm" id="3SQ-Or-RUe"/>
                         <outlet property="studentLinkText" destination="b3W-bX-kdL" id="P4i-11-Iqx"/>
-                        <outlet property="studentLocationPromptLabel" destination="SX9-EI-oNb" id="92L-em-eOF"/>
+                        <outlet property="studentLocationPromptLabel" destination="3Vw-LE-ig7" id="SND-sX-ihP"/>
                         <outlet property="studentLocationText" destination="PF2-gW-k7j" id="TGO-z9-Y29"/>
                         <outlet property="submitButton" destination="tza-c2-jNw" id="DWc-Sl-lJf"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="CLQ-XL-jW4" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2338.5" y="323"/>
+            <point key="canvasLocation" x="3256.5" y="323"/>
         </scene>
         <!--Table-->
         <scene sceneID="BsM-NF-4CS">
@@ -375,6 +383,24 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kD9-Jd-ts3" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2338.5" y="-349"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="n5s-Zr-qbN">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="UQs-ys-U8S" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="bkS-ep-eYd">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="3t7-SW-61E" kind="relationship" relationship="rootViewController" id="zJy-Z7-8pq"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="GzC-x7-u4l" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2338.5" y="323"/>
         </scene>
     </scenes>
 </document>
