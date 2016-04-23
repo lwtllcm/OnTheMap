@@ -10,7 +10,8 @@ import UIKit
 import MapKit
 
 struct Student {
-   var name: String?
+   var firstName: String?
+    var lastName: String?
    var location: String?
     
     var latitude: CLLocationDegrees
@@ -53,7 +54,8 @@ init(dictionary: [String:AnyObject]) {
             
             
             
-            let resultName = result.objectForKey("firstName")
+            let resultFirstName = result.objectForKey("firstName")
+            let resultLastName = result.objectForKey("lastName")
             let resultLocation = result.objectForKey("mapString")
             let resultLatitude = result.objectForKey("latitude") as! CLLocationDegrees
             let resultLongitude = result.objectForKey("longitude") as! CLLocationDegrees
@@ -65,7 +67,7 @@ init(dictionary: [String:AnyObject]) {
            
             //let newTestStudent = Student(name:resultName as? String, location:resultLocation as? String,url: resultURL as String)
             let newTestStudent =
-            Student(name:resultName as? String , location:resultLocation as? String ,latitude: resultLatitude, longitude: resultLongitude, url: resultURL as String)
+            Student(firstName:resultFirstName as? String , lastName:resultLastName as? String , location:resultLocation as? String ,latitude: resultLatitude, longitude: resultLongitude, url: resultURL as String)
                        
             //print("newTestStudent", newTestStudent)
             testStudents.append(newTestStudent)

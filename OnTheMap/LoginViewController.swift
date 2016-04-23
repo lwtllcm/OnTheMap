@@ -40,6 +40,7 @@ class LoginViewController: UIViewController {
             print("Username or Password not empty")
  
             getRequestToken()
+            //getUserID()
 
             
         }
@@ -84,8 +85,8 @@ class LoginViewController: UIViewController {
         let task = appDelegate.sharedSession.dataTaskWithRequest(request) { (data, response, error) in
             
             print("error" , error)
-            print("data", data)
-            print("response", response)
+            //print("data", data)
+            //print("response", response)
             
             
         //  ****** 5) parse data
@@ -98,6 +99,8 @@ class LoginViewController: UIViewController {
                 
                 parsedResult = try NSJSONSerialization.JSONObjectWithData(newData!, options: .AllowFragments)
                 print("parsedResult", parsedResult)
+                self.getUserID()
+                
             }
             catch {
 
@@ -144,5 +147,82 @@ class LoginViewController: UIViewController {
         
         return components.URL!
     }
+    
+    private func getUserID() {
+        print("getUserID")
+        
+        /*
+        // **** 1) set parameters - create dictionary with name/value pairs for parameters needed in final URL
+        
+        
+        let methodParameters : [String:AnyObject] =  [
+            
+            UdacityParameterKeys.Username:emailTextField.text!,
+            UdacityParameterKeys.Password:passwordTextField.text!
+        ]
+        
+        print("methodParameters", methodParameters)
+        
+        //  ****** 2) build url - use app delegate's ...URLFromParameters, ***** 3) configure request
+        
+        
+        let request = NSMutableURLRequest(URL: udacityURLFromParameters(methodParameters,withPathExtension: nil))
+        
+        request.HTTPMethod = "POST"
+        request.addValue("application/json", forHTTPHeaderField: "Accept")
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        let httpBodyString = "{\"udacity\": {\"username\": \"\(emailTextField.text!)\", \"password\": \"\(passwordTextField.text!)\"}}"
+        print("request httpbody: \(httpBodyString)")
+        */
+        let requestUserID = NSMutableURLRequest(URL:NSURL(string:"https://www.udacity.com/api/users/me")!)
+        
+        //request.HTTPBody = httpBodyString.dataUsingEncoding(NSUTF8StringEncoding)
+        
+        //print("request",request)
+        
+        
+        //   ***** 4) make request
+        
+        
+        let task = appDelegate.sharedSession.dataTaskWithRequest(requestUserID) { (data, response, error) in
+            
+            print("error" , error)
+            print("data", data)
+            print("response", response)
+            
+            print("response for getUserID", response)
+            
+            //  ****** 5) parse data
+            
+            let parsedResult: AnyObject!
+            do {
+                print("data to parse", data)
+                let newData = data?.subdataWithRange(NSMakeRange(5, (data?.length)! - 5))
+                print("newData", NSString(data: newData!, encoding: NSUTF8StringEncoding))
+                
+                parsedResult = try NSJSONSerialization.JSONObjectWithData(newData!, options: .AllowFragments)
+                print("parsedResult", parsedResult)
+                
+            }
+            catch {
+                
+                print("Could not parse the data as JSON: '\(data)'")
+                
+                return
+            }
+            
+            //  ****** 6) use data
+            
+        }
+        
+        
+        
+        //  ****** 7) start request
+        
+        
+        task.resume()
+    }
+    
+
 
 }

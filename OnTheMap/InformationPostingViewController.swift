@@ -85,7 +85,11 @@ class InformationPostingViewController: UIViewController, MKMapViewDelegate {
             //self.mapView.center.x = 48.8567879
             //self.mapView.center.y = 2.3510768
             
+            
+            
             self.reloadInputViews()
+            
+            
         
 
             
@@ -130,10 +134,42 @@ class InformationPostingViewController: UIViewController, MKMapViewDelegate {
     @IBAction func submitButtonPressed(sender: AnyObject) {
         print(studentLinkText.text)
         print("submitButtonPressed")
+        
+        self.postStudentLocation()
+        print("postStudentLocation completed")
     }
     
     @IBAction func cancelButtonPressed(sender: AnyObject) {
         print("cancelButtonPressed")
         navigationController?.dismissViewControllerAnimated(true, completion: {})
     }
+    
+    private func postStudentLocation() {
+        print("postStudentLocation")
+        
+        
+        let request = NSMutableURLRequest(URL: NSURL(string: "https://api.parse.com/1/classes/StudentLocation")!)
+        request.HTTPMethod = "POST"
+        request.addValue("QrX47CA9cyuGewLdsL7o5Eb8iug6Em8ye0dnAbIr", forHTTPHeaderField: "X-Parse-Application-Id")
+        request.addValue("QuWThTdiRmTux3YaDseUSEpUKo7aBYM737yKd4gY", forHTTPHeaderField: "X-Parse-REST-API-Key")
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.HTTPBody = "{\"uniqueKey\": \"1234\", \"firstName\": \"Jeremy\", \"lastName\": \"Doe\",\"mapString\": \"San Francisco, CA\", \"mediaURL\": \"https://udacity.com\",\"latitude\": 37.386052, \"longitude\": -122.083851}".dataUsingEncoding(NSUTF8StringEncoding)
+        let session = NSURLSession.sharedSession()
+        let task = session.dataTaskWithRequest(request) { data, response, error in
+            print("rdata from postStudentLocation", data)
+
+            print("response from postStudentLocation", response)
+            if error != nil { // Handle error…
+                return
+            }
+            print(NSString(data: data!, encoding: NSUTF8StringEncoding))
+        }
+        task.resume()
+        
+        
+      
+    }
+    
+    
+
 }
