@@ -21,11 +21,7 @@ class TableViewController: UITableViewController {
     
     let testTable = ["test1", "test2", "test3"]
     
-   // let testStudent = Student(dictionary: ["name": "Student 1", "location":"Location 1"])
-   // let testStudent2 = Student(dictionary: ["name" : "Student 2", "location":"Location 2"])
-   // let testStudent3 = Student(dictionary: ["name" : "Student 3", "location":"Location 3"])
-
-   // var testStudents = [Student]()
+ 
     
     var testStudents:[Student] = [Student]()
     
@@ -36,26 +32,7 @@ class TableViewController: UITableViewController {
 
     let studentURL = "www.google.com"
     
-   // var testStudent1 = Student(name:"s1", location:"l1",url: "www.google.com")
-   // var testStudent2 = Student(name:"s2", location:"l2",url:NSURL(fileURLWithPath: "www.google.com"))
-    //var testStudent3 = Student(name:"s3", location:"l3",url:NSURL(fileURLWithPath: "www.google.com"))
-
-    
-    
-    
-   // var testStudent1 = Student(name:studentValue1, location:locationValue1)
-    //testStudent1.
-    //testStudent1 = Student("name":"name1", "location":"location1")
-   
-    
-    //location = (dictionary["location"] as? String)!
-    
-    
-    //testStudents.append(["name": "Student 1", "location":"Location 1"])
-    //testStudents.append(["name" : "Student 2", "location":"Location 2"])
-    //testStudents.append(["name" : "Student 3", "location":"Location 3"])
-
-    //print("testStudents", testStudents)
+ 
         
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -66,12 +43,7 @@ class TableViewController: UITableViewController {
         super.viewDidLoad()
         print("TableViewController viewWillAppear")
         
-        //testStudents.append(testStudent1)
-        
-       // testStudents.append(testStudent2
-       // testStudents.append(testStudent3)
-        
-
+ 
         getStudentLocations()
         self.tableView.reloadData()
         
@@ -81,17 +53,15 @@ class TableViewController: UITableViewController {
         print("numberOfRowsInSection")
         print("testStudent.count",self.testStudents.count)
 
-        //return testTable.count
+  
         
         return self.testStudents.count
             }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("StudentCell") as UITableViewCell!
-        //let individual = testTable[indexPath.row]
+
         
-        //cell.textLabel?.text = individual
-        //cell.textLabel?.text = testStudent.name
         print("testStudents", testStudents)
         
         let individual = testStudents[indexPath.row]
@@ -226,36 +196,6 @@ class TableViewController: UITableViewController {
         }
 }
     
-/*
-    func studentFromResults(results: [[String:AnyObject]] )-> [Student] {
-        /*
-        var students = [Student] ()
-        for result in results {
-            testStudents.append(result)
-        }
-        */
-        
-        for result in results as NSArray {
-            print("result", result)
-            print("result firstName", result.objectForKey("firstName"))
-            print("result location", result.objectForKey("mapString"))
-            let resultName = result.objectForKey("firstName")
-            print("resultName", resultName)
-            let resultLocation = result.objectForKey("updatedAt")
-            print("resultLocation", resultLocation)
-            let resultURL = result.objectForKey("mediaURL")
-            print("resultURL", resultURL)
-
-            
-            //let newTestStudent = Student(name:resultName as? String, location:resultLocation as! String, url:resultURL as? String)
-            let newTestStudent = Student(name:resultName as? cl, location:resultLocation as! String, url:resultURL as? String)
-            print("newTestStudent", newTestStudent)
-            self.testStudents.append(newTestStudent)
-            print(self.testStudents)
-        }
-        return testStudents
-    }
-*/
 
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         print("didSelectRowAtIndexPath")
