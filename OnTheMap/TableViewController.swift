@@ -202,7 +202,7 @@ class TableViewController: UITableViewController {
         let detailViewController = storyboard?.instantiateViewControllerWithIdentifier("WebViewController") as! WebViewController
         //detailViewController.studentURL = "http://www.google.com"
         
-        var thisStudent = testStudents[indexPath.row]
+        let thisStudent = testStudents[indexPath.row]
         detailViewController.studentURL = thisStudent.url!
         navigationController?.pushViewController(detailViewController, animated: true)
         

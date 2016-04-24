@@ -13,6 +13,9 @@ class LoginViewController: UIViewController {
     var appDelegate: AppDelegate!
     
     @IBOutlet weak var loginButton: UIButton!
+    
+    @IBOutlet weak var signUpButton: UIButton!
+    
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
     
@@ -45,8 +48,18 @@ class LoginViewController: UIViewController {
             
         }
         
-             
     }
+    
+    @IBAction func signUpButtonPressed(sender: AnyObject) {
+        print("signUpButtonPressed")
+        let detailViewController = storyboard?.instantiateViewControllerWithIdentifier("WebViewController") as! WebViewController
+        detailViewController.studentURL = "http://www.udacity.com"
+        
+        navigationController?.pushViewController(detailViewController, animated: true)
+        
+
+    }
+    
     
     private func getRequestToken() {
         print("getRequestToken")
