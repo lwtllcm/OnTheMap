@@ -260,7 +260,10 @@ class TableViewController: UITableViewController {
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         print("didSelectRowAtIndexPath")
         let detailViewController = storyboard?.instantiateViewControllerWithIdentifier("WebViewController") as! WebViewController
-        detailViewController.studentURL = "http://www.google.com"
+        //detailViewController.studentURL = "http://www.google.com"
+        
+        var thisStudent = testStudents[indexPath.row]
+        detailViewController.studentURL = thisStudent.url!
         navigationController?.pushViewController(detailViewController, animated: true)
         
     }

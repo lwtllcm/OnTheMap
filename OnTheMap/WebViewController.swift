@@ -22,7 +22,9 @@ class WebViewController:UIViewController, UIWebViewDelegate {
             webView.delegate = self
             //let url = NSURL(string: "http://www.google.com")
             
-            let url = NSURL(string: studentURL)
+            let escapedStudentURL =  studentURL.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())
+            print("escapedStudentURL ", escapedStudentURL)
+            let url = NSURL(string: escapedStudentURL!)
             let request = NSURLRequest(URL: url!)
             print(request)
             webView.loadRequest(request)
@@ -57,5 +59,30 @@ class WebViewController:UIViewController, UIWebViewDelegate {
       //  activityIndicator.stopAnimating()
       //  activityIndicator.hidden = true
     }
+    
+    private func escapedParameters(parameters: [String:AnyObject]) -> String {
+        
+        if parameters.isEmpty {
+            return ""
+        } else {
+            var keyValuePairs = [String]()
+            
+            for (key, value) in parameters {
+                
+                // make sure that it is a string value
+                let stringValue = "\(value)"
+                
+                // escape it
+                let escapedValue = stringValue.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())
+                
+                // append it
+                keyValuePairs.append(key + "=" + "\(escapedValue!)")
+                
+            }
+            
+            return "?\(keyValuePairs.joinWithSeparator("&"))"
+        }
+    }
+
         
 }
