@@ -50,7 +50,8 @@ class MapViewController: UIViewController, MKMapViewDelegate {
             
             let annotation = MKPointAnnotation()
             annotation.coordinate = coordinate1
-            annotation.title = student.url
+            annotation.title = student.firstName! + " " + student.lastName!
+            annotation.subtitle = student.url!
             
             
             
