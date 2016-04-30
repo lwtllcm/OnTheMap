@@ -28,6 +28,77 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         
         print("MapViewController viewWillAppear")
         
+        
+        let dbClient = DBClient()
+        
+        DBClient.sharedInstance().taskForGETMethod { (results, error) in
+            print("taskForGetMethod")
+            print("results from taskForGETMethod", results)
+            
+            
+       
+            
+            let results = results.objectForKey("results") as! NSArray
+            
+            
+            self.testStudents = Student.studentFromResults(results as! [[String : AnyObject]])
+            var annotations = [MKPointAnnotation]()
+            for student in self.testStudents {
+                
+                let lat1 = CLLocationDegrees(student.latitude)
+                print("lat1", lat1)
+                
+                let long1 = CLLocationDegrees(student.longitude)
+                print("long1", long1)
+                let coordinate1 = CLLocationCoordinate2D(latitude: lat1, longitude: long1)
+                print("coordinate1", coordinate1)
+                
+                let annotation = MKPointAnnotation()
+                annotation.coordinate = coordinate1
+                annotation.title = student.firstName! + " " + student.lastName!
+                annotation.subtitle = student.url!
+                print("annotation.title", annotation.title)
+                
+                
+                annotations.append(annotation)
+                
+            }
+            print("annotations", annotations)
+            self.mapView.addAnnotations(annotations)
+            
+            
+
+            //self.mapView.addAnnotation(annotations[0])
+            
+            
+            //self.performUIUpdatesOnMain { () -> Void in
+            
+            
+            /*
+            self.performUIUpdatesOnMain { () -> Void in
+                self.performUIUpdatesOnMain({ () -> Void in
+                    print("performUIUpdatesOnMain")
+                    self.tableView.reloadData()
+                })
+                self.tableView.reloadData()
+             */
+                
+                
+                
+            }
+            
+       // }
+        
+        
+       /*
+
+        
+        
+        
+        
+        
+        
+        
         getStudentLocations()
         
         print("testStudents.count" , testStudents.count)
@@ -60,7 +131,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         }
         
         self.mapView.addAnnotations(annotations)
-        
+       */
 
 }
     
