@@ -21,6 +21,7 @@
 		5B72A2FD1CC87EBC00A761D6 /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B72A2FC1CC87EBC00A761D6 /* WebViewController.swift */; };
 		5B7366F71CAA396100C25ABF /* InformationPostingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B7366F61CAA396100C25ABF /* InformationPostingViewController.swift */; };
 		5B7366FE1CBAD0EE00C25ABF /* testViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B7366FD1CBAD0EE00C25ABF /* testViewController.swift */; };
+		5BB99EB81CD18C2700C65CDD /* DBClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BB99EB71CD18C2700C65CDD /* DBClient.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -40,6 +41,7 @@
 		5B72A2FC1CC87EBC00A761D6 /* WebViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebViewController.swift; sourceTree = "<group>"; };
 		5B7366F61CAA396100C25ABF /* InformationPostingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InformationPostingViewController.swift; sourceTree = "<group>"; };
 		5B7366FD1CBAD0EE00C25ABF /* testViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = testViewController.swift; sourceTree = "<group>"; };
+		5BB99EB71CD18C2700C65CDD /* DBClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DBClient.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -80,6 +82,7 @@
 				5B0FD74D1C94CE310050AA72 /* Assets.xcassets */,
 				5B0FD74F1C94CE310050AA72 /* LaunchScreen.storyboard */,
 				5B0FD7521C94CE310050AA72 /* Info.plist */,
+				5BB99EB71CD18C2700C65CDD /* DBClient.swift */,
 			);
 			path = OnTheMap;
 			sourceTree = "<group>";
@@ -188,6 +191,7 @@
 				5B7366F71CAA396100C25ABF /* InformationPostingViewController.swift in Sources */,
 				5B6E566E1C9DDB7600170053 /* Constants.swift in Sources */,
 				5B7366FE1CBAD0EE00C25ABF /* testViewController.swift in Sources */,
+				5BB99EB81CD18C2700C65CDD /* DBClient.swift in Sources */,
 				5B6E56721C9F9C6100170053 /* ParseConstants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
