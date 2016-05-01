@@ -21,23 +21,38 @@
                         <subviews>
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="1UV-uP-hHR">
                                 <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
-                                <variation key="widthClass=compact" fixedFrame="YES">
-                                    <rect key="frame" x="0.0" y="0.0" width="400" height="551"/>
-                                </variation>
                                 <connections>
                                     <outlet property="delegate" destination="8Qg-KF-dND" id="4XH-Lb-8bz"/>
                                 </connections>
                             </mapView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailingMargin" secondItem="1UV-uP-hHR" secondAttribute="trailing" constant="-20" id="mII-TF-Pfx"/>
+                            <constraint firstItem="1UV-uP-hHR" firstAttribute="top" secondItem="b0x-Ef-1f1" secondAttribute="topMargin" id="pLY-sM-7rh"/>
+                            <constraint firstItem="1UV-uP-hHR" firstAttribute="leading" secondItem="b0x-Ef-1f1" secondAttribute="leadingMargin" constant="-20" id="sLR-FK-0Fr"/>
+                            <constraint firstItem="f91-oq-rSd" firstAttribute="top" secondItem="1UV-uP-hHR" secondAttribute="bottom" id="sYP-ds-rXz"/>
+                        </constraints>
                         <variation key="default">
                             <mask key="subviews">
                                 <exclude reference="1UV-uP-hHR"/>
+                            </mask>
+                            <mask key="constraints">
+                                <exclude reference="mII-TF-Pfx"/>
+                                <exclude reference="pLY-sM-7rh"/>
+                                <exclude reference="sLR-FK-0Fr"/>
+                                <exclude reference="sYP-ds-rXz"/>
                             </mask>
                         </variation>
                         <variation key="widthClass=compact">
                             <mask key="subviews">
                                 <include reference="1UV-uP-hHR"/>
+                            </mask>
+                            <mask key="constraints">
+                                <include reference="mII-TF-Pfx"/>
+                                <include reference="pLY-sM-7rh"/>
+                                <include reference="sLR-FK-0Fr"/>
+                                <include reference="sYP-ds-rXz"/>
                             </mask>
                         </variation>
                     </view>
@@ -247,7 +262,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="enter location " borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="PF2-gW-k7j">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="enter location " borderStyle="roundedRect" textAlignment="natural" clearsOnBeginEditing="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="PF2-gW-k7j">
                                 <rect key="frame" x="-25" y="-30" width="97" height="30"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
@@ -262,7 +277,7 @@
                                 <rect key="frame" x="-23" y="-15" width="46" height="30"/>
                                 <state key="normal" title="Find on the Map"/>
                                 <variation key="widthClass=compact" fixedFrame="YES">
-                                    <rect key="frame" x="54" y="496" width="279" height="30"/>
+                                    <rect key="frame" x="61" y="488" width="279" height="30"/>
                                 </variation>
                                 <connections>
                                     <action selector="findOnTheMapButtonPressed:" destination="3t7-SW-61E" eventType="touchUpInside" id="8CE-Na-KEN"/>
@@ -274,7 +289,7 @@
                                     <rect key="frame" x="0.0" y="174" width="400" height="306"/>
                                 </variation>
                             </mapView>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="enter link" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="b3W-bX-kdL">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="enter link" borderStyle="roundedRect" textAlignment="natural" clearsOnBeginEditing="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="b3W-bX-kdL">
                                 <rect key="frame" x="-25" y="-30" width="97" height="30"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
@@ -286,7 +301,7 @@
                                 <rect key="frame" x="-23" y="-15" width="46" height="30"/>
                                 <state key="normal" title="Submit"/>
                                 <variation key="widthClass=compact" fixedFrame="YES">
-                                    <rect key="frame" x="164" y="543" width="49" height="30"/>
+                                    <rect key="frame" x="169" y="526" width="49" height="30"/>
                                 </variation>
                                 <connections>
                                     <action selector="submitButtonPressed:" destination="3t7-SW-61E" eventType="touchUpInside" id="eyD-8W-seg"/>
@@ -298,7 +313,7 @@
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                                 <variation key="widthClass=compact" fixedFrame="YES">
-                                    <rect key="frame" x="29" y="72" width="237" height="21"/>
+                                    <rect key="frame" x="37" y="72" width="279" height="21"/>
                                 </variation>
                             </label>
                         </subviews>

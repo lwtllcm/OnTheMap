@@ -23,9 +23,16 @@ class InformationPostingViewController: UIViewController, MKMapViewDelegate {
     @IBOutlet weak var submitButton: UIButton!
    
     @IBOutlet weak var cancelButton: UIBarButtonItem!
+    
+    
    
     
     @IBOutlet weak var mapView: MKMapView!
+    
+    
+    var latitude: CLLocationDegrees = 0.0
+    var longitude: CLLocationDegrees = 0.0
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         mapView.delegate = self
@@ -58,6 +65,10 @@ class InformationPostingViewController: UIViewController, MKMapViewDelegate {
             print(thisPlacemark)
             print(thisPlacemark.location)
             let thisCoordinate:CLLocationCoordinate2D = (thisPlacemark.location?.coordinate)!
+            
+            self.latitude = thisCoordinate.latitude
+            self.longitude = thisCoordinate.longitude
+            
             print(thisCoordinate)
             
             
@@ -105,12 +116,41 @@ class InformationPostingViewController: UIViewController, MKMapViewDelegate {
         print("postStudentLocation")
         
         
+        //var newStudent:Student
+        //newStudent.firstName = studentLinkText.text
+        //newStudent.lastName = " "
+        //newStudent.location = " "
+        //newStudent.latitude = self.latitude
+        //newStudent.longitude = self.longitude
+        
+    
+        //print("newStudent", newStudent.firstName, newStudent.lastName, newStudent.latitude, newStudent.longitude)
+        
+        
+        
+        let thisStudent =
+        Student(firstName:studentLinkText.text  , lastName:" " , location:" " ,latitude: self.latitude, longitude: self.longitude, url: studentLinkText.text! as String)
+        print("thisStudent", thisStudent)
+        
         let request = NSMutableURLRequest(URL: NSURL(string: "https://api.parse.com/1/classes/StudentLocation")!)
         request.HTTPMethod = "POST"
         request.addValue("QrX47CA9cyuGewLdsL7o5Eb8iug6Em8ye0dnAbIr", forHTTPHeaderField: "X-Parse-Application-Id")
         request.addValue("QuWThTdiRmTux3YaDseUSEpUKo7aBYM737yKd4gY", forHTTPHeaderField: "X-Parse-REST-API-Key")
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
         request.HTTPBody = "{\"uniqueKey\": \"1234\", \"firstName\": \"Jane\", \"lastName\": \"Doe\",\"mapString\": \"San Francisco, CA\", \"mediaURL\": \"https://udacity.com\",\"latitude\": 37.386052, \"longitude\": -122.083851}".dataUsingEncoding(NSUTF8StringEncoding)
+        
+        //request.HTTPBody = "{\"uniqueKey\": \"1234\", \"firstName\": \"Jane\", \"lastName\": \"Doe\",\"mapString\": \"San Francisco, CA\", \"mediaURL\": ".dataUsingEncoding(NSUTF8StringEncoding)
+        //request.HTTPBody.append(thisStudent.url?.dataUsingEncoding(NSUTF8StringEncoding))
+        //request.HTTPBody.append(\"latitude\": 37.386052, \"longitude\": -122.083851}".dataUsingEncoding(NSUTF8StringEncoding))
+        
+        
+        /*
+        var requestURLString = "{\"uniqueKey\": \"1234\", \"firstName\": \"Jane\", \"lastName\": \"Doe\",\"mapString\": \"San Francisco, CA\", \"mediaURL\": "
+        requestURLString = requestURLString + thisStudent.url!
+        requestURLString = requestURLString + ",\"latitude\": 37.386052, \"longitude\": -122.083851}"
+        request.HTTPBody = requestURLString.dataUsingEncoding(NSUTF8StringEncoding)
+        print("request.HTTPBody", request.HTTPBody)
+        */
         
         let session = NSURLSession.sharedSession()
         let task = session.dataTaskWithRequest(request) { data, response, error in

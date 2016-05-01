@@ -17,12 +17,22 @@ struct Student {
     var latitude: CLLocationDegrees
     var longitude: CLLocationDegrees
     //var location: String?
+    
    //var url:NSURL?
     var url:String?
 
-    
  /*
+ 
 init(dictionary: [String:AnyObject]) {
+    
+    firstName = " "
+    lastName = " "
+    location = " "
+    latitude = 0.0
+    longitude = 0.0
+    url = " "
+    
+    /*
     name = "name"
     location = "location"
  
@@ -39,10 +49,10 @@ init(dictionary: [String:AnyObject]) {
     
     
     print("init dictionary", dictionary)
- 
+ */
     }
-
 */
+
     
     static func studentFromResults(results: [[String:AnyObject]] )-> [Student] {
         print("Student studentFromResults")
