@@ -33,8 +33,6 @@ class InformationPostingViewController: UIViewController, MKMapViewDelegate {
         studentLocationPromptLabel.hidden = false
         studentLinkText.hidden = true
         submitButton.hidden = true
-       // cancelButton.hidden = false
-        
         
     }
     
@@ -51,11 +49,11 @@ class InformationPostingViewController: UIViewController, MKMapViewDelegate {
         print(studentLocationText)
         
         let geocoder = CLGeocoder()
-        var placemarks = [CLPlacemark]()
+       // var placemarks = [CLPlacemark]()
         
 
         geocoder.geocodeAddressString(studentLocationText.text!, completionHandler: {placemarks, error in
-            //print(placemarks)
+
             let thisPlacemark = placemarks![0]
             print(thisPlacemark)
             print(thisPlacemark.location)
@@ -66,68 +64,27 @@ class InformationPostingViewController: UIViewController, MKMapViewDelegate {
             
             let annotation = MKPointAnnotation()
             annotation.coordinate = thisCoordinate
-            //annotation.title = student.url
-            
             
             self.mapView.addAnnotation(annotation)
             
             let regionRadius: CLLocationDistance = 1000
             
-            //https://www.raywenderlich.com/90971/introduction-mapkit-swift-tutorial
             
             let coordinateRegion = MKCoordinateRegionMakeWithDistance(thisCoordinate, regionRadius * 2.0, regionRadius * 2.0)
             self.mapView.setRegion(coordinateRegion, animated: true)
             self.mapView.centerCoordinate = thisCoordinate
             
-            //self.mapView.center.x = thisCoordinate.latitude as! CGFloat
-            //self.mapView.center.y = thisCoordinate.longitude as! CGFloat
-            
-            //self.mapView.center.x = 48.8567879
-            //self.mapView.center.y = 2.3510768
-            
-            
-            
             self.reloadInputViews()
-            
-            
-        
-
             
             
         })
 
-        
-        /*
-        //http://stackoverflow.com/questions/31798843/swift-completion-handler-for-reverse-geocoding
-        
-        let geocoder = CLGeocoder()
-        geocoder.reverseGeocodeLocation(<#T##location: CLLocation##CLLocation#>, completionHandler: <#T##CLGeocodeCompletionHandler##CLGeocodeCompletionHandler##([CLPlacemark]?, NSError?) -> Void#>)
-        geocoder.geocodeAddressString(studentLocationText.text!, completionHandler: {(placemarks:[AnyObject]!, error:NSError!) -> Void in
-            if (placemarks.count > 0) {
-            print(place)
-            }
-            ))
-         */
-        
-        //var geocoder = CLGeocoder()
-        //geocoder.geocodeAddressString(location: studentLocationText.text!, completionHandler: {(placemarks: [AnyObject],error:NSError!) -> Void in
-          
-        //})
-        
-        //geocoder.geocodeAddressString(location: studentLocationText.text!, completionHandler: {(placemarks: [AnyObject],error:NSError!) -> Void in
-            
-        //})
-        
-        //geocoder(studentLocationText)
-        //studentLocationText.text.
-            
         mapView.hidden = false
         studentLocationPromptLabel.hidden = true
         studentLocationText.hidden = true
         findOnTheMapButton.hidden = true
         studentLinkText.hidden = false
         submitButton.hidden = false
-       // cancelButton.hidden = false
     }
     
     
@@ -153,7 +110,8 @@ class InformationPostingViewController: UIViewController, MKMapViewDelegate {
         request.addValue("QrX47CA9cyuGewLdsL7o5Eb8iug6Em8ye0dnAbIr", forHTTPHeaderField: "X-Parse-Application-Id")
         request.addValue("QuWThTdiRmTux3YaDseUSEpUKo7aBYM737yKd4gY", forHTTPHeaderField: "X-Parse-REST-API-Key")
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-        request.HTTPBody = "{\"uniqueKey\": \"1234\", \"firstName\": \"Jeremy\", \"lastName\": \"Doe\",\"mapString\": \"San Francisco, CA\", \"mediaURL\": \"https://udacity.com\",\"latitude\": 37.386052, \"longitude\": -122.083851}".dataUsingEncoding(NSUTF8StringEncoding)
+        request.HTTPBody = "{\"uniqueKey\": \"1234\", \"firstName\": \"Jane\", \"lastName\": \"Doe\",\"mapString\": \"San Francisco, CA\", \"mediaURL\": \"https://udacity.com\",\"latitude\": 37.386052, \"longitude\": -122.083851}".dataUsingEncoding(NSUTF8StringEncoding)
+        
         let session = NSURLSession.sharedSession()
         let task = session.dataTaskWithRequest(request) { data, response, error in
             print("rdata from postStudentLocation", data)
@@ -165,11 +123,7 @@ class InformationPostingViewController: UIViewController, MKMapViewDelegate {
             print(NSString(data: data!, encoding: NSUTF8StringEncoding))
         }
         task.resume()
-        
-        
       
     }
-    
-    
 
 }

@@ -46,7 +46,7 @@ init(dictionary: [String:AnyObject]) {
     
     static func studentFromResults(results: [[String:AnyObject]] )-> [Student] {
         print("Student studentFromResults")
-        var testStudents = [Student] ()
+        var allStudents = [Student] ()
         for result in results as NSArray {
             //print("result", result)
             //print("result firstName", result.objectForKey("firstName"))
@@ -70,11 +70,11 @@ init(dictionary: [String:AnyObject]) {
             Student(firstName:resultFirstName as? String , lastName:resultLastName as? String , location:resultLocation as? String ,latitude: resultLatitude, longitude: resultLongitude, url: resultURL as String)
                        
             //print("newTestStudent", newTestStudent)
-            testStudents.append(newTestStudent)
-            //print(testStudents)
+            allStudents.append(newTestStudent)
+            //print(allStudents)
             
         }
-        return testStudents
+        return allStudents
     }
 
     
