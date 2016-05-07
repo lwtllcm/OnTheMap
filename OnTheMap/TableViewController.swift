@@ -22,6 +22,7 @@ class TableViewController: UITableViewController {
     
     var allStudents:[Student] = [Student]()
     
+    
   
         
     override func viewDidLoad() {
@@ -37,6 +38,16 @@ class TableViewController: UITableViewController {
            DBClient.sharedInstance().taskForGETMethod { (results, error) in
             print("taskForGetMethod")
             print("results from taskForGETMethod", results)
+            print("error from taskForGETMethod", error)
+            
+            
+            if (error != nil) {
+        
+                let uiAlertController = UIAlertController(title: "download error", message: nil, preferredStyle: .Alert)
+                let defaultAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
+                uiAlertController.addAction(defaultAction)
+                self.presentViewController(uiAlertController, animated: true, completion: nil)
+            }
             
             
             let results = results.objectForKey("results") as! NSArray
@@ -62,10 +73,10 @@ class TableViewController: UITableViewController {
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         print("numberOfRowsInSection")
         print("testStudent.count",self.allStudents.count)
-
-  
         
         return self.allStudents.count
+
+  
             }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -95,11 +106,22 @@ class TableViewController: UITableViewController {
 
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         print("didSelectRowAtIndexPath")
+        
+        let selectedStudentURL = allStudents[indexPath.row].url
+        
+        //let url = NSURL(string: ((allStudents[indexPath.row].url)!))!
+        
+        let url = NSURL(string: (selectedStudentURL!))!
+        
+        UIApplication.sharedApplication().openURL(url)
+        
+        /*
         let detailViewController = storyboard?.instantiateViewControllerWithIdentifier("WebViewController") as! WebViewController
         
         let thisStudent = allStudents[indexPath.row]
         detailViewController.studentURL = thisStudent.url!
         navigationController?.pushViewController(detailViewController, animated: true)
+        */
         
     }
     

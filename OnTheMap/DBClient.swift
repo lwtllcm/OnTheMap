@@ -12,7 +12,7 @@ class DBClient: NSObject {
     
     var session = NSURLSession.sharedSession()
     
-    var allStudents:[Student] = [Student]()
+    //var allStudents:[Student] = [Student]()
     
     override init() {
         super.init()
@@ -52,17 +52,31 @@ class DBClient: NSObject {
                 
             }
             
+            func sendError(error: String) {
+                print(error)
+                let userInfo = [NSLocalizedDescriptionKey: error]
+                completionHandlerForGET(result: nil, error:NSError( domain: "taskForGETMethod", code: 1, userInfo:userInfo))
+                
+            }
+            
             guard (error == nil) else {
-                displayError("There was an error with your request: \(error)")
+                //displayError("There was an error with your request: \(error)")
+                sendError("There was an error with your request: \(error)")
+
+                
+                                
                 return
             }
-                        guard let statusCode = (response as? NSHTTPURLResponse)?.statusCode where statusCode >= 200 && statusCode <= 299 else {
-                displayError("Your request returned a status code other than 2xx!")
+                guard let statusCode = (response as? NSHTTPURLResponse)?.statusCode where statusCode >= 200 && statusCode <= 299 else {
+                //displayError("Your request returned a status code other than 2xx!")
+                sendError("Your request returned a status code other than 2xx!")
+
                 return
             }
             
             guard let data = data else {
-                displayError("No data was returned by the request!")
+               // displayError("No data was returned by the request!")
+                sendError("No data was returned by the request!")
                 return
             }
             
@@ -94,9 +108,10 @@ class DBClient: NSObject {
         
         completionHandlerForConvertData(result: parsedResult, error: nil)
         
-        
-        
+
     }
+    
+    
     
     class  func sharedInstance() -> DBClient {
         struct Singleton {
@@ -104,5 +119,5 @@ class DBClient: NSObject {
         }
         return Singleton.sharedInstance
     }
-
+    
 }

@@ -109,10 +109,11 @@ class LoginViewController: UIViewController {
         task.resume()
     }
  
-    
+    /*
     private func loginWithToken(requestToken:String) {
         
     }
+*/
 
     func udacityURLFromParameters(parameters: [String:AnyObject], withPathExtension: String? = nil) -> NSURL {
         print("udacityURLFromParameters")
@@ -157,6 +158,11 @@ class LoginViewController: UIViewController {
             catch {
                 
                 print("Could not parse the data as JSON: '\(data)'")
+                
+                let uiAlertController = UIAlertController(title: "loginAlert", message: "login failed", preferredStyle: .Alert)
+                let defaultAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
+                uiAlertController.addAction(defaultAction)
+                self.presentViewController(uiAlertController, animated: true, completion: nil)
                 
                 return
             }

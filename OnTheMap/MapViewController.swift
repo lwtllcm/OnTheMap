@@ -13,7 +13,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     
     var appDelegate: AppDelegate!
     var student: Student?
-    var allStudents:[Student] = [Student]()
+    //var allStudents:[Student] = [Student]()
     
     @IBOutlet weak var mapView: MKMapView!
     
@@ -25,16 +25,28 @@ class MapViewController: UIViewController, MKMapViewDelegate {
             print("taskForGetMethod")
             print("results from taskForGETMethod", results)
             
+            if (error != nil) {
+                
+                let uiAlertController = UIAlertController(title: "download error", message: nil, preferredStyle: .Alert)
+                let defaultAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
+                uiAlertController.addAction(defaultAction)
+                self.presentViewController(uiAlertController, animated: true, completion: nil)
+            }
+
+            
             let results = results.objectForKey("results") as! NSArray
             
             
-            self.allStudents = Student.studentFromResults(results as! [[String : AnyObject]])
+            //self.allStudents = Student.studentFromResults(results as! [[String : AnyObject]])
+            
+
             
             
             var annotations = [MKPointAnnotation]()
             
-            
-            for student in self.allStudents {
+            for student in Student.studentFromResults(results as! [[String : AnyObject]]) {
+                
+            //for student in self.allStudents {
                 
                 let lat1 = CLLocationDegrees(student.latitude)
                 print("lat1", lat1)
@@ -95,11 +107,15 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         print("calloutAccessoryControlTapped")
         if control == view.rightCalloutAccessoryView {
             
-            let detailViewController = storyboard?.instantiateViewControllerWithIdentifier("WebViewController") as! WebViewController
            
+            let url = NSURL(string: ((view.annotation?.subtitle)!)!)!
+            UIApplication.sharedApplication().openURL(url)
             
+            /*
+            let detailViewController = storyboard?.instantiateViewControllerWithIdentifier("WebViewController") as! WebViewController
             detailViewController.studentURL = ((view.annotation?.subtitle)!)!
             navigationController?.pushViewController(detailViewController, animated: true)
+*/
             
         }
     }
@@ -113,7 +129,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
             ]
         ]
     }
-    
+
 */
     func performUIUpdatesOnMain(updates: () -> Void) {
         dispatch_async(dispatch_get_main_queue()) {

@@ -25,6 +25,7 @@ class InformationPostingViewController: UIViewController, MKMapViewDelegate {
     @IBOutlet weak var cancelButton: UIBarButtonItem!
     
     
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
    
     
     @IBOutlet weak var mapView: MKMapView!
@@ -40,20 +41,30 @@ class InformationPostingViewController: UIViewController, MKMapViewDelegate {
         studentLocationPromptLabel.hidden = false
         studentLinkText.hidden = true
         submitButton.hidden = true
+        activityIndicator.hidden = true
         
     }
     
     override func viewWillAppear(animated: Bool) {
         print("InformationPostingViewController")
+        //activityIndicator.alpha = 1.0
+        
+        //activityIndicator.startAnimating()
         
     }
     @IBAction func studentLocationTextAction(sender: AnyObject) {
         print("studentLocationText entered")
+       
     }
     
     @IBAction func findOnTheMapButtonPressed(sender: AnyObject) {
         print("Find on the Map pressed")
         print(studentLocationText)
+        
+        activityIndicator.hidden = false
+        activityIndicator.alpha = 1.0
+        
+        activityIndicator.startAnimating()
         
         let geocoder = CLGeocoder()
        // var placemarks = [CLPlacemark]()
@@ -61,6 +72,20 @@ class InformationPostingViewController: UIViewController, MKMapViewDelegate {
 
         geocoder.geocodeAddressString(studentLocationText.text!, completionHandler: {placemarks, error in
 
+            
+            if (error != nil) {
+                print("geocoding error")
+                let uiAlertController = UIAlertController(title: "geocoding error", message: nil, preferredStyle: .Alert)
+                let defaultAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
+                uiAlertController.addAction(defaultAction)
+                self.presentViewController(uiAlertController, animated: true, completion: nil)
+                self.activityIndicator.alpha = 0.0
+                self.activityIndicator.stopAnimating()
+
+                
+            }
+            else {
+            
             let thisPlacemark = placemarks![0]
             print(thisPlacemark)
             print(thisPlacemark.location)
@@ -85,17 +110,34 @@ class InformationPostingViewController: UIViewController, MKMapViewDelegate {
             self.mapView.setRegion(coordinateRegion, animated: true)
             self.mapView.centerCoordinate = thisCoordinate
             
-            self.reloadInputViews()
             
+            
+            self.activityIndicator.alpha = 0.0
+            self.activityIndicator.stopAnimating()
+            
+            
+                
+           self.mapView.hidden = false
+           self.studentLocationPromptLabel.hidden = true
+                self.studentLocationText.hidden = true
+                self.findOnTheMapButton.hidden = true
+                self.studentLinkText.hidden = false
+                self.submitButton.hidden = false
+                
+            self.reloadInputViews()
+                
+                
+            }
             
         })
-
+/*
         mapView.hidden = false
         studentLocationPromptLabel.hidden = true
         studentLocationText.hidden = true
         findOnTheMapButton.hidden = true
         studentLinkText.hidden = false
         submitButton.hidden = false
+*/
     }
     
     
@@ -129,15 +171,17 @@ class InformationPostingViewController: UIViewController, MKMapViewDelegate {
         
         
         let thisStudent =
-        Student(firstName:studentLinkText.text  , lastName:" " , location:" " ,latitude: self.latitude, longitude: self.longitude, url: studentLinkText.text! as String)
+        Student(firstName:studentLinkText.text!  , lastName:" " , location:" " ,latitude: self.latitude, longitude: self.longitude, url: studentLinkText.text! as String)
         print("thisStudent", thisStudent)
+        
+        
         
         let request = NSMutableURLRequest(URL: NSURL(string: "https://api.parse.com/1/classes/StudentLocation")!)
         request.HTTPMethod = "POST"
         request.addValue("QrX47CA9cyuGewLdsL7o5Eb8iug6Em8ye0dnAbIr", forHTTPHeaderField: "X-Parse-Application-Id")
         request.addValue("QuWThTdiRmTux3YaDseUSEpUKo7aBYM737yKd4gY", forHTTPHeaderField: "X-Parse-REST-API-Key")
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-        request.HTTPBody = "{\"uniqueKey\": \"1234\", \"firstName\": \"Jane\", \"lastName\": \"Doe\",\"mapString\": \"San Francisco, CA\", \"mediaURL\": \"https://udacity.com\",\"latitude\": 37.386052, \"longitude\": -122.083851}".dataUsingEncoding(NSUTF8StringEncoding)
+        request.HTTPBody = "{\"uniqueKey\": \"1234\", \"firstName\": \"Holly\", \"lastName\": \"Doe\",\"mapString\": \"Sacremento, CA\", \"mediaURL\": \"https://udacity.com\",\"latitude\": 37.386052, \"longitude\": -122.083851}".dataUsingEncoding(NSUTF8StringEncoding)
         
         //request.HTTPBody = "{\"uniqueKey\": \"1234\", \"firstName\": \"Jane\", \"lastName\": \"Doe\",\"mapString\": \"San Francisco, CA\", \"mediaURL\": ".dataUsingEncoding(NSUTF8StringEncoding)
         //request.HTTPBody.append(thisStudent.url?.dataUsingEncoding(NSUTF8StringEncoding))
@@ -157,7 +201,17 @@ class InformationPostingViewController: UIViewController, MKMapViewDelegate {
             print("rdata from postStudentLocation", data)
 
             print("response from postStudentLocation", response)
-            if error != nil { // Handle error…
+            if error != nil {
+                
+                
+                let uiAlertController = UIAlertController(title: "post error", message: nil, preferredStyle: .Alert)
+                let defaultAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
+                uiAlertController.addAction(defaultAction)
+                self.presentViewController(uiAlertController, animated: true, completion: nil)
+                self.activityIndicator.alpha = 0.0
+                self.activityIndicator.stopAnimating()
+
+                
                 return
             }
             print(NSString(data: data!, encoding: NSUTF8StringEncoding))

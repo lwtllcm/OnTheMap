@@ -3,6 +3,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+        <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Navigation items with more than one left or right bar item" minToolsVersion="7.0"/>
     </dependencies>
@@ -38,10 +39,10 @@
                                 <exclude reference="1UV-uP-hHR"/>
                             </mask>
                             <mask key="constraints">
+                                <exclude reference="sYP-ds-rXz"/>
                                 <exclude reference="mII-TF-Pfx"/>
                                 <exclude reference="pLY-sM-7rh"/>
                                 <exclude reference="sLR-FK-0Fr"/>
-                                <exclude reference="sYP-ds-rXz"/>
                             </mask>
                         </variation>
                         <variation key="widthClass=compact">
@@ -49,10 +50,10 @@
                                 <include reference="1UV-uP-hHR"/>
                             </mask>
                             <mask key="constraints">
+                                <include reference="sYP-ds-rXz"/>
                                 <include reference="mII-TF-Pfx"/>
                                 <include reference="pLY-sM-7rh"/>
                                 <include reference="sLR-FK-0Fr"/>
-                                <include reference="sYP-ds-rXz"/>
                             </mask>
                         </variation>
                     </view>
@@ -316,6 +317,12 @@
                                     <rect key="frame" x="37" y="72" width="279" height="21"/>
                                 </variation>
                             </label>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="cjD-v5-zfU">
+                                <rect key="frame" x="-10" y="-10" width="20" height="20"/>
+                                <variation key="widthClass=compact" fixedFrame="YES">
+                                    <rect key="frame" x="186" y="314" width="20" height="20"/>
+                                </variation>
+                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <variation key="default">
@@ -326,6 +333,7 @@
                                 <exclude reference="b3W-bX-kdL"/>
                                 <exclude reference="tza-c2-jNw"/>
                                 <exclude reference="3Vw-LE-ig7"/>
+                                <exclude reference="cjD-v5-zfU"/>
                             </mask>
                         </variation>
                         <variation key="widthClass=compact">
@@ -336,6 +344,7 @@
                                 <include reference="b3W-bX-kdL"/>
                                 <include reference="tza-c2-jNw"/>
                                 <include reference="3Vw-LE-ig7"/>
+                                <include reference="cjD-v5-zfU"/>
                             </mask>
                         </variation>
                     </view>
@@ -347,6 +356,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="activityIndicator" destination="cjD-v5-zfU" id="drx-OJ-Dbf"/>
                         <outlet property="cancelButton" destination="eGI-6M-Psn" id="IUR-lz-Deb"/>
                         <outlet property="findOnTheMapButton" destination="n4d-an-hKK" id="jEM-vP-oAO"/>
                         <outlet property="mapView" destination="HfR-WP-dEm" id="3SQ-Or-RUe"/>
