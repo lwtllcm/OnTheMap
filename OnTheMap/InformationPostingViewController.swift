@@ -171,7 +171,7 @@ class InformationPostingViewController: UIViewController, MKMapViewDelegate {
         
         
         let thisStudent =
-        Student(firstName:studentLinkText.text!  , lastName:" " , location:" " ,latitude: self.latitude, longitude: self.longitude, url: studentLinkText.text! as String)
+        Student(firstName:studentLinkText.text!  , lastName:" " , location:" " ,latitude: self.latitude, longitude: self.longitude, url: studentLinkText.text! as String, updatedAt: NSCalendar.currentCalendar())
         print("thisStudent", thisStudent)
         
         

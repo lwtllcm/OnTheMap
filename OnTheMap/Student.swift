@@ -16,14 +16,16 @@ struct Student {
     var latitude: CLLocationDegrees
     var longitude: CLLocationDegrees
     var url:String?
+    var updatedAt:NSCalendar
     
-    init(firstName: String, lastName: String, location: String, latitude: CLLocationDegrees, longitude: CLLocationDegrees, url: String) {
+    init(firstName: String,lastName: String,location: String,latitude: CLLocationDegrees,longitude: CLLocationDegrees,url: String,updatedAt: NSCalendar) {
         self.firstName = firstName
         self.lastName = lastName
         self.location = location
         self.latitude = latitude
         self.longitude = longitude
         self.url = url
+        self.updatedAt = NSCalendar.currentCalendar()
     }
 
  
@@ -42,14 +44,16 @@ struct Student {
             let resultLocation = result.objectForKey("mapString")
             let resultLatitude = result.objectForKey("latitude") as! CLLocationDegrees
             let resultLongitude = result.objectForKey("longitude") as! CLLocationDegrees
-
+            //let resultUpdatedAt = result.objectForKey("updatedAt")
+            let resultUpdatedAt = NSCalendar.currentCalendar()
             
             let resultURL = result.objectForKey("mediaURL") as! String
             //print("resultURL", resultURL)
             
            
             let newTestStudent =
-            Student(firstName:(resultFirstName as? String)! , lastName:(resultLastName as? String)! , location:(resultLocation as? String)! ,latitude: resultLatitude, longitude: resultLongitude, url: resultURL as String)
+            Student(firstName:(resultFirstName as? String)! , lastName:(resultLastName as? String)! , location:(resultLocation as? String)! ,latitude: resultLatitude, longitude: resultLongitude, url: resultURL as String, updatedAt: resultUpdatedAt 
+            )
                        
             //print("newTestStudent", newTestStudent)
             allStudents.append(newTestStudent)
