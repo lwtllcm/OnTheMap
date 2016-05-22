@@ -36,6 +36,11 @@
         static let Password = "password"
         static let ResponseFormat = "json"
     }
-    
+
+struct UdacityJSONResponseKeys {
+    static let Account = "account"
+    static let UserID = "X-Udacity-Account-Id"
+}
+
     
 

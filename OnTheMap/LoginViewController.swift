@@ -42,7 +42,68 @@ class LoginViewController: UIViewController {
 
             print("Username or Password not empty")
  
-            getRequestToken()
+           // getRequestToken()
+            
+            
+            
+            let studentUserName = "sbj5@sbcglobal.net"
+            let studentPassword = "kwahyaj5"
+            
+            
+            
+            //let jsonBody = "{\"uniqueKey\": \"1234\", \"firstName\": \"Holly\", \"lastName\": \"Doe\",\"mapString\": \"Sacremento, CA\", \"mediaURL\": \"https://udacity.com\",\"latitude\": 37.386052, \"longitude\": -122.083851}"
+            
+            let jsonBody = "{\"udacity\": {\"username\": \"\(studentUserName)\", \"password\": \"\(studentPassword)\"}}"
+            
+            
+            print("jsonBody", jsonBody)
+            
+            DBClient.sharedInstance().taskForUdacityPOSTMethod(jsonBody) { (results, error) in
+                print("taskForPostMethod")
+                
+                print("userID", results.valueForKey("account"))
+                
+                if (error != nil) {
+                    
+                    let uiAlertController = UIAlertController(title: "post error", message: nil, preferredStyle: .Alert)
+                    let defaultAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
+                    uiAlertController.addAction(defaultAction)
+                    self.presentViewController(uiAlertController, animated: true, completion: nil)
+                }
+                
+                else {
+                    let resultDictionary = results.valueForKey("account") as? NSDictionary
+                    let userID = resultDictionary?.valueForKey("key")
+                    print("key", userID)
+                    
+                    NSUserDefaults.standardUserDefaults().setObject(userID, forKey: "Udacity.UserID")
+                    
+                }
+                
+            
+                
+                /*
+                let results = results.objectForKey("results") as! NSArray
+                
+                self.allStudents = Student.studentFromResults(results as! [[String : AnyObject]])
+                
+                self.performUIUpdatesOnMain { () -> Void in
+                self.performUIUpdatesOnMain({ () -> Void in
+                print("performUIUpdatesOnMain")
+                self.tableView.reloadData()
+                })
+                self.tableView.reloadData()
+                
+                }
+                */
+                
+            }
+            
+            
+ 
+            
+            
+            
             
         }
         
