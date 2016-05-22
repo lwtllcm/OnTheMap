@@ -145,7 +145,45 @@ class InformationPostingViewController: UIViewController, MKMapViewDelegate {
         print(studentLinkText.text)
         print("submitButtonPressed")
         
-        self.postStudentLocation()
+        //self.postStudentLocation()
+        
+        let jsonBody = "{\"uniqueKey\": \"1234\", \"firstName\": \"Holly\", \"lastName\": \"Doe\",\"mapString\": \"Sacremento, CA\", \"mediaURL\": \"https://udacity.com\",\"latitude\": 37.386052, \"longitude\": -122.083851}"
+        
+        DBClient.sharedInstance().taskForPOSTMethod(jsonBody) { (results, error) in
+            print("taskForPostMethod")
+            print("results from taskForPOSTMethod", results)
+            print("error from taskForPOSTMethod", error)
+            
+            
+            if (error != nil) {
+                
+                let uiAlertController = UIAlertController(title: "post error", message: nil, preferredStyle: .Alert)
+                let defaultAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
+                uiAlertController.addAction(defaultAction)
+                self.presentViewController(uiAlertController, animated: true, completion: nil)
+            }
+            
+            /*
+            let results = results.objectForKey("results") as! NSArray
+            
+            self.allStudents = Student.studentFromResults(results as! [[String : AnyObject]])
+           
+            self.performUIUpdatesOnMain { () -> Void in
+                self.performUIUpdatesOnMain({ () -> Void in
+                    print("performUIUpdatesOnMain")
+                    self.tableView.reloadData()
+                })
+                self.tableView.reloadData()
+                
+            }
+            */
+            
+        }
+        
+        
+        
+        
+        
         print("postStudentLocation completed")
     }
     

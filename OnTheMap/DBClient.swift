@@ -22,7 +22,7 @@ class DBClient: NSObject {
         
         print("taskForGETMethod")
         
-        let request = NSMutableURLRequest(URL: NSURL(string: "https://api.parse.com/1/classes/StudentLocation?order=updatedAt")!)
+        let request = NSMutableURLRequest(URL: NSURL(string: "https://api.parse.com/1/classes/StudentLocation?-order=updatedAt")!)
         
         //request.addValue("QrX47CA9cyuGewLdsL7o5Eb8iug6Em8ye0dnAbIr", forHTTPHeaderField: "X-Parse-Application-Id")
         request.addValue(ParseConstants.ParseParameterValues.ApplicationID, forHTTPHeaderField: "X-Parse-Application-Id")
@@ -87,6 +87,140 @@ class DBClient: NSObject {
         return task
         
     }
+    
+    
+    
+    
+    func taskForPOSTMethod(jsonBody: String, completionHandlerForPOST:(result: AnyObject!, error: NSError?) -> Void) -> NSURLSessionDataTask {
+
+    //unc postStudentLocation() {
+    print("postStudentLocation")
+    
+    
+    //var newStudent:Student
+    //newStudent.firstName = studentLinkText.text
+    //newStudent.lastName = " "
+    //newStudent.location = " "
+    //newStudent.latitude = self.latitude
+    //newStudent.longitude = self.longitude
+    
+    
+    //print("newStudent", newStudent.firstName, newStudent.lastName, newStudent.latitude, newStudent.longitude)
+    
+    
+    
+    //let thisStudent =
+    //Student(firstName:studentLinkText.text!  , lastName:" " , location:" " ,latitude: self.latitude, longitude: self.longitude, url: studentLinkText.text! as String, updatedAt: NSCalendar.currentCalendar())
+    //print("thisStudent", thisStudent)
+    
+    
+    
+    let request = NSMutableURLRequest(URL: NSURL(string: "https://api.parse.com/1/classes/StudentLocation")!)
+    request.HTTPMethod = "POST"
+    request.addValue("QrX47CA9cyuGewLdsL7o5Eb8iug6Em8ye0dnAbIr", forHTTPHeaderField: "X-Parse-Application-Id")
+    request.addValue("QuWThTdiRmTux3YaDseUSEpUKo7aBYM737yKd4gY", forHTTPHeaderField: "X-Parse-REST-API-Key")
+    request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+    
+        
+    //request.HTTPBody = "{\"uniqueKey\": \"1234\", \"firstName\": \"Holly\", \"lastName\": \"Doe\",\"mapString\": \"Sacremento, CA\", \"mediaURL\": \"https://udacity.com\",\"latitude\": 37.386052, \"longitude\": -122.083851}".dataUsingEncoding(NSUTF8StringEncoding)
+        
+    request.HTTPBody = jsonBody.dataUsingEncoding(NSUTF8StringEncoding)
+    
+    //request.HTTPBody = "{\"uniqueKey\": \"1234\", \"firstName\": \"Jane\", \"lastName\": \"Doe\",\"mapString\": \"San Francisco, CA\", \"mediaURL\": ".dataUsingEncoding(NSUTF8StringEncoding)
+    //request.HTTPBody.append(thisStudent.url?.dataUsingEncoding(NSUTF8StringEncoding))
+    //request.HTTPBody.append(\"latitude\": 37.386052, \"longitude\": -122.083851}".dataUsingEncoding(NSUTF8StringEncoding))
+    
+    
+    /*
+    var requestURLString = "{\"uniqueKey\": \"1234\", \"firstName\": \"Jane\", \"lastName\": \"Doe\",\"mapString\": \"San Francisco, CA\", \"mediaURL\": "
+    requestURLString = requestURLString + thisStudent.url!
+    requestURLString = requestURLString + ",\"latitude\": 37.386052, \"longitude\": -122.083851}"
+    request.HTTPBody = requestURLString.dataUsingEncoding(NSUTF8StringEncoding)
+    print("request.HTTPBody", request.HTTPBody)
+    */
+    
+    let session = NSURLSession.sharedSession()
+    let task = session.dataTaskWithRequest(request) { data, response, error in
+    print("rdata from postStudentLocation", data)
+    
+    print("response from postStudentLocation", response)
+        
+        
+        func displayError(error: String) {
+            print("displayError")
+            print(error)
+            
+            let userInfo = [NSLocalizedDescriptionKey: error]
+            
+            completionHandlerForPOST(result: nil, error:NSError( domain: "taskForPOSTMethod", code: 1, userInfo:userInfo))
+            
+            
+        }
+        
+        func sendError(error: String) {
+            print(error)
+            let userInfo = [NSLocalizedDescriptionKey: error]
+            completionHandlerForPOST(result: nil, error:NSError( domain: "taskForPOSTMethod", code: 1, userInfo:userInfo))
+            
+        }
+        
+        guard (error == nil) else {
+            //displayError("There was an error with your request: \(error)")
+            sendError("There was an error with your request: \(error)")
+            
+            
+            
+            return
+        }
+        guard let statusCode = (response as? NSHTTPURLResponse)?.statusCode where statusCode >= 200 && statusCode <= 299 else {
+            //displayError("Your request returned a status code other than 2xx!")
+            sendError("Your request returned a status code other than 2xx!")
+            
+            return
+        }
+        
+        guard let data = data else {
+            // displayError("No data was returned by the request!")
+            sendError("No data was returned by the request!")
+            return
+        }
+    
+        
+        
+        
+        /*
+    if error != nil {
+    
+    
+    let uiAlertController = UIAlertController(title: "post error", message: nil, preferredStyle: .Alert)
+    let defaultAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
+    uiAlertController.addAction(defaultAction)
+    self.presentViewController(uiAlertController, animated: true, completion: nil)
+    self.activityIndicator.alpha = 0.0
+    self.activityIndicator.stopAnimating()
+    
+    
+    return
+    }
+*/
+        
+   // print(NSString(data: data!, encoding: NSUTF8StringEncoding))
+        
+        /*
+    }
+    task.resume()
+    */
+        
+        self.convertDataWithCompletionHandler(data, completionHandlerForConvertData: completionHandlerForPOST)
+        
+        }
+        task.resume()
+        return task
+    }
+    
+
+    
+    
     
     private func convertDataWithCompletionHandler(data: NSData, completionHandlerForConvertData: (result: AnyObject!, error: NSError?) -> Void) {
         print("convertDataWithCompletionHandler")
