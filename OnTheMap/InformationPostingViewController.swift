@@ -94,7 +94,7 @@ class InformationPostingViewController: UIViewController, MKMapViewDelegate {
             self.latitude = thisCoordinate.latitude
             self.longitude = thisCoordinate.longitude
             
-            print(thisCoordinate)
+            print("thisCoordinate",thisCoordinate)
             
             
             
@@ -147,12 +147,20 @@ class InformationPostingViewController: UIViewController, MKMapViewDelegate {
         
         //self.postStudentLocation()
         
-        let mediaURL = studentLinkText.text as String!
+        let studentMediaURL = studentLinkText.text as String!
+        let studentFirstName = "Jane"
+        let studentLastName = "Doe"
+        let studentLatitude = self.latitude
+        let studentLongitude = self.longitude
+        let studentMapString = studentLocationText.text as String!
     
         
         //let jsonBody = "{\"uniqueKey\": \"1234\", \"firstName\": \"Holly\", \"lastName\": \"Doe\",\"mapString\": \"Sacremento, CA\", \"mediaURL\": \"https://udacity.com\",\"latitude\": 37.386052, \"longitude\": -122.083851}"
         
-       let jsonBody = "{\"uniqueKey\": \"1234\", \"firstName\": \"Holly\", \"lastName\": \"Doe\",\"mapString\": \"Sacremento, CA\", \"mediaURL\": \"\(mediaURL)\",\"latitude\": 37.386052, \"longitude\": -122.083851}"
+       let jsonBody = "{\"uniqueKey\": \"1234\", \"firstName\": \"\(studentFirstName)\", \"lastName\": \"\(studentLastName)\",\"mapString\": \"\(studentMapString)\", \"mediaURL\": \"\(studentMediaURL)\",\"latitude\": \(studentLatitude), \"longitude\": \(studentLongitude)}"
+        
+        
+        print("jsonBody", jsonBody)
         
         DBClient.sharedInstance().taskForPOSTMethod(jsonBody) { (results, error) in
             print("taskForPostMethod")
