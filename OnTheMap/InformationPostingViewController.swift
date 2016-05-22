@@ -147,12 +147,17 @@ class InformationPostingViewController: UIViewController, MKMapViewDelegate {
         
         //self.postStudentLocation()
         
-        let jsonBody = "{\"uniqueKey\": \"1234\", \"firstName\": \"Holly\", \"lastName\": \"Doe\",\"mapString\": \"Sacremento, CA\", \"mediaURL\": \"https://udacity.com\",\"latitude\": 37.386052, \"longitude\": -122.083851}"
+        let mediaURL = studentLinkText.text as String!
+    
+        
+        //let jsonBody = "{\"uniqueKey\": \"1234\", \"firstName\": \"Holly\", \"lastName\": \"Doe\",\"mapString\": \"Sacremento, CA\", \"mediaURL\": \"https://udacity.com\",\"latitude\": 37.386052, \"longitude\": -122.083851}"
+        
+       let jsonBody = "{\"uniqueKey\": \"1234\", \"firstName\": \"Holly\", \"lastName\": \"Doe\",\"mapString\": \"Sacremento, CA\", \"mediaURL\": \"\(mediaURL)\",\"latitude\": 37.386052, \"longitude\": -122.083851}"
         
         DBClient.sharedInstance().taskForPOSTMethod(jsonBody) { (results, error) in
             print("taskForPostMethod")
-            print("results from taskForPOSTMethod", results)
-            print("error from taskForPOSTMethod", error)
+           // print("results from taskForPOSTMethod", results)
+           // print("error from taskForPOSTMethod", error)
             
             
             if (error != nil) {
