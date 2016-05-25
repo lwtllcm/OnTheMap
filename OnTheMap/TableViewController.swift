@@ -90,7 +90,8 @@ class TableViewController: UITableViewController {
         performUIUpdatesOnMain { () -> Void in
             
             cell.textLabel?.text = individual.firstName! + " " + individual.lastName! + " " + individual.url!
-            }
+           
+        }
         
         return cell
             }

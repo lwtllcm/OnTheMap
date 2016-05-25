@@ -78,16 +78,33 @@ class LoginViewController: UIViewController {
                     let userID = resultDictionary?.valueForKey("key")
                     print("key", userID)
                     
-                    //NSUserDefaults.standardUserDefaults().setObject(userID, forKey: "Udacity.UserID")
-                    let defaults = NSUserDefaults.standardUserDefaults()
+                    NSUserDefaults.standardUserDefaults().setObject(userID, forKey: "Udacity.UserID")
+                   let defaults = NSUserDefaults.standardUserDefaults()
                     defaults.setObject(userID, forKey: "Udacity.UserID")
                     
-                    self.getUserID()
+                    //self.getUserID()
                     
-                }
-                
-            
-                
+                    
+                  
+                    DBClient.sharedInstance().taskForGetUserID {(results, error) in
+                        
+                        if (error != nil) {
+                            print("error after taskForGetUserID", error)
+                        }
+                        else {
+                        print("results after taskForGetUserID", results)
+                         print(results.valueForKey("user")?.valueForKey("first_name"))
+                            print(results.valueForKey("user")?.valueForKey("last_name"))
+
+                            defaults.setObject(results.valueForKey("user")?.valueForKey("first_name"), forKey: "Udacity.FirstName")
+                            defaults.setObject(results.valueForKey("user")?.valueForKey("last_name"), forKey: "Udacity.LastName")
+                            
+                            
+                        }
+                    }
+               
+                    
+                    
                 /*
                 let results = results.objectForKey("results") as! NSArray
                 
@@ -106,13 +123,9 @@ class LoginViewController: UIViewController {
             }
             
             
- 
-            
-            
-            
-            
         }
         
+    }
     }
     
     @IBAction func signUpButtonPressed(sender: AnyObject) {
@@ -155,14 +168,36 @@ class LoginViewController: UIViewController {
             
             let parsedResult: AnyObject!
             do {
+                
+                /*
                 print("data to parse", data)
                 let newData = data?.subdataWithRange(NSMakeRange(5, (data?.length)! - 5))
                 print("newData", NSString(data: newData!, encoding: NSUTF8StringEncoding))
                 
                 parsedResult = try NSJSONSerialization.JSONObjectWithData(newData!, options: .AllowFragments)
                 print("parsedResult", parsedResult)
-                self.getUserID()
+*/
                 
+                let parsedResult: AnyObject!
+                do {
+                    
+                    
+                    parsedResult = try NSJSONSerialization.JSONObjectWithData(data!, options: .AllowFragments)
+                    print("parsedResult", parsedResult)
+                    
+                }
+                catch {
+                    
+                    print("Could not parse the data as JSON: '\(data)'")
+                    
+                    let uiAlertController = UIAlertController(title: "loginAlert", message: "login failed", preferredStyle: .Alert)
+                    let defaultAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
+                    uiAlertController.addAction(defaultAction)
+                    self.presentViewController(uiAlertController, animated: true, completion: nil)
+                    
+                    return
+                }
+
             }
             catch {
 
@@ -199,7 +234,11 @@ class LoginViewController: UIViewController {
         return components.URL!
     }
     
-    private func getUserID() {
+  
+    
+    
+    
+     func getUserID() {
         print("getUserID")
         
         
@@ -207,14 +246,23 @@ class LoginViewController: UIViewController {
         if let userID = defaults.stringForKey("Udacity.UserID") {
             print("UserID", userID)
             let requestUserID = NSMutableURLRequest(URL:NSURL(string:"https://www.udacity.com/api/users/\(userID)")!)
+            print("requestUserID", requestUserID)
+
+            //let task = appDelegate.sharedSession.dataTaskWithRequest(requestUserID) { (data, response, error) in
             
-            let task = appDelegate.sharedSession.dataTaskWithRequest(requestUserID) { (data, response, error) in
+            let session = NSURLSession.sharedSession()
                 
-                print("error" , error)
-                print("data", data)
-                print("response", response)
+                let task = session.dataTaskWithRequest(requestUserID) { (data, response, error) in
+                    
+                   // print("data from getUserID", data)
+                    
+                    print("response from getUserID", response)
+                    
+                    
+                    print("error from getUserID", error)
+
                 
-                print("response for getUserID", response)
+             
                 
                 let parsedResult: AnyObject!
                 do {
@@ -243,45 +291,8 @@ class LoginViewController: UIViewController {
             task.resume()
         
         }
-        //print("NSUserDefaults",NSUserDefaults.standardUserDefaults())
         
-        /*
-        let requestUserID = NSMutableURLRequest(URL:NSURL(string:"https://www.udacity.com/api/users/")!)
         
-        let task = appDelegate.sharedSession.dataTaskWithRequest(requestUserID) { (data, response, error) in
-            
-            print("error" , error)
-            print("data", data)
-            print("response", response)
-            
-            print("response for getUserID", response)
-
-            let parsedResult: AnyObject!
-            do {
-                print("data to parse", data)
-                let newData = data?.subdataWithRange(NSMakeRange(5, (data?.length)! - 5))
-                print("newData", NSString(data: newData!, encoding: NSUTF8StringEncoding))
-                
-                parsedResult = try NSJSONSerialization.JSONObjectWithData(newData!, options: .AllowFragments)
-                print("parsedResult", parsedResult)
-                
-            }
-            catch {
-                
-                print("Could not parse the data as JSON: '\(data)'")
-                
-                let uiAlertController = UIAlertController(title: "loginAlert", message: "login failed", preferredStyle: .Alert)
-                let defaultAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
-                uiAlertController.addAction(defaultAction)
-                self.presentViewController(uiAlertController, animated: true, completion: nil)
-                
-                return
-            }
-            
-        }
-        
-        task.resume()
-*/
     }
     
 }

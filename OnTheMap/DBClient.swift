@@ -372,6 +372,12 @@ class DBClient: NSObject {
             
             self.convertDataWithCompletionHandler(newData, completionHandlerForConvertData: completionHandlerForPOST)
             
+            
+           // self.taskForGetUserID { (results, error) in
+           //
+           //     print("results from taskForGetUserID", results)
+           // }
+            
         }
         task.resume()
         return task
@@ -495,49 +501,36 @@ class DBClient: NSObject {
     
  
     
+ 
     
     
     
     
-    private func getUserID() {
-        print("getUserID")
-       /*
+    //****
+    
+    
+    func taskForGetUserID(completionHandlerForGetUserID:(result: AnyObject!, error: NSError?) -> Void) -> NSURLSessionDataTask {
+        
+        let defaults = NSUserDefaults.standardUserDefaults()
         
         
-        let request = NSMutableURLRequest(URL: NSURL(string: "https://www.udacity.com/api/session")!)
+        var userID = defaults.stringForKey("Udacity.UserID")!
         
-        request.HTTPMethod = "POST"
+        //let userID = "3483828796"
         
-        request.addValue("application/json", forHTTPHeaderField: "Accept")
-        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-        // let httpBodyString = "{\"udacity\": {\"username\": \"\(emailTextField.text!)\", \"password\": \"\(passwordTextField.text!)\"}}"
+        print(userID)
         
-        
-        //request.HTTPBody = "{\"uniqueKey\": \"1234\", \"firstName\": \"Holly\", \"lastName\": \"Doe\",\"mapString\": \"Sacremento, CA\", \"mediaURL\": \"https://udacity.com\",\"latitude\": 37.386052, \"longitude\": -122.083851}".dataUsingEncoding(NSUTF8StringEncoding)
-        
-        request.HTTPBody = jsonBody.dataUsingEncoding(NSUTF8StringEncoding)
-        
-        //request.HTTPBody = "{\"uniqueKey\": \"1234\", \"firstName\": \"Jane\", \"lastName\": \"Doe\",\"mapString\": \"San Francisco, CA\", \"mediaURL\": ".dataUsingEncoding(NSUTF8StringEncoding)
-        //request.HTTPBody.append(thisStudent.url?.dataUsingEncoding(NSUTF8StringEncoding))
-        //request.HTTPBody.append(\"latitude\": 37.386052, \"longitude\": -122.083851}".dataUsingEncoding(NSUTF8StringEncoding))
-        
-        
-        /*
-        var requestURLString = "{\"uniqueKey\": \"1234\", \"firstName\": \"Jane\", \"lastName\": \"Doe\",\"mapString\": \"San Francisco, CA\", \"mediaURL\": "
-        requestURLString = requestURLString + thisStudent.url!
-        requestURLString = requestURLString + ",\"latitude\": 37.386052, \"longitude\": -122.083851}"
-        request.HTTPBody = requestURLString.dataUsingEncoding(NSUTF8StringEncoding)
-        print("request.HTTPBody", request.HTTPBody)
-        */
+        let requestUserID = NSMutableURLRequest(URL:NSURL(string:"https://www.udacity.com/api/users/\(userID)")!)
+        print("requestUserID", requestUserID)
+
         
         let session = NSURLSession.sharedSession()
-        let task = session.dataTaskWithRequest(request) { data, response, error in
-            print("rdata from postUdacity", data)
+        let task = session.dataTaskWithRequest(requestUserID) { data,response, error in
             
-            print("response from postUdacity", response)
+            print("response from taskForGetUserID", response)
             
             
-            print("postUdacity error", error)
+            print("error from taskForGetUserID", error)
             
             
             
@@ -547,7 +540,7 @@ class DBClient: NSObject {
                 
                 let userInfo = [NSLocalizedDescriptionKey: error]
                 
-                completionHandlerForPOST(result: nil, error:NSError( domain: "taskForPOSTMethod", code: 1, userInfo:userInfo))
+                completionHandlerForGetUserID(result: nil, error:NSError( domain: "taskForGetUserID", code: 1, userInfo:userInfo))
                 
                 
             }
@@ -555,7 +548,7 @@ class DBClient: NSObject {
             func sendError(error: String) {
                 print(error)
                 let userInfo = [NSLocalizedDescriptionKey: error]
-                completionHandlerForPOST(result: nil, error:NSError( domain: "taskForPOSTMethod", code: 1, userInfo:userInfo))
+                completionHandlerForGetUserID(result: nil, error:NSError( domain: "taskForGetUserID", code: 1, userInfo:userInfo))
                 
             }
             
@@ -582,132 +575,15 @@ class DBClient: NSObject {
             
             let newData = data.subdataWithRange(NSMakeRange(5, data.length - 5) )
             
-            /*
-            if error != nil {
             
+            self.convertDataWithCompletionHandler(newData, completionHandlerForConvertData: completionHandlerForGetUserID)
             
-            let uiAlertController = UIAlertController(title: "post error", message: nil, preferredStyle: .Alert)
-            let defaultAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
-            uiAlertController.addAction(defaultAction)
-            self.presentViewController(uiAlertController, animated: true, completion: nil)
-            self.activityIndicator.alpha = 0.0
-            self.activityIndicator.stopAnimating()
-            
-            
-            return
-            }
-            */
-            
-            // print(NSString(data: data!, encoding: NSUTF8StringEncoding))
-            
-            /*
-            }
-            task.resume()
-            */
-            
-            self.convertDataWithCompletionHandler(newData, completionHandlerForConvertData: completionHandlerForPOST)
             
         }
         task.resume()
         return task
-        /*
-        print("getRequestToken")
-        
-        let methodParameters : [String:AnyObject] =  [
-        
-        UdacityParameterKeys.Username:emailTextField.text!,
-        UdacityParameterKeys.Password:passwordTextField.text!
-        ]
-        
-        print("methodParameters", methodParameters)
-        
-        
-        let request = NSMutableURLRequest(URL: udacityURLFromParameters(methodParameters,withPathExtension: nil))
-        
-        request.HTTPMethod = "POST"
-        request.addValue("application/json", forHTTPHeaderField: "Accept")
-        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-        let httpBodyString = "{\"udacity\": {\"username\": \"\(emailTextField.text!)\", \"password\": \"\(passwordTextField.text!)\"}}"
-        print("request httpbody: \(httpBodyString)")
-        
-        request.HTTPBody = httpBodyString.dataUsingEncoding(NSUTF8StringEncoding)
-        
-        print("request",request)
-        
-        let task = appDelegate.sharedSession.dataTaskWithRequest(request) { (data, response, error) in
-        
-        print("error" , error)
-        
-        let parsedResult: AnyObject!
-        do {
-        print("data to parse", data)
-        let newData = data?.subdataWithRange(NSMakeRange(5, (data?.length)! - 5))
-        print("newData", NSString(data: newData!, encoding: NSUTF8StringEncoding))
-        
-        parsedResult = try NSJSONSerialization.JSONObjectWithData(newData!, options: .AllowFragments)
-        print("parsedResult", parsedResult)
-        self.getUserID()
-        
-        }
-        catch {
-        
-        print("Could not parse the data as JSON: '\(data)'")
-        
-        return
-        }
-        
-        }
-        
-        task.resume()
-        */
-
-        
-        
-        
-        
-        
-        
-        let requestUserID = NSMutableURLRequest(URL:NSURL(string:"https://www.udacity.com/api/users/me")!)
-        
-        let task = appDelegate.sharedSession.dataTaskWithRequest(requestUserID) { (data, response, error) in
-            
-            print("error" , error)
-            print("data", data)
-            print("response", response)
-            
-            print("response for getUserID", response)
-            
-            let parsedResult: AnyObject!
-            do {
-                print("data to parse", data)
-                let newData = data?.subdataWithRange(NSMakeRange(5, (data?.length)! - 5))
-                print("newData", NSString(data: newData!, encoding: NSUTF8StringEncoding))
-                
-                parsedResult = try NSJSONSerialization.JSONObjectWithData(newData!, options: .AllowFragments)
-                print("parsedResult", parsedResult)
-                
-            }
-            catch {
-                
-                print("Could not parse the data as JSON: '\(data)'")
-                
-                let uiAlertController = UIAlertController(title: "loginAlert", message: "login failed", preferredStyle: .Alert)
-                let defaultAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
-                uiAlertController.addAction(defaultAction)
-                self.presentViewController(uiAlertController, animated: true, completion: nil)
-                
-                return
-            }
-            
-        }
-        
-        task.resume()
-
-*/
     }
-    
-
-    
+ 
     
     
 }

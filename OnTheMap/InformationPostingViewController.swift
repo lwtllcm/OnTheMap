@@ -147,9 +147,11 @@ class InformationPostingViewController: UIViewController, MKMapViewDelegate {
         
         //self.postStudentLocation()
         
+        let defaults = NSUserDefaults.standardUserDefaults()
+
         let studentMediaURL = studentLinkText.text as String!
-        let studentFirstName = "Jane"
-        let studentLastName = "Doe"
+        let studentFirstName = defaults.stringForKey("Udacity.FirstName")!
+        let studentLastName = defaults.stringForKey("Udacity.LastName")!
         let studentLatitude = self.latitude
         let studentLongitude = self.longitude
         let studentMapString = studentLocationText.text as String!
