@@ -18,9 +18,9 @@ class WebViewController:UIViewController, UIWebViewDelegate {
         override func viewDidLoad() {
             super.viewDidLoad()
             print("WebViewController viewDidLoad")
-            //webView.loadHTMLString("www.google.com", baseURL: nil)
+
             webView.delegate = self
-            //let url = NSURL(string: "http://www.google.com")
+
             
             let escapedStudentURL =  studentURL.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())
             print("escapedStudentURL ", escapedStudentURL)
@@ -30,34 +30,13 @@ class WebViewController:UIViewController, UIWebViewDelegate {
             webView.loadRequest(request)
             
             
-            
-            /*
-            webView.loadRequest(NSURLRequest(URL: NSURL(string: "google.com")!))
-            webView.reloadInputViews()
-            
-            //(NSURLRequest(URL: NSURL(string: "google.com")!))NSURL?
-            //webView.delegate = self
-            //reloadInputViews()
-*/
-            
         }
         
-       /* override func viewWillAppear(animated: Bool) {
-            super.viewDidLoad()
-            print("WebViewController viewWillAppear")
-            
-        }
-*/
     func webViewDidStartLoad(webView: UIWebView) {
-        print("webViewDidStartLoad")
-     //   activityIndicator.center = self.view.center
-     //   activityIndicator.startAnimating()
     }
     
     func webViewDidFinishLoad(webView: UIWebView) {
         print("webViewDidFinishLoad")
-      //  activityIndicator.stopAnimating()
-      //  activityIndicator.hidden = true
     }
     
     private func escapedParameters(parameters: [String:AnyObject]) -> String {
@@ -69,13 +48,9 @@ class WebViewController:UIViewController, UIWebViewDelegate {
             
             for (key, value) in parameters {
                 
-                // make sure that it is a string value
                 let stringValue = "\(value)"
                 
-                // escape it
                 let escapedValue = stringValue.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())
-                
-                // append it
                 keyValuePairs.append(key + "=" + "\(escapedValue!)")
                 
             }

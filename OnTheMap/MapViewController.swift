@@ -13,7 +13,6 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     
     var appDelegate: AppDelegate!
     var student: Student?
-    //var allStudents:[Student] = [Student]()
     
     @IBOutlet weak var mapView: MKMapView!
     
@@ -37,16 +36,10 @@ class MapViewController: UIViewController, MKMapViewDelegate {
             let results = results.objectForKey("results") as! NSArray
             
             
-            //self.allStudents = Student.studentFromResults(results as! [[String : AnyObject]])
-            
-
-            
-            
             var annotations = [MKPointAnnotation]()
             
             for student in Student.studentFromResults(results as! [[String : AnyObject]]) {
                 
-            //for student in self.allStudents {
                 
                 let lat1 = CLLocationDegrees(student.latitude)
                 print("lat1", lat1)
@@ -111,27 +104,11 @@ class MapViewController: UIViewController, MKMapViewDelegate {
             let url = NSURL(string: ((view.annotation?.subtitle)!)!)!
             UIApplication.sharedApplication().openURL(url)
             
-            /*
-            let detailViewController = storyboard?.instantiateViewControllerWithIdentifier("WebViewController") as! WebViewController
-            detailViewController.studentURL = ((view.annotation?.subtitle)!)!
-            navigationController?.pushViewController(detailViewController, animated: true)
-*/
             
         }
     }
     
- /*
-    func testLocationData() -> [[String : AnyObject]] {
-        return [
-            [
-                "latitude" : 28.1461248,
-                "longitude" : -82.75676799999999
-            ]
-        ]
-    }
-
-*/
-    func performUIUpdatesOnMain(updates: () -> Void) {
+     func performUIUpdatesOnMain(updates: () -> Void) {
         dispatch_async(dispatch_get_main_queue()) {
             updates()
         }

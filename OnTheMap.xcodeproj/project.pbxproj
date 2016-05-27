@@ -18,7 +18,6 @@
 		5B6E566E1C9DDB7600170053 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B6E566D1C9DDB7600170053 /* Constants.swift */; };
 		5B6E56701C9F9B8A00170053 /* UdacityConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B6E566F1C9F9B8A00170053 /* UdacityConstants.swift */; };
 		5B6E56721C9F9C6100170053 /* ParseConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B6E56711C9F9C6100170053 /* ParseConstants.swift */; };
-		5B72A2FD1CC87EBC00A761D6 /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B72A2FC1CC87EBC00A761D6 /* WebViewController.swift */; };
 		5B7366F71CAA396100C25ABF /* InformationPostingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B7366F61CAA396100C25ABF /* InformationPostingViewController.swift */; };
 		5BB99EB81CD18C2700C65CDD /* DBClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BB99EB71CD18C2700C65CDD /* DBClient.swift */; };
 /* End PBXBuildFile section */
@@ -37,7 +36,6 @@
 		5B6E566D1C9DDB7600170053 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		5B6E566F1C9F9B8A00170053 /* UdacityConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UdacityConstants.swift; sourceTree = "<group>"; };
 		5B6E56711C9F9C6100170053 /* ParseConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParseConstants.swift; sourceTree = "<group>"; };
-		5B72A2FC1CC87EBC00A761D6 /* WebViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebViewController.swift; sourceTree = "<group>"; };
 		5B7366F61CAA396100C25ABF /* InformationPostingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InformationPostingViewController.swift; sourceTree = "<group>"; };
 		5BB99EB71CD18C2700C65CDD /* DBClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DBClient.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -92,7 +90,6 @@
 				5B0FD75E1C94D4280050AA72 /* TableViewController.swift */,
 				5B0FD75C1C94D40C0050AA72 /* MapViewController.swift */,
 				5B7366F61CAA396100C25ABF /* InformationPostingViewController.swift */,
-				5B72A2FC1CC87EBC00A761D6 /* WebViewController.swift */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -179,7 +176,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				5B0D06A81C9DC5E6001F0B31 /* LoginViewController.swift in Sources */,
-				5B72A2FD1CC87EBC00A761D6 /* WebViewController.swift in Sources */,
 				5B6E56701C9F9B8A00170053 /* UdacityConstants.swift in Sources */,
 				5B0FD75D1C94D40C0050AA72 /* MapViewController.swift in Sources */,
 				5B0FD7471C94CE310050AA72 /* AppDelegate.swift in Sources */,

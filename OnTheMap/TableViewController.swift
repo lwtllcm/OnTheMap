@@ -110,19 +110,11 @@ class TableViewController: UITableViewController {
         
         let selectedStudentURL = allStudents[indexPath.row].url
         
-        //let url = NSURL(string: ((allStudents[indexPath.row].url)!))!
         
         let url = NSURL(string: (selectedStudentURL!))!
         
         UIApplication.sharedApplication().openURL(url)
         
-        /*
-        let detailViewController = storyboard?.instantiateViewControllerWithIdentifier("WebViewController") as! WebViewController
-        
-        let thisStudent = allStudents[indexPath.row]
-        detailViewController.studentURL = thisStudent.url!
-        navigationController?.pushViewController(detailViewController, animated: true)
-        */
         
     }
     

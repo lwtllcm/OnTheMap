@@ -47,9 +47,6 @@ class InformationPostingViewController: UIViewController, MKMapViewDelegate {
     
     override func viewWillAppear(animated: Bool) {
         print("InformationPostingViewController")
-        //activityIndicator.alpha = 1.0
-        
-        //activityIndicator.startAnimating()
         
     }
     @IBAction func studentLocationTextAction(sender: AnyObject) {
@@ -67,7 +64,6 @@ class InformationPostingViewController: UIViewController, MKMapViewDelegate {
         activityIndicator.startAnimating()
         
         let geocoder = CLGeocoder()
-       // var placemarks = [CLPlacemark]()
         
 
         geocoder.geocodeAddressString(studentLocationText.text!, completionHandler: {placemarks, error in
@@ -130,14 +126,6 @@ class InformationPostingViewController: UIViewController, MKMapViewDelegate {
             }
             
         })
-/*
-        mapView.hidden = false
-        studentLocationPromptLabel.hidden = true
-        studentLocationText.hidden = true
-        findOnTheMapButton.hidden = true
-        studentLinkText.hidden = false
-        submitButton.hidden = false
-*/
     }
     
     
@@ -145,7 +133,6 @@ class InformationPostingViewController: UIViewController, MKMapViewDelegate {
         print(studentLinkText.text)
         print("submitButtonPressed")
         
-        //self.postStudentLocation()
         
         let defaults = NSUserDefaults.standardUserDefaults()
 
@@ -157,7 +144,6 @@ class InformationPostingViewController: UIViewController, MKMapViewDelegate {
         let studentMapString = studentLocationText.text as String!
     
         
-        //let jsonBody = "{\"uniqueKey\": \"1234\", \"firstName\": \"Holly\", \"lastName\": \"Doe\",\"mapString\": \"Sacremento, CA\", \"mediaURL\": \"https://udacity.com\",\"latitude\": 37.386052, \"longitude\": -122.083851}"
         
        let jsonBody = "{\"uniqueKey\": \"1234\", \"firstName\": \"\(studentFirstName)\", \"lastName\": \"\(studentLastName)\",\"mapString\": \"\(studentMapString)\", \"mediaURL\": \"\(studentMediaURL)\",\"latitude\": \(studentLatitude), \"longitude\": \(studentLongitude)}"
         
@@ -166,9 +152,6 @@ class InformationPostingViewController: UIViewController, MKMapViewDelegate {
         
         DBClient.sharedInstance().taskForPOSTMethod(jsonBody) { (results, error) in
             print("taskForPostMethod")
-           // print("results from taskForPOSTMethod", results)
-           // print("error from taskForPOSTMethod", error)
-            
             
             if (error != nil) {
                 
@@ -178,20 +161,6 @@ class InformationPostingViewController: UIViewController, MKMapViewDelegate {
                 self.presentViewController(uiAlertController, animated: true, completion: nil)
             }
             
-            /*
-            let results = results.objectForKey("results") as! NSArray
-            
-            self.allStudents = Student.studentFromResults(results as! [[String : AnyObject]])
-           
-            self.performUIUpdatesOnMain { () -> Void in
-                self.performUIUpdatesOnMain({ () -> Void in
-                    print("performUIUpdatesOnMain")
-                    self.tableView.reloadData()
-                })
-                self.tableView.reloadData()
-                
-            }
-            */
             
         }
         
@@ -211,18 +180,6 @@ class InformationPostingViewController: UIViewController, MKMapViewDelegate {
         print("postStudentLocation")
         
         
-        //var newStudent:Student
-        //newStudent.firstName = studentLinkText.text
-        //newStudent.lastName = " "
-        //newStudent.location = " "
-        //newStudent.latitude = self.latitude
-        //newStudent.longitude = self.longitude
-        
-    
-        //print("newStudent", newStudent.firstName, newStudent.lastName, newStudent.latitude, newStudent.longitude)
-        
-        
-        
         let thisStudent =
         Student(firstName:studentLinkText.text!  , lastName:" " , location:" " ,latitude: self.latitude, longitude: self.longitude, url: studentLinkText.text! as String, updatedAt: NSCalendar.currentCalendar())
         print("thisStudent", thisStudent)
@@ -236,18 +193,6 @@ class InformationPostingViewController: UIViewController, MKMapViewDelegate {
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
         request.HTTPBody = "{\"uniqueKey\": \"1234\", \"firstName\": \"Holly\", \"lastName\": \"Doe\",\"mapString\": \"Sacremento, CA\", \"mediaURL\": \"https://udacity.com\",\"latitude\": 37.386052, \"longitude\": -122.083851}".dataUsingEncoding(NSUTF8StringEncoding)
         
-        //request.HTTPBody = "{\"uniqueKey\": \"1234\", \"firstName\": \"Jane\", \"lastName\": \"Doe\",\"mapString\": \"San Francisco, CA\", \"mediaURL\": ".dataUsingEncoding(NSUTF8StringEncoding)
-        //request.HTTPBody.append(thisStudent.url?.dataUsingEncoding(NSUTF8StringEncoding))
-        //request.HTTPBody.append(\"latitude\": 37.386052, \"longitude\": -122.083851}".dataUsingEncoding(NSUTF8StringEncoding))
-        
-        
-        /*
-        var requestURLString = "{\"uniqueKey\": \"1234\", \"firstName\": \"Jane\", \"lastName\": \"Doe\",\"mapString\": \"San Francisco, CA\", \"mediaURL\": "
-        requestURLString = requestURLString + thisStudent.url!
-        requestURLString = requestURLString + ",\"latitude\": 37.386052, \"longitude\": -122.083851}"
-        request.HTTPBody = requestURLString.dataUsingEncoding(NSUTF8StringEncoding)
-        print("request.HTTPBody", request.HTTPBody)
-        */
         
         let session = NSURLSession.sharedSession()
         let task = session.dataTaskWithRequest(request) { data, response, error in

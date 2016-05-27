@@ -43,17 +43,11 @@ class LoginViewController: UIViewController {
         else {
 
             print("Username or Password not empty")
- 
-           // getRequestToken()
+
             
+            let studentUserName = emailTextField.text!
+            let studentPassword = passwordTextField.text!
             
-            
-            let studentUserName = "sbj5@sbcglobal.net"
-            let studentPassword = "kwahyaj5"
-            
-            
-            
-            //let jsonBody = "{\"uniqueKey\": \"1234\", \"firstName\": \"Holly\", \"lastName\": \"Doe\",\"mapString\": \"Sacremento, CA\", \"mediaURL\": \"https://udacity.com\",\"latitude\": 37.386052, \"longitude\": -122.083851}"
             
             let jsonBody = "{\"udacity\": {\"username\": \"\(studentUserName)\", \"password\": \"\(studentPassword)\"}}"
             
@@ -61,16 +55,20 @@ class LoginViewController: UIViewController {
             print("jsonBody", jsonBody)
             
             DBClient.sharedInstance().taskForUdacityPOSTMethod(jsonBody) { (results, error) in
-                print("taskForPostMethod")
+                print("taskForUdacityPostMethod")
                 
-                print("userID", results.valueForKey("account"))
                 
                 if (error != nil) {
+                    print("error from taskForUdacityPOSTMethod")
                     
-                    let uiAlertController = UIAlertController(title: "post error", message: nil, preferredStyle: .Alert)
+                    let uiAlertController = UIAlertController(title: "error after taskForUdacityPostMethod", message: nil, preferredStyle: .Alert)
                     let defaultAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
                     uiAlertController.addAction(defaultAction)
                     self.presentViewController(uiAlertController, animated: true, completion: nil)
+                    
+                    
+                    
+                    
                 }
                 
                 else {
@@ -82,7 +80,6 @@ class LoginViewController: UIViewController {
                    let defaults = NSUserDefaults.standardUserDefaults()
                     defaults.setObject(userID, forKey: "Udacity.UserID")
                     
-                    //self.getUserID()
                     
                     
                   
@@ -90,6 +87,15 @@ class LoginViewController: UIViewController {
                         
                         if (error != nil) {
                             print("error after taskForGetUserID", error)
+                            
+                          
+                            let uiAlertController = UIAlertController(title: "error after taskForGetUserID", message: nil, preferredStyle: .Alert)
+                            let defaultAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
+                            uiAlertController.addAction(defaultAction)
+                            self.presentViewController(uiAlertController, animated: true, completion: nil)
+                            
+                            
+                            
                         }
                         else {
                         print("results after taskForGetUserID", results)
@@ -99,199 +105,21 @@ class LoginViewController: UIViewController {
                             defaults.setObject(results.valueForKey("user")?.valueForKey("first_name"), forKey: "Udacity.FirstName")
                             defaults.setObject(results.valueForKey("user")?.valueForKey("last_name"), forKey: "Udacity.LastName")
                             
-                            
                         }
                     }
                
-                    
-                    
-                /*
-                let results = results.objectForKey("results") as! NSArray
-                
-                self.allStudents = Student.studentFromResults(results as! [[String : AnyObject]])
-                
-                self.performUIUpdatesOnMain { () -> Void in
-                self.performUIUpdatesOnMain({ () -> Void in
-                print("performUIUpdatesOnMain")
-                self.tableView.reloadData()
-                })
-                self.tableView.reloadData()
-                
-                }
-                */
-                
             }
-            
             
         }
         
     }
-    }
+}
     
     @IBAction func signUpButtonPressed(sender: AnyObject) {
         print("signUpButtonPressed")
-        let detailViewController = storyboard?.instantiateViewControllerWithIdentifier("WebViewController") as! WebViewController
-        detailViewController.studentURL = "http://www.udacity.com"
         
-        navigationController?.pushViewController(detailViewController, animated: true)
-        
-    }
-    
-    
-    private func getRequestToken() {
-        print("getRequestToken")
-        
-        let methodParameters : [String:AnyObject] =  [
-            
-            UdacityParameterKeys.Username:emailTextField.text!,
-            UdacityParameterKeys.Password:passwordTextField.text!
-        ]
-        
-            print("methodParameters", methodParameters)
-        
-        
-        let request = NSMutableURLRequest(URL: udacityURLFromParameters(methodParameters,withPathExtension: nil))
-
-        request.HTTPMethod = "POST"
-        request.addValue("application/json", forHTTPHeaderField: "Accept")
-        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-        let httpBodyString = "{\"udacity\": {\"username\": \"\(emailTextField.text!)\", \"password\": \"\(passwordTextField.text!)\"}}"
-        print("request httpbody: \(httpBodyString)")
-        
-        request.HTTPBody = httpBodyString.dataUsingEncoding(NSUTF8StringEncoding)
-        
-        print("request",request)
-
-        let task = appDelegate.sharedSession.dataTaskWithRequest(request) { (data, response, error) in
-            
-        print("error" , error)
-            
-            let parsedResult: AnyObject!
-            do {
-                
-                /*
-                print("data to parse", data)
-                let newData = data?.subdataWithRange(NSMakeRange(5, (data?.length)! - 5))
-                print("newData", NSString(data: newData!, encoding: NSUTF8StringEncoding))
-                
-                parsedResult = try NSJSONSerialization.JSONObjectWithData(newData!, options: .AllowFragments)
-                print("parsedResult", parsedResult)
-*/
-                
-                let parsedResult: AnyObject!
-                do {
-                    
-                    
-                    parsedResult = try NSJSONSerialization.JSONObjectWithData(data!, options: .AllowFragments)
-                    print("parsedResult", parsedResult)
-                    
-                }
-                catch {
-                    
-                    print("Could not parse the data as JSON: '\(data)'")
-                    
-                    let uiAlertController = UIAlertController(title: "loginAlert", message: "login failed", preferredStyle: .Alert)
-                    let defaultAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
-                    uiAlertController.addAction(defaultAction)
-                    self.presentViewController(uiAlertController, animated: true, completion: nil)
-                    
-                    return
-                }
-
-            }
-            catch {
-
-                print("Could not parse the data as JSON: '\(data)'")
-
-                return
-            }
-
-        }
-        
-        task.resume()
-    }
- 
-    /*
-    private func loginWithToken(requestToken:String) {
-        
-    }
-*/
-
-    func udacityURLFromParameters(parameters: [String:AnyObject], withPathExtension: String? = nil) -> NSURL {
-        print("udacityURLFromParameters")
-        let components = NSURLComponents()
-        
-        components.scheme = "https"
-        components.host = "udacity.com"
-        components.path = "/api/session" + (withPathExtension ?? "")
-        components.queryItems = [NSURLQueryItem]()
-        
-        for (key, value) in parameters {
-            let queryItem = NSURLQueryItem(name: key, value: "\(value)")
-            components.queryItems!.append(queryItem)
-        }
-        
-        return components.URL!
-    }
-    
-  
-    
-    
-    
-     func getUserID() {
-        print("getUserID")
-        
-        
-        let defaults = NSUserDefaults.standardUserDefaults()
-        if let userID = defaults.stringForKey("Udacity.UserID") {
-            print("UserID", userID)
-            let requestUserID = NSMutableURLRequest(URL:NSURL(string:"https://www.udacity.com/api/users/\(userID)")!)
-            print("requestUserID", requestUserID)
-
-            //let task = appDelegate.sharedSession.dataTaskWithRequest(requestUserID) { (data, response, error) in
-            
-            let session = NSURLSession.sharedSession()
-                
-                let task = session.dataTaskWithRequest(requestUserID) { (data, response, error) in
-                    
-                   // print("data from getUserID", data)
-                    
-                    print("response from getUserID", response)
-                    
-                    
-                    print("error from getUserID", error)
-
-                
-             
-                
-                let parsedResult: AnyObject!
-                do {
-                    print("data to parse", data)
-                    let newData = data?.subdataWithRange(NSMakeRange(5, (data?.length)! - 5))
-                    print("newData", NSString(data: newData!, encoding: NSUTF8StringEncoding))
-                    
-                    parsedResult = try NSJSONSerialization.JSONObjectWithData(newData!, options: .AllowFragments)
-                    print("parsedResult", parsedResult)
-                    
-                }
-                catch {
-                    
-                    print("Could not parse the data as JSON: '\(data)'")
-                    
-                    let uiAlertController = UIAlertController(title: "loginAlert", message: "login failed", preferredStyle: .Alert)
-                    let defaultAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
-                    uiAlertController.addAction(defaultAction)
-                    self.presentViewController(uiAlertController, animated: true, completion: nil)
-                    
-                    return
-                }
-                
-            }
-            
-            task.resume()
-        
-        }
-        
+        let url = NSURL(string: (("http://www.udacity.com")))!
+        UIApplication.sharedApplication().openURL(url)
         
     }
     
