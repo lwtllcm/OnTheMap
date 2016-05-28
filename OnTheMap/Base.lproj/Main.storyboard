@@ -60,11 +60,17 @@
                     <navigationItem key="navigationItem" id="pKg-0M-cgP">
                         <rightBarButtonItems>
                             <barButtonItem title="Refresh" id="PvT-dO-XtO"/>
-                            <barButtonItem title="Pin" id="6q0-cP-hty"/>
+                            <barButtonItem title="Pin" id="6q0-cP-hty">
+                                <connections>
+                                    <segue destination="UQs-ys-U8S" kind="presentation" id="eBb-kG-jlg"/>
+                                </connections>
+                            </barButtonItem>
                         </rightBarButtonItems>
                     </navigationItem>
                     <connections>
                         <outlet property="mapView" destination="1UV-uP-hHR" id="u2q-qe-iEf"/>
+                        <outlet property="pinButton" destination="6q0-cP-hty" id="sYv-7G-juN"/>
+                        <outlet property="refreshButton" destination="6q0-cP-hty" id="ioo-kX-7SK"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pTi-5D-Izv" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -423,7 +429,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="GzC-x7-u4l" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3256.5" y="323"/>
+            <point key="canvasLocation" x="3291" y="-106"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="zXs-mN-pE9">
@@ -463,4 +469,7 @@
             <point key="canvasLocation" x="1191" y="-481"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="eBb-kG-jlg"/>
+    </inferredMetricsTieBreakers>
 </document>

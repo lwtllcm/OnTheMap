@@ -13,6 +13,10 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     
     var appDelegate: AppDelegate!
     var student: Student?
+   
+    @IBOutlet weak var pinButton: UIBarButtonItem!
+    
+    @IBOutlet weak var refreshButton: UIBarButtonItem!
     
     @IBOutlet weak var mapView: MKMapView!
     
