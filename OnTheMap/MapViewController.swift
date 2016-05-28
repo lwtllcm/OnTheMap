@@ -64,7 +64,10 @@ class MapViewController: UIViewController, MKMapViewDelegate {
                 
             }
             print("annotations", annotations)
-            self.mapView.addAnnotations(annotations)
+            
+            dispatch_async(dispatch_get_main_queue()) {
+                self.mapView.addAnnotations(annotations)
+            }
         }
 
         
