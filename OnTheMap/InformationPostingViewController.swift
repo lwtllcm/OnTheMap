@@ -9,7 +9,7 @@
 import UIKit
 import MapKit
 
-class InformationPostingViewController: UIViewController, MKMapViewDelegate {
+class InformationPostingViewController: UIViewController, MKMapViewDelegate, UITextFieldDelegate {
    
     @IBOutlet weak var studentLocationPromptLabel: UILabel!
     
@@ -34,6 +34,8 @@ class InformationPostingViewController: UIViewController, MKMapViewDelegate {
     var latitude: CLLocationDegrees = 0.0
     var longitude: CLLocationDegrees = 0.0
     
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         mapView.delegate = self
@@ -43,12 +45,31 @@ class InformationPostingViewController: UIViewController, MKMapViewDelegate {
         submitButton.hidden = true
         activityIndicator.hidden = true
         
+        studentLocationText.delegate = self
+        studentLinkText.delegate = self
+        
+        //subscribeToKeyboardNotifications()
+        //subscribeToKeyboardWillHideNotifications()
+        
+
+        
     }
     
     override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
         print("InformationPostingViewController")
         
+        subscribeToKeyboardNotifications()
+        subscribeToKeyboardWillHideNotifications()
+
+            }
+    
+    override func viewWillDisappear(animated: Bool) {
+        print("viewWillDisappear")
+        super.viewWillDisappear(animated)
+        unsubscribeFromKeyboardNotifications()
     }
+    
     @IBAction func studentLocationTextAction(sender: AnyObject) {
         print("studentLocationText entered")
        
@@ -217,5 +238,78 @@ class InformationPostingViewController: UIViewController, MKMapViewDelegate {
         task.resume()
       
     }
+    
+    func keyboardWillShow(notification: NSNotification) {
+        if (studentLocationText.isFirstResponder()) {
+            print("studentLocationText is FirstResponder")
+          //  view.frame.origin.y = getKeyboardHeight(notification) * -1
+        }
+        //else
+        
+            if (studentLinkText.isFirstResponder()) {
+                print("studentLinkText is FirstResponder")
 
+                view.frame.origin.y = getKeyboardHeight(notification) * -0.1
+        }
+
+
+    }
+    
+    func keyboardWillHide(notification: NSNotification) {
+        if studentLocationText.isFirstResponder() {
+            view.frame.origin.y = 0.0
+        }
+            
+        else
+            if studentLinkText.isFirstResponder() {
+                view.frame.origin.y = 0.0
+        }
+
+    }
+    func textFieldDidBeginEditing( textField: UITextField) {
+        print("textFieldDidBeginEditing")
+        if textField.text == "TOP" || textField.text == "BOTTOM" {
+            textField.text = ""
+        }
+    }
+    func textFieldDidEndEditing(textField: UITextField) {
+        print("textFieldDidEndEditing")
+    }
+    
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        print("textFieldShouldReturn")
+        textField.resignFirstResponder()
+        return true
+    }
+    
+    func getKeyboardHeight(notification:NSNotification) -> CGFloat {
+        print("getKeyboardHeight")
+        let userInfo = notification.userInfo
+        let keyboardSize = userInfo![UIKeyboardFrameEndUserInfoKey] as! NSValue
+        return keyboardSize.CGRectValue().height
+    }
+    
+    func subscribeToKeyboardNotifications() {
+        print("subscribeToKeyboardNotifications")
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillShow:", name: UIKeyboardWillShowNotification, object: nil)
+    }
+    
+    func subscribeToKeyboardWillHideNotifications() {
+        print("subscribeToKeyboardNotifications")
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillHide:", name: UIKeyboardWillHideNotification, object: nil)
+    }
+    
+    func unsubscribeFromKeyboardNotifications() {
+        print("unsubscribeFromKeyboardNotifications")
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillShowNotification, object: nil)
+    }
+    
+    func unsubscribeFromKeyboardWillHideNotifications() {
+        print("unsubscribeFromKeyboardNotifications")
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillHideNotification, object: nil)
+    }
+    
+    
+    
+    
 }

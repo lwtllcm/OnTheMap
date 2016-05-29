@@ -74,7 +74,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     }
     
     override func viewWillAppear(animated: Bool) {
-        super.viewDidLoad()
+        super.viewWillAppear(animated)
         
         print("MapViewController viewWillAppear")
      

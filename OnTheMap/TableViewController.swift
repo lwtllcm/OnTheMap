@@ -31,7 +31,7 @@ class TableViewController: UITableViewController {
     }
     
     override func viewWillAppear(animated: Bool) {    
-        super.viewDidLoad()
+        super.viewWillAppear(animated)
         print("TableViewController viewWillAppear")
         
  
