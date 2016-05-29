@@ -166,8 +166,10 @@ class InformationPostingViewController: UIViewController, MKMapViewDelegate, UIT
     
         
         
-       let jsonBody = "{\"uniqueKey\": \"1234\", \"firstName\": \"\(studentFirstName)\", \"lastName\": \"\(studentLastName)\",\"mapString\": \"\(studentMapString)\", \"mediaURL\": \"\(studentMediaURL)\",\"latitude\": \(studentLatitude), \"longitude\": \(studentLongitude)}"
+       //let jsonBody = "{\"uniqueKey\": \"1234\", \"firstName\": \"\(studentFirstName)\", \"lastName\": \"\(studentLastName)\",\"mapString\": \"\(studentMapString)\", \"mediaURL\": \"\(studentMediaURL)\",\"latitude\": \(studentLatitude), \"longitude\": \(studentLongitude)}"
         
+        
+       let jsonBody = "{\"uniqueKey\": \"1234\", \"\(DBClient.ParseResponseKeys.FirstName)\": \"\(studentFirstName)\", \"\(DBClient.ParseResponseKeys.LastName)\": \"\(studentLastName)\",\"\(DBClient.ParseResponseKeys.MapString)\": \"\(studentMapString)\", \"\(DBClient.ParseResponseKeys.MediaURL)\": \"\(studentMediaURL)\",\"\(DBClient.ParseResponseKeys.Latitude)\": \(studentLatitude), \"\(DBClient.ParseResponseKeys.Longitude)\": \(studentLongitude)}"
         
         print("jsonBody", jsonBody)
         
@@ -196,13 +198,14 @@ class InformationPostingViewController: UIViewController, MKMapViewDelegate, UIT
         print("cancelButtonPressed")
         navigationController?.dismissViewControllerAnimated(true, completion: {})
     }
-    
+    /*
     private func postStudentLocation() {
         print("postStudentLocation")
         
         
         let thisStudent =
         Student(firstName:studentLinkText.text!  , lastName:" " , location:" " ,latitude: self.latitude, longitude: self.longitude, url: studentLinkText.text! as String, updatedAt: NSCalendar.currentCalendar())
+        
         print("thisStudent", thisStudent)
         
         
@@ -238,6 +241,7 @@ class InformationPostingViewController: UIViewController, MKMapViewDelegate, UIT
         task.resume()
       
     }
+*/
     
     func keyboardWillShow(notification: NSNotification) {
         if (studentLocationText.isFirstResponder()) {

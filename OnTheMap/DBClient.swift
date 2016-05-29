@@ -20,7 +20,7 @@ class DBClient: NSObject {
         
         print("taskForGETMethod")
         
-        let request = NSMutableURLRequest(URL: NSURL(string: "https://api.parse.com/1/classes/StudentLocation?-order=updatedAt")!)
+        let request = NSMutableURLRequest(URL: NSURL(string: "https://api.parse.com/1/classes/StudentLocation?limit=100&-order=updatedAt")!)
         
         request.addValue(ParseConstants.ParseParameterValues.ApplicationID, forHTTPHeaderField: "X-Parse-Application-Id")
 
