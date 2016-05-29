@@ -32,7 +32,7 @@ struct Student {
     
     static func studentFromResults(results: [[String:AnyObject]] )-> [Student] {
         print("Student studentFromResults")
-        var allStudents = [Student] ()
+        //var allStudents = [Student] ()
         for result in results as NSArray {
             
             //print("result", result)
@@ -56,11 +56,13 @@ struct Student {
             )
                        
             //print("newTestStudent", newTestStudent)
-            allStudents.append(newTestStudent)
+            
+            print(Students.allStudents)
+            Students.allStudents.append(newTestStudent)
             //print(allStudents)
             
         }
-        return allStudents
+        return Students.allStudents
     }
 
     

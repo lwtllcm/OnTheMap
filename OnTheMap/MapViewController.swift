@@ -39,7 +39,20 @@ class MapViewController: UIViewController, MKMapViewDelegate {
             
             let results = results.objectForKey("results") as! NSArray
             
+            if Students.allStudents.count == 0 {
+                for student in Student.studentFromResults(results as! [[String : AnyObject]]) {
+
+                self.setAnnotations(student)
+            }
+            }
+            else {
+                for student in Students.allStudents {
+                    
+                    self.setAnnotations(student)
+            }
             
+            /*
+           
             var annotations = [MKPointAnnotation]()
             
             for student in Student.studentFromResults(results as! [[String : AnyObject]]) {
@@ -63,10 +76,13 @@ class MapViewController: UIViewController, MKMapViewDelegate {
                 annotations.append(annotation)
                 
             }
+
+
             print("annotations", annotations)
-            
+
             dispatch_async(dispatch_get_main_queue()) {
                 self.mapView.addAnnotations(annotations)
+*/
             }
         }
 
@@ -121,4 +137,28 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         }
     }
     
+    func setAnnotations (student:Student) {
+        var annotations = [MKPointAnnotation]()
+        let lat1 = CLLocationDegrees(student.latitude)
+        print("lat1", lat1)
+        
+        let long1 = CLLocationDegrees(student.longitude)
+        print("long1", long1)
+        let coordinate1 = CLLocationCoordinate2D(latitude: lat1, longitude: long1)
+        print("coordinate1", coordinate1)
+        
+        let annotation = MKPointAnnotation()
+        annotation.coordinate = coordinate1
+        annotation.title = student.firstName! + " " + student.lastName!
+        annotation.subtitle = student.url!
+        print("annotation.title", annotation.title)
+        
+        
+        annotations.append(annotation)
+        
+        dispatch_async(dispatch_get_main_queue()) {
+            self.mapView.addAnnotations(annotations)
+
+    }
+    }
 }

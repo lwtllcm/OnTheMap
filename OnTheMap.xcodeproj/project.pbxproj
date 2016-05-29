@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5B0C6E9E1CFAA3BA00CDE082 /* Students.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B0C6E9D1CFAA3BA00CDE082 /* Students.swift */; };
 		5B0D06A81C9DC5E6001F0B31 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B0D06A71C9DC5E6001F0B31 /* LoginViewController.swift */; };
 		5B0FD7471C94CE310050AA72 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B0FD7461C94CE310050AA72 /* AppDelegate.swift */; };
 		5B0FD74C1C94CE310050AA72 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5B0FD74A1C94CE310050AA72 /* Main.storyboard */; };
@@ -23,6 +24,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		5B0C6E9D1CFAA3BA00CDE082 /* Students.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Students.swift; sourceTree = "<group>"; };
 		5B0D06A71C9DC5E6001F0B31 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		5B0FD7431C94CE310050AA72 /* OnTheMap.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OnTheMap.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5B0FD7461C94CE310050AA72 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -74,6 +76,7 @@
 				5B6E566C1C9DD9E900170053 /* ViewControllers */,
 				5B0FD7461C94CE310050AA72 /* AppDelegate.swift */,
 				5B0FD7601C9609680050AA72 /* Student.swift */,
+				5B0C6E9D1CFAA3BA00CDE082 /* Students.swift */,
 				5B0FD74A1C94CE310050AA72 /* Main.storyboard */,
 				5B0FD74D1C94CE310050AA72 /* Assets.xcassets */,
 				5B0FD74F1C94CE310050AA72 /* LaunchScreen.storyboard */,
@@ -183,6 +186,7 @@
 				5B0FD75F1C94D4280050AA72 /* TableViewController.swift in Sources */,
 				5B7366F71CAA396100C25ABF /* InformationPostingViewController.swift in Sources */,
 				5B6E566E1C9DDB7600170053 /* Constants.swift in Sources */,
+				5B0C6E9E1CFAA3BA00CDE082 /* Students.swift in Sources */,
 				5BB99EB81CD18C2700C65CDD /* DBClient.swift in Sources */,
 				5B6E56721C9F9C6100170053 /* ParseConstants.swift in Sources */,
 			);
