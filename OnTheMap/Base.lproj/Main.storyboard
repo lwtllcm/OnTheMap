@@ -94,7 +94,7 @@
                                 <state key="normal" title="Login"/>
                                 <connections>
                                     <action selector="loginPressed:" destination="dC6-g7-GBw" eventType="touchUpInside" id="FXI-AD-q9Y"/>
-                                    <segue destination="Ruk-64-CdW" kind="showDetail" id="1ld-RO-UXw"/>
+                                    <segue destination="Ruk-64-CdW" kind="showDetail" identifier="loginSuccess" id="1ld-RO-UXw"/>
                                 </connections>
                             </button>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="password" borderStyle="roundedRect" textAlignment="natural" clearsOnBeginEditing="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="adJ-U1-30U">

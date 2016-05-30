@@ -21,6 +21,8 @@ class LoginViewController: UIViewController {
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
     
+    var loginSuccessIndicator = false
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         print("LoginViewController")
@@ -30,7 +32,8 @@ class LoginViewController: UIViewController {
     }
     
     override func viewWillAppear(animated: Bool) {
-        super.viewDidLoad()
+        super.viewWillAppear(animated)
+        loginSuccessIndicator = false
         print("LoginViewController viewWillAppear")        
     }
     
@@ -61,11 +64,16 @@ class LoginViewController: UIViewController {
                 if (error != nil) {
                     print("error from taskForUdacityPOSTMethod")
                     
-                    let uiAlertController = UIAlertController(title: "error after taskForUdacityPostMethod", message: nil, preferredStyle: .Alert)
+                    
+                   // http://stackoverflow.com/questions/26947608/waituntilalltasksarefinished-error-swift
+                    
+                    
+                    NSOperationQueue.mainQueue().addOperationWithBlock {
+                        let uiAlertController = UIAlertController(title: "Username/Password error", message: nil, preferredStyle: .Alert)
                     let defaultAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
                     uiAlertController.addAction(defaultAction)
                     self.presentViewController(uiAlertController, animated: true, completion: nil)
-                    
+                    }
                     
                     
                     
@@ -89,7 +97,7 @@ class LoginViewController: UIViewController {
                             print("error after taskForGetUserID", error)
                             
                           
-                            let uiAlertController = UIAlertController(title: "error after taskForGetUserID", message: nil, preferredStyle: .Alert)
+                            let uiAlertController = UIAlertController(title: "Username/Password error", message: nil, preferredStyle: .Alert)
                             let defaultAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
                             uiAlertController.addAction(defaultAction)
                             self.presentViewController(uiAlertController, animated: true, completion: nil)
@@ -104,7 +112,10 @@ class LoginViewController: UIViewController {
 
                             defaults.setObject(results.valueForKey("user")?.valueForKey("first_name"), forKey: "Udacity.FirstName")
                             defaults.setObject(results.valueForKey("user")?.valueForKey("last_name"), forKey: "Udacity.LastName")
-                            
+                        self.loginSuccessIndicator = true
+                        NSOperationQueue.mainQueue().addOperationWithBlock {
+                        self.performSegueWithIdentifier("loginSuccess", sender: self)
+                        }
                         }
                     }
                
@@ -121,6 +132,12 @@ class LoginViewController: UIViewController {
         let url = NSURL(string: (("http://www.udacity.com")))!
         UIApplication.sharedApplication().openURL(url)
         
+    }
+    
+    override func shouldPerformSegueWithIdentifier(identifier: String, sender: AnyObject?) -> Bool {
+            print("shouldPerformSegueWithIdentifier")
+            print("loginSuccessIndicator", loginSuccessIndicator)
+            return loginSuccessIndicator
     }
     
 }

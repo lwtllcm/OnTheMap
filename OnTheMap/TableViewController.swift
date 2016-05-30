@@ -43,14 +43,15 @@ class TableViewController: UITableViewController {
             
             if (error != nil) {
         
+                NSOperationQueue.mainQueue().addOperationWithBlock {
                 let uiAlertController = UIAlertController(title: "download error", message: nil, preferredStyle: .Alert)
                 let defaultAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
                 uiAlertController.addAction(defaultAction)
                 self.presentViewController(uiAlertController, animated: true, completion: nil)
             }
+            }
             
-            
-            let results = results.objectForKey("results") as! NSArray
+           // let results = results.objectForKey("results") as! NSArray
             
           // self.allStudents = Student.studentFromResults(results as! [[String : AnyObject]])
             

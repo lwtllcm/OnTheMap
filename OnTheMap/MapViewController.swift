@@ -29,13 +29,14 @@ class MapViewController: UIViewController, MKMapViewDelegate {
             print("results from taskForGETMethod", results)
             
             if (error != nil) {
+                NSOperationQueue.mainQueue().addOperationWithBlock {
                 
                 let uiAlertController = UIAlertController(title: "download error", message: nil, preferredStyle: .Alert)
                 let defaultAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
                 uiAlertController.addAction(defaultAction)
                 self.presentViewController(uiAlertController, animated: true, completion: nil)
             }
-
+            }
             
             let results = results.objectForKey("results") as! NSArray
             
