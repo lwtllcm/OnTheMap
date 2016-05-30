@@ -20,6 +20,8 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     
     @IBOutlet weak var mapView: MKMapView!
     
+    @IBOutlet weak var logoutButton: UIBarButtonItem!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         print("MapViewController viewDidLoad")
@@ -162,4 +164,15 @@ class MapViewController: UIViewController, MKMapViewDelegate {
 
     }
     }
+    /*
+    @IBAction override func unwindForSegue(unwindSegue: UIStoryboardSegue, towardsViewController subsequentVC: UIViewController) {
+        print("unwind to login")
+        if let thisController:MapViewController = unwindSegue.sourceViewController as? MapViewController {
+            print("coming from mapviewcontroller")
+            performSegueWithIdentifier("UnwindToLogin", sender: self)
+        }
+       
+    }
+    */
+    
 }

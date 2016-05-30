@@ -58,6 +58,11 @@
                         </variation>
                     </view>
                     <navigationItem key="navigationItem" id="pKg-0M-cgP">
+                        <barButtonItem key="leftBarButtonItem" title="Logout" id="sYQ-MD-vQ6">
+                            <connections>
+                                <segue destination="ziC-eF-rZO" kind="unwind" identifier="UnwindFromMap" unwindAction="unwindToLogin:" id="U9C-sr-nEt"/>
+                            </connections>
+                        </barButtonItem>
                         <rightBarButtonItems>
                             <barButtonItem title="Refresh" id="PvT-dO-XtO"/>
                             <barButtonItem title="Pin" id="6q0-cP-hty">
@@ -68,12 +73,14 @@
                         </rightBarButtonItems>
                     </navigationItem>
                     <connections>
+                        <outlet property="logoutButton" destination="sYQ-MD-vQ6" id="5Qk-7A-Htr"/>
                         <outlet property="mapView" destination="1UV-uP-hHR" id="u2q-qe-iEf"/>
                         <outlet property="pinButton" destination="6q0-cP-hty" id="sYv-7G-juN"/>
                         <outlet property="refreshButton" destination="6q0-cP-hty" id="ioo-kX-7SK"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pTi-5D-Izv" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="ziC-eF-rZO" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="2109" y="-481"/>
         </scene>
@@ -197,6 +204,11 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" id="IeI-cs-XwC">
+                        <barButtonItem key="leftBarButtonItem" title="Logout" id="vwU-Xu-4LE">
+                            <connections>
+                                <segue destination="B7W-gx-dGm" kind="unwind" identifier="UnwindToLogin" unwindAction="unwindToLogin:" id="xBg-LW-l7j"/>
+                            </connections>
+                        </barButtonItem>
                         <rightBarButtonItems>
                             <barButtonItem title="Refresh" id="u6N-0q-cVK"/>
                             <barButtonItem title="Pin" id="Re9-MA-Wgh">
@@ -208,11 +220,13 @@
                         </rightBarButtonItems>
                     </navigationItem>
                     <connections>
+                        <outlet property="logoutButton" destination="vwU-Xu-4LE" id="pkY-2N-wxP"/>
                         <outlet property="pinButton" destination="Re9-MA-Wgh" id="uB5-D7-S4Q"/>
                         <outlet property="refreshButton" destination="u6N-0q-cVK" id="Upc-ip-Ief"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="tpe-A2-VWz" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="B7W-gx-dGm" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="2073" y="323"/>
         </scene>
@@ -470,6 +484,6 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="eBb-kG-jlg"/>
+        <segue reference="ccB-0S-D5d"/>
     </inferredMetricsTieBreakers>
 </document>

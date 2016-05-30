@@ -139,5 +139,22 @@ class LoginViewController: UIViewController {
             print("loginSuccessIndicator", loginSuccessIndicator)
             return loginSuccessIndicator
     }
+ 
     
-}
+    // http://stackoverflow.com/questions/12561735/what-are-unwind-segues-for-and-how-do-you-use-them
+    
+    @IBAction func unwindToLogin(unwindSegue: UIStoryboardSegue) {
+        print("unwindToLogin in LoginViewController")
+                /*
+        if let mapViewController:MapViewController = unwindSegue.sourceViewController as! MapViewController {
+        print("coming from mapview")
+        }
+               
+        else
+        if let tableViewController:TableViewController = unwindSegue.sourceViewController as! TableViewController {
+        print("coming from tableview")
+        }
+*/
+    }
+    
+    }

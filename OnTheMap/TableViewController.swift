@@ -19,7 +19,8 @@ class TableViewController: UITableViewController {
     
     @IBOutlet weak var refreshButton: UIBarButtonItem!
     
-    
+    @IBOutlet weak var logoutButton: UIBarButtonItem!
+        
     //var allStudents:[Student] = [Student]()
     
     
