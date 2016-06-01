@@ -23,6 +23,9 @@ class LoginViewController: UIViewController {
     
     var loginSuccessIndicator = false
     
+    var timer = NSTimer()
+    var counter = 0
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         print("LoginViewController")
@@ -34,11 +37,44 @@ class LoginViewController: UIViewController {
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         loginSuccessIndicator = false
-        print("LoginViewController viewWillAppear")        
+        print("LoginViewController viewWillAppear")
+        counter = 0
     }
     
     @IBAction func loginPressed(sender: AnyObject) {
         print("loginPressed")
+        
+        
+        
+        //var connectionTimer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: "countUp", userInfo: nil, repeats: true)
+        /*
+        if Reachability.isConnectedToNetwork() == true {
+            print("Internet connection OK")
+        }
+        else {
+            print("Internet connection is not OK")
+            NSOperationQueue.mainQueue().addOperationWithBlock {
+                let uiAlertController = UIAlertController(title: "Internet connection error", message: nil, preferredStyle: .Alert)
+                let defaultAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
+                uiAlertController.addAction(defaultAction)
+                self.presentViewController(uiAlertController, animated: true, completion: nil)
+            }
+        }
+        */
+        
+       /*
+        timer = NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: "updateCounter", userInfo: nil, repeats: true)
+        if counter > 30 {
+            NSOperationQueue.mainQueue().addOperationWithBlock {
+                let uiAlertController = UIAlertController(title: "Internet connection error", message: nil, preferredStyle: .Alert)
+                let defaultAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
+                uiAlertController.addAction(defaultAction)
+                self.presentViewController(uiAlertController, animated: true, completion: nil)
+                self.counter = 0
+            }
+            
+        }
+*/
         
         if emailTextField.text!.isEmpty || passwordTextField.text!.isEmpty {
             print("Username or Password Empty")
@@ -56,6 +92,8 @@ class LoginViewController: UIViewController {
             
             
             print("jsonBody", jsonBody)
+         
+            
             
             DBClient.sharedInstance().taskForUdacityPOSTMethod(jsonBody) { (results, error) in
                 print("taskForUdacityPostMethod")
@@ -63,22 +101,29 @@ class LoginViewController: UIViewController {
                 
                 if (error != nil) {
                     print("error from taskForUdacityPOSTMethod")
+                    print(error!)
+                    print(error!.localizedDescription)
                     
                     
                    // http://stackoverflow.com/questions/26947608/waituntilalltasksarefinished-error-swift
                     
                     
                     NSOperationQueue.mainQueue().addOperationWithBlock {
-                        let uiAlertController = UIAlertController(title: "Username/Password error", message: nil, preferredStyle: .Alert)
+                        //let uiAlertController = UIAlertController(title: "Username/Password error", message: nil, preferredStyle: .Alert)
+                        
+                        
+                       let displayError =  error!.localizedDescription
+                        let uiAlertController = UIAlertController(title: displayError, message: nil, preferredStyle: .Alert)
+
                     let defaultAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
                     uiAlertController.addAction(defaultAction)
                     self.presentViewController(uiAlertController, animated: true, completion: nil)
                     }
                     
                     
-                    
-                }
                 
+            }
+            
                 else {
                     let resultDictionary = results.valueForKey("account") as? NSDictionary
                     let userID = resultDictionary?.valueForKey("key")
@@ -94,8 +139,8 @@ class LoginViewController: UIViewController {
                     DBClient.sharedInstance().taskForGetUserID {(results, error) in
                         
                         if (error != nil) {
+                            //print("error after taskForGetUserID", error)
                             print("error after taskForGetUserID", error)
-                            
                           
                             let uiAlertController = UIAlertController(title: "Username/Password error", message: nil, preferredStyle: .Alert)
                             let defaultAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
@@ -145,16 +190,7 @@ class LoginViewController: UIViewController {
     
     @IBAction func unwindToLogin(unwindSegue: UIStoryboardSegue) {
         print("unwindToLogin in LoginViewController")
-                /*
-        if let mapViewController:MapViewController = unwindSegue.sourceViewController as! MapViewController {
-        print("coming from mapview")
-        }
-               
-        else
-        if let tableViewController:TableViewController = unwindSegue.sourceViewController as! TableViewController {
-        print("coming from tableview")
-        }
-*/
     }
     
-    }
+
+}

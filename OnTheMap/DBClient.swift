@@ -217,23 +217,26 @@ class DBClient: NSObject {
 
             
             
-            func displayError(error: String) {
-                print("displayError")
-                print(error)
-                
-                let userInfo = [NSLocalizedDescriptionKey: error]
-                
-                completionHandlerForPOST(result: nil, error:NSError( domain: "taskForPOSTMethod", code: 1, userInfo:userInfo))
-                
-                
-            }
-            
             func sendError(error: String) {
                 print(error)
                 let userInfo = [NSLocalizedDescriptionKey: error]
-                completionHandlerForPOST(result: nil, error:NSError( domain: "taskForPOSTMethod", code: 1, userInfo:userInfo))
+                completionHandlerForPOST(result: nil, error:NSError( domain: "taskForUdacityPOSTMethod", code: 1, userInfo:userInfo))
                 
             }
+            
+            func checkForTimedOut() {
+                guard (error?.code == NSURLErrorTimedOut) else {
+                    return
+                }
+                
+                    print("timed out")
+                    sendError("Request timed out")
+                    
+                    return
+                }
+
+                
+            checkForTimedOut()
             
             guard (error == nil) else {
 
@@ -243,18 +246,38 @@ class DBClient: NSObject {
                 
                 return
             }
+            
+            
             guard let statusCode = (response as? NSHTTPURLResponse)?.statusCode where statusCode >= 200 && statusCode <= 299 else {
 
-                sendError("Your taskForUdacityPOSTMethod request returned a status code other than 2xx!")
+                //sendError("Your taskForUdacityPOSTMethod request returned a status code other than 2xx!")
+                sendError("Username/Password error")
                 
                 return
             }
+            
+            
             
             guard let data = data else {
 
                 sendError("No data was returned by the request!")
                 return
             }
+            
+            /*
+            guard (error?.code != NSURLErrorTimedOut) else {
+                
+            
+                print("timed out")
+                sendError("Request timed out")
+                
+                return
+            }
+            */
+            
+            //checkForTimedOut()
+            
+            
             
             let newData = data.subdataWithRange(NSMakeRange(5, data.length - 5) )
             
@@ -291,7 +314,7 @@ class DBClient: NSObject {
             print("error from taskForGetUserID", error)
             
             
-            
+          /*
             func displayError(error: String) {
                 print("displayError")
                 print(error)
@@ -302,6 +325,7 @@ class DBClient: NSObject {
                 
                 
             }
+*/
             
             func sendError(error: String) {
                 print(error)
