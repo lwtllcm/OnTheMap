@@ -250,7 +250,6 @@ class DBClient: NSObject {
             
             guard let statusCode = (response as? NSHTTPURLResponse)?.statusCode where statusCode >= 200 && statusCode <= 299 else {
 
-                //sendError("Your taskForUdacityPOSTMethod request returned a status code other than 2xx!")
                 sendError("Username/Password error")
                 
                 return
@@ -264,21 +263,7 @@ class DBClient: NSObject {
                 return
             }
             
-            /*
-            guard (error?.code != NSURLErrorTimedOut) else {
-                
-            
-                print("timed out")
-                sendError("Request timed out")
-                
-                return
-            }
-            */
-            
-            //checkForTimedOut()
-            
-            
-            
+             
             let newData = data.subdataWithRange(NSMakeRange(5, data.length - 5) )
             
             
@@ -313,19 +298,6 @@ class DBClient: NSObject {
             
             print("error from taskForGetUserID", error)
             
-            
-          /*
-            func displayError(error: String) {
-                print("displayError")
-                print(error)
-                
-                let userInfo = [NSLocalizedDescriptionKey: error]
-                
-                completionHandlerForGetUserID(result: nil, error:NSError( domain: "taskForGetUserID", code: 1, userInfo:userInfo))
-                
-                
-            }
-*/
             
             func sendError(error: String) {
                 print(error)

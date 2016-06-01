@@ -46,36 +46,6 @@ class LoginViewController: UIViewController {
         
         
         
-        //var connectionTimer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: "countUp", userInfo: nil, repeats: true)
-        /*
-        if Reachability.isConnectedToNetwork() == true {
-            print("Internet connection OK")
-        }
-        else {
-            print("Internet connection is not OK")
-            NSOperationQueue.mainQueue().addOperationWithBlock {
-                let uiAlertController = UIAlertController(title: "Internet connection error", message: nil, preferredStyle: .Alert)
-                let defaultAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
-                uiAlertController.addAction(defaultAction)
-                self.presentViewController(uiAlertController, animated: true, completion: nil)
-            }
-        }
-        */
-        
-       /*
-        timer = NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: "updateCounter", userInfo: nil, repeats: true)
-        if counter > 30 {
-            NSOperationQueue.mainQueue().addOperationWithBlock {
-                let uiAlertController = UIAlertController(title: "Internet connection error", message: nil, preferredStyle: .Alert)
-                let defaultAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
-                uiAlertController.addAction(defaultAction)
-                self.presentViewController(uiAlertController, animated: true, completion: nil)
-                self.counter = 0
-            }
-            
-        }
-*/
-        
         if emailTextField.text!.isEmpty || passwordTextField.text!.isEmpty {
             print("Username or Password Empty")
         }
@@ -109,7 +79,6 @@ class LoginViewController: UIViewController {
                     
                     
                     NSOperationQueue.mainQueue().addOperationWithBlock {
-                        //let uiAlertController = UIAlertController(title: "Username/Password error", message: nil, preferredStyle: .Alert)
                         
                         
                        let displayError =  error!.localizedDescription
@@ -139,7 +108,7 @@ class LoginViewController: UIViewController {
                     DBClient.sharedInstance().taskForGetUserID {(results, error) in
                         
                         if (error != nil) {
-                            //print("error after taskForGetUserID", error)
+
                             print("error after taskForGetUserID", error)
                           
                             let uiAlertController = UIAlertController(title: "Username/Password error", message: nil, preferredStyle: .Alert)

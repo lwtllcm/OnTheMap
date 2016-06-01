@@ -52,10 +52,6 @@ class TableViewController: UITableViewController {
             }
             }
             
-           // let results = results.objectForKey("results") as! NSArray
-            
-          // self.allStudents = Student.studentFromResults(results as! [[String : AnyObject]])
-            
             self.performUIUpdatesOnMain { () -> Void in
                 self.performUIUpdatesOnMain({ () -> Void in
                     print("performUIUpdatesOnMain")
@@ -74,9 +70,6 @@ class TableViewController: UITableViewController {
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         print("numberOfRowsInSection")
-       // print("testStudent.count",self.allStudents.count)
-        
-        //return self.allStudents.count
         
         if Students.allStudents.count == 0 {
             return 1
@@ -92,10 +85,6 @@ class TableViewController: UITableViewController {
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("StudentCell") as UITableViewCell!
 
-        
-        //print("allStudents", allStudents)
-        
-        //let individual = allStudents[indexPath.row]
         
         let individual = Students.allStudents[indexPath.row]
         
@@ -120,7 +109,6 @@ class TableViewController: UITableViewController {
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         print("didSelectRowAtIndexPath")
         
-       // let selectedStudentURL = allStudents[indexPath.row].url
         let selectedStudentURL = Students.allStudents[indexPath.row].url
         
         

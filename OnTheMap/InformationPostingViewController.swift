@@ -48,10 +48,6 @@ class InformationPostingViewController: UIViewController, MKMapViewDelegate, UIT
         studentLocationText.delegate = self
         studentLinkText.delegate = self
         
-        //subscribeToKeyboardNotifications()
-        //subscribeToKeyboardWillHideNotifications()
-        
-
         
     }
     
@@ -165,10 +161,6 @@ class InformationPostingViewController: UIViewController, MKMapViewDelegate, UIT
         let studentMapString = studentLocationText.text as String!
     
         
-        
-       //let jsonBody = "{\"uniqueKey\": \"1234\", \"firstName\": \"\(studentFirstName)\", \"lastName\": \"\(studentLastName)\",\"mapString\": \"\(studentMapString)\", \"mediaURL\": \"\(studentMediaURL)\",\"latitude\": \(studentLatitude), \"longitude\": \(studentLongitude)}"
-        
-        
        let jsonBody = "{\"uniqueKey\": \"1234\", \"\(DBClient.ParseResponseKeys.FirstName)\": \"\(studentFirstName)\", \"\(DBClient.ParseResponseKeys.LastName)\": \"\(studentLastName)\",\"\(DBClient.ParseResponseKeys.MapString)\": \"\(studentMapString)\", \"\(DBClient.ParseResponseKeys.MediaURL)\": \"\(studentMediaURL)\",\"\(DBClient.ParseResponseKeys.Latitude)\": \(studentLatitude), \"\(DBClient.ParseResponseKeys.Longitude)\": \(studentLongitude)}"
         
         print("jsonBody", jsonBody)
@@ -198,50 +190,6 @@ class InformationPostingViewController: UIViewController, MKMapViewDelegate, UIT
         print("cancelButtonPressed")
         navigationController?.dismissViewControllerAnimated(true, completion: {})
     }
-    /*
-    private func postStudentLocation() {
-        print("postStudentLocation")
-        
-        
-        let thisStudent =
-        Student(firstName:studentLinkText.text!  , lastName:" " , location:" " ,latitude: self.latitude, longitude: self.longitude, url: studentLinkText.text! as String, updatedAt: NSCalendar.currentCalendar())
-        
-        print("thisStudent", thisStudent)
-        
-        
-        
-        let request = NSMutableURLRequest(URL: NSURL(string: "https://api.parse.com/1/classes/StudentLocation")!)
-        request.HTTPMethod = "POST"
-        request.addValue("QrX47CA9cyuGewLdsL7o5Eb8iug6Em8ye0dnAbIr", forHTTPHeaderField: "X-Parse-Application-Id")
-        request.addValue("QuWThTdiRmTux3YaDseUSEpUKo7aBYM737yKd4gY", forHTTPHeaderField: "X-Parse-REST-API-Key")
-        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-        request.HTTPBody = "{\"uniqueKey\": \"1234\", \"firstName\": \"Holly\", \"lastName\": \"Doe\",\"mapString\": \"Sacremento, CA\", \"mediaURL\": \"https://udacity.com\",\"latitude\": 37.386052, \"longitude\": -122.083851}".dataUsingEncoding(NSUTF8StringEncoding)
-        
-        
-        let session = NSURLSession.sharedSession()
-        let task = session.dataTaskWithRequest(request) { data, response, error in
-            print("rdata from postStudentLocation", data)
-
-            print("response from postStudentLocation", response)
-            if error != nil {
-                
-                
-                let uiAlertController = UIAlertController(title: "post error", message: nil, preferredStyle: .Alert)
-                let defaultAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
-                uiAlertController.addAction(defaultAction)
-                self.presentViewController(uiAlertController, animated: true, completion: nil)
-                self.activityIndicator.alpha = 0.0
-                self.activityIndicator.stopAnimating()
-
-                
-                return
-            }
-            print(NSString(data: data!, encoding: NSUTF8StringEncoding))
-        }
-        task.resume()
-      
-    }
-*/
     
     func keyboardWillShow(notification: NSNotification) {
         if (studentLocationText.isFirstResponder()) {
