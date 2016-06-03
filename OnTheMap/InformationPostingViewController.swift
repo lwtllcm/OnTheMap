@@ -88,7 +88,11 @@ class InformationPostingViewController: UIViewController, MKMapViewDelegate, UIT
             
             if (error != nil) {
                 print("geocoding error")
-                let uiAlertController = UIAlertController(title: "geocoding error", message: nil, preferredStyle: .Alert)
+                print(error?.localizedDescription)
+                let errorMsg  = error?.localizedDescription
+                let uiAlertController = UIAlertController(title: "geocoding error", message: errorMsg, preferredStyle: .Alert)
+                
+                
                 let defaultAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
                 uiAlertController.addAction(defaultAction)
                 self.presentViewController(uiAlertController, animated: true, completion: nil)
@@ -169,18 +173,21 @@ class InformationPostingViewController: UIViewController, MKMapViewDelegate, UIT
             print("taskForPostMethod")
             
             if (error != nil) {
+                print(error?.localizedDescription)
+                let errorMsg  = error?.localizedDescription
                 
-                let uiAlertController = UIAlertController(title: "post error", message: nil, preferredStyle: .Alert)
+                let uiAlertController = UIAlertController(title: "post error", message: errorMsg, preferredStyle: .Alert)
                 let defaultAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
                 uiAlertController.addAction(defaultAction)
                 self.presentViewController(uiAlertController, animated: true, completion: nil)
             }
             
-            
+            else {
+                
+                self.dismissViewControllerAnimated(true, completion: {})
+
+            }
         }
-        
-        
-        
         
         
         print("postStudentLocation completed")

@@ -43,9 +43,12 @@ class TableViewController: UITableViewController {
             
             
             if (error != nil) {
+                
+                print(error?.localizedDescription)
+                let errorMsg  = error?.localizedDescription
         
                 NSOperationQueue.mainQueue().addOperationWithBlock {
-                let uiAlertController = UIAlertController(title: "download error", message: nil, preferredStyle: .Alert)
+                let uiAlertController = UIAlertController(title: "download error", message: errorMsg, preferredStyle: .Alert)
                 let defaultAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
                 uiAlertController.addAction(defaultAction)
                 self.presentViewController(uiAlertController, animated: true, completion: nil)

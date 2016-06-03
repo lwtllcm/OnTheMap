@@ -37,28 +37,12 @@ struct Student {
         }
     
 
- /*
-    init(firstName: String,lastName: String,location: String,latitude: CLLocationDegrees,longitude: CLLocationDegrees,url: String,updatedAt: NSCalendar) {
-        
-        self.firstName = firstName
-        self.lastName = lastName
-        self.location = location
-        self.latitude = latitude
-        self.longitude = longitude
-        self.url = url
-        self.updatedAt = NSCalendar.currentCalendar()
-    }
-
-*/
     
     static func studentFromResults(results: [[String:AnyObject]] )-> [Student] {
         print("Student studentFromResults")
-        //var allStudents = [Student] ()
+
         for result in results as NSArray {
             
-            //print("result", result)
-            //print("result firstName", result.objectForKey("firstName"))
-            //print("result location", result.objectForKey("mapString"))
             
             let resultObjectId = result.objectForKey("objectId")
             let resultUniqueKey = result.objectForKey("uniqueKey")
@@ -70,15 +54,7 @@ struct Student {
             let resultLongitude = result.objectForKey("longitude") as! CLLocationDegrees
             let resultCreatedAt = result.objectForKey("createdAt")
              let resultUpdatedAt = result.objectForKey("updatedAt")
-            //let resultUpdatedAt = NSCalendar.currentCalendar()
-            
-            //print("resultURL", resultURL)
-            
-           /*
-            let newTestStudent =
-            Student(firstName:(resultFirstName as? String)! , lastName:(resultLastName as? String)! , location:(resultLocation as? String)! ,latitude: resultLatitude, longitude: resultLongitude, url: resultURL as String, updatedAt: resultUpdatedAt 
-            )
-*/
+
             
             let newTestStudent = Student(dictionary: [DBClient.ParseResponseKeys.ObjectId:resultObjectId!,
                 DBClient.ParseResponseKeys.UniqueKey:resultUniqueKey!,
@@ -91,11 +67,9 @@ struct Student {
                 DBClient.ParseResponseKeys.CreatedAt:resultCreatedAt!,
                 DBClient.ParseResponseKeys.UpdatedAt:resultUpdatedAt!])
 
-            //print("newTestStudent", newTestStudent)
             
             print(Students.allStudents)
             Students.allStudents.append(newTestStudent)
-            //print(allStudents)
             
         }
         return Students.allStudents

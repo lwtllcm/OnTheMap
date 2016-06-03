@@ -8,14 +8,11 @@
 
 import Foundation
 
-class DBClient: NSObject {
+class DBClient {
     
     var session = NSURLSession.sharedSession()
     
-    override init() {
-        super.init()
-    }
-    
+        
     func taskForGETMethod(completionHandlerForGET:(result: AnyObject!, error: NSError?) -> Void) -> NSURLSessionDataTask {
         
         print("taskForGETMethod")
@@ -186,7 +183,9 @@ class DBClient: NSObject {
     
     class  func sharedInstance() -> DBClient {
         struct Singleton {
-            static var sharedInstance = DBClient()
+            static let sharedInstance = DBClient()
+            
+            private init() {}
         }
         return Singleton.sharedInstance
     }

@@ -32,8 +32,11 @@ class MapViewController: UIViewController, MKMapViewDelegate {
             
             if (error != nil) {
                 NSOperationQueue.mainQueue().addOperationWithBlock {
+                    
+                print(error?.localizedDescription)
+                let errorMsg  = error?.localizedDescription
                 
-                let uiAlertController = UIAlertController(title: "download error", message: nil, preferredStyle: .Alert)
+                let uiAlertController = UIAlertController(title: "download error", message: errorMsg, preferredStyle: .Alert)
                 let defaultAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
                 uiAlertController.addAction(defaultAction)
                 self.presentViewController(uiAlertController, animated: true, completion: nil)

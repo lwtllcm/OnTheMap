@@ -8,7 +8,7 @@
 
 import UIKit
 
-class LoginViewController: UIViewController {
+class LoginViewController: UIViewController, UITextFieldDelegate {
 
     var appDelegate: AppDelegate!
     
@@ -24,7 +24,7 @@ class LoginViewController: UIViewController {
     var loginSuccessIndicator = false
     
     var timer = NSTimer()
-    var counter = 0
+    //var counter = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -38,7 +38,17 @@ class LoginViewController: UIViewController {
         super.viewWillAppear(animated)
         loginSuccessIndicator = false
         print("LoginViewController viewWillAppear")
-        counter = 0
+        //counter = 0
+        
+        subscribeToKeyboardNotifications()
+        subscribeToKeyboardWillHideNotifications()
+
+    }
+    
+    override func viewWillDisappear(animated: Bool) {
+        print("viewWillDisappear")
+        super.viewWillDisappear(animated)
+        unsubscribeFromKeyboardNotifications()
     }
     
     @IBAction func loginPressed(sender: AnyObject) {
@@ -48,6 +58,18 @@ class LoginViewController: UIViewController {
         
         if emailTextField.text!.isEmpty || passwordTextField.text!.isEmpty {
             print("Username or Password Empty")
+            
+            NSOperationQueue.mainQueue().addOperationWithBlock {
+                
+                
+                
+                let uiAlertController = UIAlertController(title: "Username or Password Missing", message: nil, preferredStyle: .Alert)
+                
+                let defaultAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
+                uiAlertController.addAction(defaultAction)
+                self.presentViewController(uiAlertController, animated: true, completion: nil)
+            }
+            
         }
         else {
 
@@ -81,8 +103,9 @@ class LoginViewController: UIViewController {
                     NSOperationQueue.mainQueue().addOperationWithBlock {
                         
                         
-                       let displayError =  error!.localizedDescription
-                        let uiAlertController = UIAlertController(title: displayError, message: nil, preferredStyle: .Alert)
+                        print(error?.localizedDescription)
+                        let errorMsg  = error?.localizedDescription
+                        let uiAlertController = UIAlertController(title: errorMsg, message: nil, preferredStyle: .Alert)
 
                     let defaultAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
                     uiAlertController.addAction(defaultAction)
@@ -110,8 +133,13 @@ class LoginViewController: UIViewController {
                         if (error != nil) {
 
                             print("error after taskForGetUserID", error)
+                            
+                            print(error?.localizedDescription)
+                            let errorMsg  = error?.localizedDescription
+
+                            
                           
-                            let uiAlertController = UIAlertController(title: "Username/Password error", message: nil, preferredStyle: .Alert)
+                            let uiAlertController = UIAlertController(title: errorMsg, message: nil, preferredStyle: .Alert)
                             let defaultAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
                             uiAlertController.addAction(defaultAction)
                             self.presentViewController(uiAlertController, animated: true, completion: nil)
@@ -127,7 +155,10 @@ class LoginViewController: UIViewController {
                             defaults.setObject(results.valueForKey("user")?.valueForKey("first_name"), forKey: "Udacity.FirstName")
                             defaults.setObject(results.valueForKey("user")?.valueForKey("last_name"), forKey: "Udacity.LastName")
                         self.loginSuccessIndicator = true
+                           
                         NSOperationQueue.mainQueue().addOperationWithBlock {
+                            self.emailTextField.text = nil
+                            self.passwordTextField.text = nil
                         self.performSegueWithIdentifier("loginSuccess", sender: self)
                         }
                         }
@@ -159,6 +190,77 @@ class LoginViewController: UIViewController {
     
     @IBAction func unwindToLogin(unwindSegue: UIStoryboardSegue) {
         print("unwindToLogin in LoginViewController")
+    }
+   
+    
+    func keyboardWillShow(notification: NSNotification) {
+        if (emailTextField.isFirstResponder()) {
+            print("studentLocationText is FirstResponder")
+            //  view.frame.origin.y = getKeyboardHeight(notification) * -1
+        }
+        //else
+        
+        if (passwordTextField.isFirstResponder()) {
+            print("studentLinkText is FirstResponder")
+            
+            view.frame.origin.y = getKeyboardHeight(notification) * -0.1
+        }
+        
+        
+    }
+    
+    func keyboardWillHide(notification: NSNotification) {
+        if emailTextField.isFirstResponder() {
+            view.frame.origin.y = 0.0
+        }
+            
+        else
+            if passwordTextField.isFirstResponder() {
+                view.frame.origin.y = 0.0
+        }
+        
+    }
+    func textFieldDidBeginEditing( textField: UITextField) {
+        print("textFieldDidBeginEditing")
+        if textField.text == "TOP" || textField.text == "BOTTOM" {
+            textField.text = ""
+        }
+    }
+    func textFieldDidEndEditing(textField: UITextField) {
+        print("textFieldDidEndEditing")
+    }
+    
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        print("textFieldShouldReturn")
+        textField.resignFirstResponder()
+        return true
+    }
+    
+    func getKeyboardHeight(notification:NSNotification) -> CGFloat {
+        print("getKeyboardHeight")
+        let userInfo = notification.userInfo
+        let keyboardSize = userInfo![UIKeyboardFrameEndUserInfoKey] as! NSValue
+        return keyboardSize.CGRectValue().height
+    }
+    
+    func subscribeToKeyboardNotifications() {
+        print("subscribeToKeyboardNotifications")
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillShow:", name: UIKeyboardWillShowNotification, object: nil)
+    }
+    
+    func subscribeToKeyboardWillHideNotifications() {
+        print("subscribeToKeyboardNotifications")
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillHide:", name: UIKeyboardWillHideNotification, object: nil)
+    }
+    
+    func unsubscribeFromKeyboardNotifications() {
+        print("unsubscribeFromKeyboardNotifications")
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillShowNotification, object: nil)
+    }
+    
+    func unsubscribeFromKeyboardWillHideNotifications() {
+        print("unsubscribeFromKeyboardNotifications")
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillHideNotification, object: nil)
     }
     
 
