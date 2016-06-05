@@ -64,7 +64,11 @@
                             </connections>
                         </barButtonItem>
                         <rightBarButtonItems>
-                            <barButtonItem title="Refresh" id="PvT-dO-XtO"/>
+                            <barButtonItem title="Refresh" id="PvT-dO-XtO">
+                                <connections>
+                                    <action selector="refreshAction:" destination="8Qg-KF-dND" id="QCT-eX-XD4"/>
+                                </connections>
+                            </barButtonItem>
                             <barButtonItem title="Pin" id="6q0-cP-hty">
                                 <connections>
                                     <segue destination="UQs-ys-U8S" kind="presentation" id="eBb-kG-jlg"/>
@@ -82,7 +86,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pTi-5D-Izv" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="ziC-eF-rZO" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="2109" y="-481"/>
+            <point key="canvasLocation" x="2361" y="-489"/>
         </scene>
         <!--Login-->
         <scene sceneID="KKB-oN-WlL">
@@ -210,7 +214,11 @@
                             </connections>
                         </barButtonItem>
                         <rightBarButtonItems>
-                            <barButtonItem title="Refresh" id="u6N-0q-cVK"/>
+                            <barButtonItem title="Refresh" id="u6N-0q-cVK">
+                                <connections>
+                                    <action selector="refreshAction:" destination="heb-Dd-g3d" id="dfO-qf-snu"/>
+                                </connections>
+                            </barButtonItem>
                             <barButtonItem title="Pin" id="Re9-MA-Wgh">
                                 <connections>
                                     <action selector="pinButtonPressed:" destination="heb-Dd-g3d" id="ngL-CO-T3y"/>
@@ -487,6 +495,6 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="eBb-kG-jlg"/>
+        <segue reference="ccB-0S-D5d"/>
     </inferredMetricsTieBreakers>
 </document>

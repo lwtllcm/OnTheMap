@@ -20,10 +20,6 @@ class TableViewController: UITableViewController {
     @IBOutlet weak var refreshButton: UIBarButtonItem!
     
     @IBOutlet weak var logoutButton: UIBarButtonItem!
-        
-    //var allStudents:[Student] = [Student]()
-    
-    
   
         
     override func viewDidLoad() {
@@ -122,6 +118,42 @@ class TableViewController: UITableViewController {
         
     }
     
+    @IBAction func refreshAction(sender: AnyObject) {
+        print("refreshAction")
+        
+        DBClient.sharedInstance().taskForGETMethod { (results, error) in
+            print("taskForGetMethod")
+            print("results from taskForGETMethod", results)
+            print("error from taskForGETMethod", error)
+            
+            
+            if (error != nil) {
+                
+                print(error?.localizedDescription)
+                let errorMsg  = error?.localizedDescription
+                
+                NSOperationQueue.mainQueue().addOperationWithBlock {
+                    let uiAlertController = UIAlertController(title: "download error", message: errorMsg, preferredStyle: .Alert)
+                    let defaultAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
+                    uiAlertController.addAction(defaultAction)
+                    self.presentViewController(uiAlertController, animated: true, completion: nil)
+                }
+            }
+            
+            self.performUIUpdatesOnMain { () -> Void in
+                self.performUIUpdatesOnMain({ () -> Void in
+                    print("performUIUpdatesOnMain")
+                    self.tableView.reloadData()
+                })
+                self.tableView.reloadData()
+                
+            }
+            
+        }
+        
+        
+        self.tableView.reloadData()
+    }
     
 }
 

@@ -104,10 +104,6 @@ class DBClient {
     
     let session = NSURLSession.sharedSession()
     let task = session.dataTaskWithRequest(request) { data, response, error in
-    print("rdata from postStudentLocation", data)
-    
-    print("response from postStudentLocation", response)
-        
         
         func displayError(error: String) {
             print("displayError")
@@ -207,10 +203,6 @@ class DBClient {
        
         let session = NSURLSession.sharedSession()
         let task = session.dataTaskWithRequest(request) { data, response, error in
-            print("rdata from postUdacity", data)
-            
-            print("response from postUdacity", response)
-            
            
             print("postUdacity error", error)
 
@@ -292,7 +284,7 @@ class DBClient {
         let session = NSURLSession.sharedSession()
         let task = session.dataTaskWithRequest(requestUserID) { data,response, error in
             
-            print("response from taskForGetUserID", response)
+            //print("response from taskForGetUserID", response)
             
             
             print("error from taskForGetUserID", error)

@@ -24,7 +24,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     var loginSuccessIndicator = false
     
     var timer = NSTimer()
-    //var counter = 0
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -38,7 +38,6 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         super.viewWillAppear(animated)
         loginSuccessIndicator = false
         print("LoginViewController viewWillAppear")
-        //counter = 0
         
         subscribeToKeyboardNotifications()
         subscribeToKeyboardWillHideNotifications()
@@ -81,11 +80,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
             
             
             let jsonBody = "{\"udacity\": {\"username\": \"\(studentUserName)\", \"password\": \"\(studentPassword)\"}}"
-            
-            
-            print("jsonBody", jsonBody)
-         
-            
+ 
             
             DBClient.sharedInstance().taskForUdacityPOSTMethod(jsonBody) { (results, error) in
                 print("taskForUdacityPostMethod")
@@ -148,7 +143,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                             
                         }
                         else {
-                        print("results after taskForGetUserID", results)
+                        //print("results after taskForGetUserID", results)
                          print(results.valueForKey("user")?.valueForKey("first_name"))
                             print(results.valueForKey("user")?.valueForKey("last_name"))
 
