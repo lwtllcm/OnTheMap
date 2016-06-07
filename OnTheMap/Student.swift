@@ -68,7 +68,7 @@ struct Student {
                 DBClient.ParseResponseKeys.UpdatedAt:resultUpdatedAt!])
 
             
-            print(Students.allStudents)
+           // print(Students.allStudents)
             Students.allStudents.append(newTestStudent)
             
         }

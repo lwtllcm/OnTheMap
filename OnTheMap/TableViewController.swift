@@ -31,6 +31,9 @@ class TableViewController: UITableViewController {
         super.viewWillAppear(animated)
         print("TableViewController viewWillAppear")
         
+        
+        //Students.allStudents.removeAll()
+
  
            DBClient.sharedInstance().taskForGETMethod { (results, error) in
             print("taskForGetMethod")
@@ -119,8 +122,10 @@ class TableViewController: UITableViewController {
     }
     
     @IBAction func refreshAction(sender: AnyObject) {
-        print("refreshAction")
         
+        
+        //Students.allStudents.removeAll()
+
         DBClient.sharedInstance().taskForGETMethod { (results, error) in
             print("taskForGetMethod")
             print("results from taskForGETMethod", results)
@@ -139,21 +144,20 @@ class TableViewController: UITableViewController {
                     self.presentViewController(uiAlertController, animated: true, completion: nil)
                 }
             }
+            Students.allStudents.removeAll()
+            print("allStudents count", Students.allStudents.count)
+            let results = results.objectForKey("results") as! NSArray
+            
+            for student in Student.studentFromResults(results as! [[String : AnyObject]]) {
+                    
+                    Students.allStudents.append(student)
+                }
+           
             
             self.performUIUpdatesOnMain { () -> Void in
-                self.performUIUpdatesOnMain({ () -> Void in
-                    print("performUIUpdatesOnMain")
-                    self.tableView.reloadData()
-                })
-                self.tableView.reloadData()
-                
-            }
-            
-        }
-        
-        
         self.tableView.reloadData()
+            }
+        }
     }
-    
 }
 

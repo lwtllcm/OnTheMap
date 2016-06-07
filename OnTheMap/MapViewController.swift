@@ -24,31 +24,37 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        print("MapViewController viewDidLoad")
-   
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        Students.allStudents.removeAll()
+
+        let allAnnotations = self.mapView.annotations
+        self.mapView.removeAnnotations(allAnnotations)
+        
         DBClient.sharedInstance().taskForGETMethod { (results, error) in
-            print("taskForGetMethod")
             
             if (error != nil) {
                 NSOperationQueue.mainQueue().addOperationWithBlock {
                     
-                print(error?.localizedDescription)
-                let errorMsg  = error?.localizedDescription
-                
-                let uiAlertController = UIAlertController(title: "download error", message: errorMsg, preferredStyle: .Alert)
-                let defaultAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
-                uiAlertController.addAction(defaultAction)
-                self.presentViewController(uiAlertController, animated: true, completion: nil)
-            }
+                    let errorMsg  = error?.localizedDescription
+                    
+                    let uiAlertController = UIAlertController(title: "download error", message: errorMsg, preferredStyle: .Alert)
+                    let defaultAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
+                    uiAlertController.addAction(defaultAction)
+                    self.presentViewController(uiAlertController, animated: true, completion: nil)
+                }
             }
             
             let results = results.objectForKey("results") as! NSArray
             
             if Students.allStudents.count == 0 {
                 for student in Student.studentFromResults(results as! [[String : AnyObject]]) {
-
-                self.setAnnotations(student)
-            }
+                    
+                    self.setAnnotations(student)
+                }
             }
             else {
                 
@@ -56,25 +62,16 @@ class MapViewController: UIViewController, MKMapViewDelegate {
                     
                     self.setAnnotations(student)
                 }
-
-             
-        
+                
+                
+                
             }
-       }
-
-        
-    }
-    
-    override func viewWillAppear(animated: Bool) {
-        super.viewWillAppear(animated)
-        
-        print("MapViewController viewWillAppear")
+        }
      
 }
     
     
     func mapView(mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView? {
-        print("mapView viewForAnnotation")
         
         let reuseId = "pin"
         
@@ -96,7 +93,6 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     
     
     func mapView(mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
-        print("calloutAccessoryControlTapped")
         if control == view.rightCalloutAccessoryView {
             
            
@@ -136,16 +132,17 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     }
     
     @IBAction func refreshAction(sender: AnyObject) {
-        print("refreshAction")
         
+       Students.allStudents.removeAll()
+        
+        let allAnnotations = self.mapView.annotations
+        self.mapView.removeAnnotations(allAnnotations)
         
         DBClient.sharedInstance().taskForGETMethod { (results, error) in
-        print("taskForGetMethod")
         
         if (error != nil) {
         NSOperationQueue.mainQueue().addOperationWithBlock {
         
-        print(error?.localizedDescription)
         let errorMsg  = error?.localizedDescription
         
         let uiAlertController = UIAlertController(title: "download error", message: errorMsg, preferredStyle: .Alert)

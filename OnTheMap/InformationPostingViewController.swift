@@ -167,7 +167,6 @@ class InformationPostingViewController: UIViewController, MKMapViewDelegate, UIT
         
        let jsonBody = "{\"uniqueKey\": \"1234\", \"\(DBClient.ParseResponseKeys.FirstName)\": \"\(studentFirstName)\", \"\(DBClient.ParseResponseKeys.LastName)\": \"\(studentLastName)\",\"\(DBClient.ParseResponseKeys.MapString)\": \"\(studentMapString)\", \"\(DBClient.ParseResponseKeys.MediaURL)\": \"\(studentMediaURL)\",\"\(DBClient.ParseResponseKeys.Latitude)\": \(studentLatitude), \"\(DBClient.ParseResponseKeys.Longitude)\": \(studentLongitude)}"
         
-        print("jsonBody", jsonBody)
         
         DBClient.sharedInstance().taskForPOSTMethod(jsonBody) { (results, error) in
             print("taskForPostMethod")

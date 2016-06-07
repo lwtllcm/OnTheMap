@@ -9,8 +9,6 @@
 import UIKit
 
 class LoginViewController: UIViewController, UITextFieldDelegate {
-
-    var appDelegate: AppDelegate!
     
     var studentUserID = " "
     
@@ -30,7 +28,8 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         super.viewDidLoad()
         print("LoginViewController")
         
-        appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+        emailTextField.delegate = self
+        passwordTextField.delegate = self
 
     }
     
@@ -51,16 +50,11 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     }
     
     @IBAction func loginPressed(sender: AnyObject) {
-        print("loginPressed")
-        
-        
         
         if emailTextField.text!.isEmpty || passwordTextField.text!.isEmpty {
             print("Username or Password Empty")
             
             NSOperationQueue.mainQueue().addOperationWithBlock {
-                
-                
                 
                 let uiAlertController = UIAlertController(title: "Username or Password Missing", message: nil, preferredStyle: .Alert)
                 
@@ -120,10 +114,62 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                    let defaults = NSUserDefaults.standardUserDefaults()
                     defaults.setObject(userID, forKey: "Udacity.UserID")
                     
+                    if (defaults.stringForKey("Udacity.UserID") == nil) {
+                    print("no UserID")
+                        
+                        NSOperationQueue.mainQueue().addOperationWithBlock {
+                            
+                            
+                            //print(error?.localizedDescription)
+                            print(error?.localizedDescription)
+                            let errorMsg  = error?.localizedDescription
+                            let uiAlertController = UIAlertController(title: errorMsg, message: "The email or password you entered is invalid", preferredStyle: .Alert)
+                            
+                            let defaultAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
+                            uiAlertController.addAction(defaultAction)
+                            self.presentViewController(uiAlertController, animated: true, completion: nil)
+                        }
+                    }
+                    else {
+                        DBClient.sharedInstance().taskForGetUserID(userID as! String) {(results, error) in
+                            
+                            if (error != nil) {
+                                
+                                print("error after taskForGetUserID", error)
+                                
+                                print(error?.localizedDescription)
+                                let errorMsg  = error?.localizedDescription
+                                
+                                
+                                
+                                let uiAlertController = UIAlertController(title: errorMsg, message: nil, preferredStyle: .Alert)
+                                let defaultAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
+                                uiAlertController.addAction(defaultAction)
+                                self.presentViewController(uiAlertController, animated: true, completion: nil)
+                                
+                                
+                                
+                            }
+                            else {
+                                //print("results after taskForGetUserID", results)
+                                print("Udacity.first_name",results.valueForKey("user")?.valueForKey("first_name"))
+                                print("Udacity.last_name",results.valueForKey("user")?.valueForKey("last_name"))
+                                
+                                defaults.setObject(results.valueForKey("user")?.valueForKey("first_name"), forKey: "Udacity.FirstName")
+                                defaults.setObject(results.valueForKey("user")?.valueForKey("last_name"), forKey: "Udacity.LastName")
+                                self.loginSuccessIndicator = true
+                                
+                                NSOperationQueue.mainQueue().addOperationWithBlock {
+                                    self.emailTextField.text = nil
+                                    self.passwordTextField.text = nil
+                                    self.performSegueWithIdentifier("loginSuccess", sender: self)
+                                }
+                            }
+                        }
+                    }
                     
-                    
-                  
-                    DBClient.sharedInstance().taskForGetUserID {(results, error) in
+                    /*
+                    DBClient.sharedInstance().taskForGetUserID(userID as! String) {(results, error) in
                         
                         if (error != nil) {
 
@@ -158,7 +204,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                         }
                         }
                     }
-               
+               */
             }
             
         }
