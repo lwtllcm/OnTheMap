@@ -131,6 +131,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     }
     }
     
+    // refreshAction
     @IBAction func refreshAction(sender: AnyObject) {
         
        Students.allStudents.removeAll()
