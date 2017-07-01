@@ -21,7 +21,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     
     var loginSuccessIndicator = false
     
-    var timer = NSTimer()
+    var timer = Timer()
     
     
     override func viewDidLoad() {
@@ -33,7 +33,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
 
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         loginSuccessIndicator = false
         print("LoginViewController viewWillAppear")
@@ -43,24 +43,24 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
 
     }
     
-    override func viewWillDisappear(animated: Bool) {
+    override func viewWillDisappear(_ animated: Bool) {
         print("viewWillDisappear")
         super.viewWillDisappear(animated)
         unsubscribeFromKeyboardNotifications()
     }
     
-    @IBAction func loginPressed(sender: AnyObject) {
+    @IBAction func loginPressed(_ sender: AnyObject) {
         
         if emailTextField.text!.isEmpty || passwordTextField.text!.isEmpty {
             print("Username or Password Empty")
             
-            NSOperationQueue.mainQueue().addOperationWithBlock {
+            OperationQueue.main.addOperation {
                 
-                let uiAlertController = UIAlertController(title: "Username or Password Missing", message: nil, preferredStyle: .Alert)
+                let uiAlertController = UIAlertController(title: "Username or Password Missing", message: nil, preferredStyle: .alert)
                 
-                let defaultAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
+                let defaultAction = UIAlertAction(title: "OK", style: .default, handler: nil)
                 uiAlertController.addAction(defaultAction)
-                self.presentViewController(uiAlertController, animated: true, completion: nil)
+                self.present(uiAlertController, animated: true, completion: nil)
             }
             
         }
@@ -89,16 +89,16 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                    // http://stackoverflow.com/questions/26947608/waituntilalltasksarefinished-error-swift
                     
                     
-                    NSOperationQueue.mainQueue().addOperationWithBlock {
+                    OperationQueue.main.addOperation {
                         
                         
-                        print(error?.localizedDescription)
+                        print(error?.localizedDescription as Any)
                         let errorMsg  = error?.localizedDescription
-                        let uiAlertController = UIAlertController(title: errorMsg, message: nil, preferredStyle: .Alert)
+                        let uiAlertController = UIAlertController(title: errorMsg, message: nil, preferredStyle: .alert)
 
-                    let defaultAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
+                    let defaultAction = UIAlertAction(title: "OK", style: .default, handler: nil)
                     uiAlertController.addAction(defaultAction)
-                    self.presentViewController(uiAlertController, animated: true, completion: nil)
+                    self.present(uiAlertController, animated: true, completion: nil)
                     }
                     
                     
@@ -106,28 +106,28 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
             }
             
                 else {
-                    let resultDictionary = results.valueForKey("account") as? NSDictionary
-                    let userID = resultDictionary?.valueForKey("key")
-                    print("key", userID)
+                    let resultDictionary = results?.value(forKey: "account") as? NSDictionary
+                    let userID = resultDictionary?.value(forKey: "key")
+                    print("key", userID as Any)
                     
-                    NSUserDefaults.standardUserDefaults().setObject(userID, forKey: "Udacity.UserID")
-                   let defaults = NSUserDefaults.standardUserDefaults()
-                    defaults.setObject(userID, forKey: "Udacity.UserID")
+                    UserDefaults.standard.set(userID, forKey: "Udacity.UserID")
+                   let defaults = UserDefaults.standard
+                    defaults.set(userID, forKey: "Udacity.UserID")
                     
-                    if (defaults.stringForKey("Udacity.UserID") == nil) {
+                    if (defaults.string(forKey: "Udacity.UserID") == nil) {
                     print("no UserID")
                         
-                        NSOperationQueue.mainQueue().addOperationWithBlock {
+                        OperationQueue.main.addOperation {
                             
                             
                             //print(error?.localizedDescription)
-                            print(error?.localizedDescription)
+                            print(error?.localizedDescription as Any)
                             let errorMsg  = error?.localizedDescription
-                            let uiAlertController = UIAlertController(title: errorMsg, message: "The email or password you entered is invalid", preferredStyle: .Alert)
+                            let uiAlertController = UIAlertController(title: errorMsg, message: "The email or password you entered is invalid", preferredStyle: .alert)
                             
-                            let defaultAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
+                            let defaultAction = UIAlertAction(title: "OK", style: .default, handler: nil)
                             uiAlertController.addAction(defaultAction)
-                            self.presentViewController(uiAlertController, animated: true, completion: nil)
+                            self.present(uiAlertController, animated: true, completion: nil)
                         }
                     }
                     else {
@@ -135,34 +135,34 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                             
                             if (error != nil) {
                                 
-                                print("error after taskForGetUserID", error)
+                                print("error after taskForGetUserID", error as Any)
                                 
-                                print(error?.localizedDescription)
+                                print(error?.localizedDescription as Any)
                                 let errorMsg  = error?.localizedDescription
                                 
                                 
                                 
-                                let uiAlertController = UIAlertController(title: errorMsg, message: nil, preferredStyle: .Alert)
-                                let defaultAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
+                                let uiAlertController = UIAlertController(title: errorMsg, message: nil, preferredStyle: .alert)
+                                let defaultAction = UIAlertAction(title: "OK", style: .default, handler: nil)
                                 uiAlertController.addAction(defaultAction)
-                                self.presentViewController(uiAlertController, animated: true, completion: nil)
+                                self.present(uiAlertController, animated: true, completion: nil)
                                 
                                 
                                 
                             }
                             else {
                                 //print("results after taskForGetUserID", results)
-                                print("Udacity.first_name",results.valueForKey("user")?.valueForKey("first_name"))
-                                print("Udacity.last_name",results.valueForKey("user")?.valueForKey("last_name"))
+                                print("Udacity.first_name",(results?.value(forKey: "user") as AnyObject).value(forKey: "first_name"))
+                                print("Udacity.last_name",(results?.value(forKey: "user") as AnyObject).value(forKey: "last_name"))
                                 
-                                defaults.setObject(results.valueForKey("user")?.valueForKey("first_name"), forKey: "Udacity.FirstName")
-                                defaults.setObject(results.valueForKey("user")?.valueForKey("last_name"), forKey: "Udacity.LastName")
+                                defaults.set((results?.value(forKey: "user") as AnyObject).value(forKey: "first_name"), forKey: "Udacity.FirstName")
+                                defaults.set((results?.value(forKey: "user") as AnyObject).value(forKey: "last_name"), forKey: "Udacity.LastName")
                                 self.loginSuccessIndicator = true
                                 
-                                NSOperationQueue.mainQueue().addOperationWithBlock {
+                                OperationQueue.main.addOperation {
                                     self.emailTextField.text = nil
                                     self.passwordTextField.text = nil
-                                    self.performSegueWithIdentifier("loginSuccess", sender: self)
+                                    self.performSegue(withIdentifier: "loginSuccess", sender: self)
                                 }
                             }
                         }
@@ -212,15 +212,15 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     }
 }
     
-    @IBAction func signUpButtonPressed(sender: AnyObject) {
+    @IBAction func signUpButtonPressed(_ sender: AnyObject) {
         print("signUpButtonPressed")
         
-        let url = NSURL(string: (("http://www.udacity.com")))!
-        UIApplication.sharedApplication().openURL(url)
+        let url = URL(string: (("http://www.udacity.com")))!
+        UIApplication.shared.openURL(url)
         
     }
     
-    override func shouldPerformSegueWithIdentifier(identifier: String, sender: AnyObject?) -> Bool {
+    override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
             print("shouldPerformSegueWithIdentifier")
             print("loginSuccessIndicator", loginSuccessIndicator)
             return loginSuccessIndicator
@@ -229,19 +229,19 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     
     // http://stackoverflow.com/questions/12561735/what-are-unwind-segues-for-and-how-do-you-use-them
     
-    @IBAction func unwindToLogin(unwindSegue: UIStoryboardSegue) {
+    @IBAction func unwindToLogin(_ unwindSegue: UIStoryboardSegue) {
         print("unwindToLogin in LoginViewController")
     }
    
     
-    func keyboardWillShow(notification: NSNotification) {
-        if (emailTextField.isFirstResponder()) {
+    func keyboardWillShow(_ notification: Notification) {
+        if (emailTextField.isFirstResponder) {
             print("studentLocationText is FirstResponder")
             //  view.frame.origin.y = getKeyboardHeight(notification) * -1
         }
         //else
         
-        if (passwordTextField.isFirstResponder()) {
+        if (passwordTextField.isFirstResponder) {
             print("studentLinkText is FirstResponder")
             
             view.frame.origin.y = getKeyboardHeight(notification) * -0.1
@@ -250,58 +250,58 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         
     }
     
-    func keyboardWillHide(notification: NSNotification) {
-        if emailTextField.isFirstResponder() {
+    func keyboardWillHide(_ notification: Notification) {
+        if emailTextField.isFirstResponder {
             view.frame.origin.y = 0.0
         }
             
         else
-            if passwordTextField.isFirstResponder() {
+            if passwordTextField.isFirstResponder {
                 view.frame.origin.y = 0.0
         }
         
     }
-    func textFieldDidBeginEditing( textField: UITextField) {
+    func textFieldDidBeginEditing( _ textField: UITextField) {
         print("textFieldDidBeginEditing")
         if textField.text == "TOP" || textField.text == "BOTTOM" {
             textField.text = ""
         }
     }
-    func textFieldDidEndEditing(textField: UITextField) {
+    func textFieldDidEndEditing(_ textField: UITextField) {
         print("textFieldDidEndEditing")
     }
     
-    func textFieldShouldReturn(textField: UITextField) -> Bool {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         print("textFieldShouldReturn")
         textField.resignFirstResponder()
         return true
     }
     
-    func getKeyboardHeight(notification:NSNotification) -> CGFloat {
+    func getKeyboardHeight(_ notification:Notification) -> CGFloat {
         print("getKeyboardHeight")
         let userInfo = notification.userInfo
         let keyboardSize = userInfo![UIKeyboardFrameEndUserInfoKey] as! NSValue
-        return keyboardSize.CGRectValue().height
+        return keyboardSize.cgRectValue.height
     }
     
     func subscribeToKeyboardNotifications() {
         print("subscribeToKeyboardNotifications")
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillShow:", name: UIKeyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(LoginViewController.keyboardWillShow(_:)), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
     }
     
     func subscribeToKeyboardWillHideNotifications() {
         print("subscribeToKeyboardNotifications")
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillHide:", name: UIKeyboardWillHideNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(LoginViewController.keyboardWillHide(_:)), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
     }
     
     func unsubscribeFromKeyboardNotifications() {
         print("unsubscribeFromKeyboardNotifications")
-        NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillShowNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIKeyboardWillShow, object: nil)
     }
     
     func unsubscribeFromKeyboardWillHideNotifications() {
         print("unsubscribeFromKeyboardNotifications")
-        NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillHideNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIKeyboardWillHide, object: nil)
     }
     
 

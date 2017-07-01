@@ -10,43 +10,70 @@ import Foundation
 
 class DBClient {
     
-    var session = NSURLSession.sharedSession()
+    var session = URLSession.shared
     
     
     class  func sharedInstance() -> DBClient {
         struct Singleton {
             static let sharedInstance = DBClient()
             
-            private init() {}
+            fileprivate init() {}
         }
         return Singleton.sharedInstance
     }
     
     
-    func taskForGETMethod(completionHandlerForGET:(result: AnyObject!, error: NSError?) -> Void) -> NSURLSessionDataTask {
+    func taskForGETMethod(_ completionHandlerForGET:@escaping (_ result: AnyObject?, _ error: NSError?) -> Void) -> URLSessionDataTask {
         
-        let request = NSMutableURLRequest(URL: NSURL(string: "https://api.parse.com/1/classes/StudentLocation?limit=100&-order=updatedAt")!)
+        //let request = NSMutableURLRequest(url: URL(string: "https://api.parse.com/1/classes/StudentLocation?limit=100&-order=updatedAt")!)
+        
+       // var request = URLRequest(url: URL(string: "https://api.parse.com/1/classes/StudentLocation?limit=100&-order=updatedAt")!)
+        
+        //var request = URLRequest(url: URL(string: "https://parse.udacity.com/parse/classes/StudentLocation?limit=100&-order=updatedAt")!)
+        var request = URLRequest(url: URL(string: "https://parse.udacity.com/parse/classes/StudentLocation?limit=3")!)
+
         
         request.addValue(ParseConstants.ParseParameterValues.ApplicationID, forHTTPHeaderField: "X-Parse-Application-Id")
 
         request.addValue(ParseConstants.ParseParameterValues.ApiKey, forHTTPHeaderField: "X-Parse-REST-API-Key")
         
+
+        //request.addValue("QrX47CA9cyuGewLdsL7o5Eb8iug6Em8ye0dnAbIr", forHTTPHeaderField: "X-Parse-Application-Id")
+        //request.addValue("QuWThTdiRmTux3YaDseUSEpUKo7aBYM737yKd4gY", forHTTPHeaderField: "X-Parse-REST-API-Key")
+        
+        print(request)
+        
         //let session = NSURLSession.sharedSession()
         
-        let task = session.dataTaskWithRequest(request) { data, response, error in
+     //   let task = session.dataTask(with: request, completionHandler: { data, response, error in
+            
+
+       // let task = URLSession.shared.dataTask(with: request, completionHandler: { data, response, error in
+        
+       // let task = session.dataTask(with: request) { (data, response, error ) in
+        let task = session.dataTask(with: request as URLRequest) { (data, response, error ) in
+
             print("in task")
-            print("error", error)
+             print(NSString(data: data!, encoding: String.Encoding.utf8.rawValue)!)
+           // print(data as Any)
+            print("error", error as Any)
             
             
-            func sendError(error: String) {
+            func sendError(_ error: String) {
                 print(error)
                 let userInfo = [NSLocalizedDescriptionKey: error]
-                completionHandlerForGET(result: nil, error:NSError( domain: "taskForGETMethod", code: 1, userInfo:userInfo))
+                completionHandlerForGET(nil, NSError( domain: "taskForGETMethod", code: 1, userInfo:userInfo))
                 
             }
-            
+            /*
             if error != nil
             {
+                sendError((error?.localizedDescription)!)
+                return
+            }
+            */
+            
+            guard (error == nil) else {
                 sendError((error?.localizedDescription)!)
                 return
             }
@@ -56,90 +83,120 @@ class DBClient {
                 sendError("Error retrieving data")
                 return
             }
-        
+            
+            /*
+            guard (data == nil) else {
+                sendError("Error retrieving data")
+                return
+            }
+ */
+            print("ready to convert Parse data")
             self.convertDataWithCompletionHandler(data!, completionHandlerForConvertData: completionHandlerForGET)
             
-        }
+        } 
         task.resume()
         return task
         
     }
     
     
-    func taskForPOSTMethod(jsonBody: String, completionHandlerForPOST:(result: AnyObject!, error: NSError?) -> Void) -> NSURLSessionDataTask {
+    func taskForPOSTMethod(_ jsonBody: String, completionHandlerForPOST:@escaping (_ result: AnyObject?, _ error: NSError?) -> Void) -> URLSessionDataTask {
 
     
-    let request = NSMutableURLRequest(URL: NSURL(string: "https://api.parse.com/1/classes/StudentLocation")!)
-    request.HTTPMethod = "POST"
+    //let request = NSMutableURLRequest(url: URL(string: "https://api.parse.com/1/classes/StudentLocation")!)
+        
+        var request = URLRequest(url: URL(string: "https://api.parse.com/1/classes/StudentLocation")!)
+
+    request.httpMethod = "POST"
         
     request.addValue(ParseConstants.ParseParameterValues.ApplicationID, forHTTPHeaderField: "X-Parse-Application-Id")
     request.addValue(ParseConstants.ParseParameterValues.ApiKey, forHTTPHeaderField: "X-Parse-REST-API-Key")
     
     request.addValue("application/json", forHTTPHeaderField: "Content-Type")
     
-    request.HTTPBody = jsonBody.dataUsingEncoding(NSUTF8StringEncoding)
+    request.httpBody = jsonBody.data(using: String.Encoding.utf8)
         
     //let session = NSURLSession.sharedSession()
-    let task = session.dataTaskWithRequest(request) { data, response, error in
-       
         
-        func sendError(error: String) {
+        
+   // let task = session.dataTask(with: request, completionHandler: { data, response, error in
+        
+        //let task = URLSession.shared.dataTask(with: request, completionHandler: { data, response, error in
+
+       let task = session.dataTask(with: request, completionHandler: { data, response, error in
+        
+        func sendError(_ error: String) {
             print(error)
             let userInfo = [NSLocalizedDescriptionKey: error]
-            completionHandlerForPOST(result: nil, error:NSError( domain: "taskForPOSTMethod", code: 1, userInfo:userInfo))
+            completionHandlerForPOST(nil, NSError( domain: "taskForPOSTMethod", code: 1, userInfo:userInfo))
             
         }
-       
+       /*
         if error != nil
         {
             sendError((error?.localizedDescription)!)
             return
         }
+ */
+        guard (error == nil) else {
+            sendError((error?.localizedDescription)!)
+            return
+        }
         
-        
+        /*
         if data == nil {
             sendError("Parse update error ")
             return
         }
-
+*/
+        guard (data == nil) else {
+            sendError("Parse update error ")
+            return
+        }
+        
         self.convertDataWithCompletionHandler(data!, completionHandlerForConvertData: completionHandlerForPOST)
         
-        }
+        }) 
         task.resume()
         return task
     }
         
-    func taskForUdacityPOSTMethod(jsonBody: String, completionHandlerForPOST:(result: AnyObject!, error: NSError?) -> Void) -> NSURLSessionDataTask {
+    func taskForUdacityPOSTMethod(_ jsonBody: String, completionHandlerForPOST:@escaping (_ result: AnyObject?, _ error: NSError?) -> Void) -> URLSessionDataTask {
         
         
-        let request = NSMutableURLRequest(URL: NSURL(string: "https://www.udacity.com/api/session")!)
+        //let request = NSMutableURLRequest(url: URL(string: "https://www.udacity.com/api/session")!)
         
-        request.HTTPMethod = "POST"
+        var request = URLRequest(url: URL(string: "https://www.udacity.com/api/session")!)
+
+        
+        request.httpMethod = "POST"
         
         request.addValue("application/json", forHTTPHeaderField: "Accept")
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
         
         
-        request.HTTPBody = jsonBody.dataUsingEncoding(NSUTF8StringEncoding)
+        request.httpBody = jsonBody.data(using: String.Encoding.utf8)
         
         
 //        let session = NSURLSession.sharedSession()
-        let task = session.dataTaskWithRequest(request) { data, response, error in
+        let task = session.dataTask(with: request, completionHandler: { data, response, error in
             
-            print("postUdacity error", error)
+            print("postUdacity error", error as Any)
+            print(response)
             
             
-            
-            func sendError(error: String) {
+            func sendError(_ error: String) {
                 print(error)
                 let userInfo = [NSLocalizedDescriptionKey: error]
                 //completionHandlerForPOST(result: nil, error:NSError( domain: "taskForUdacityPOSTMethod", code: 1, userInfo:userInfo))
-                completionHandlerForPOST(result: nil, error:NSError( domain: "taskForUdacityPOSTMethod", code: 1, userInfo:userInfo))
+                completionHandlerForPOST(nil, NSError( domain: "taskForUdacityPOSTMethod", code: 1, userInfo:userInfo))
                 
             }
-            
+            /*
             func checkForTimedOut() {
-                guard (error?.code == NSURLErrorTimedOut) else {
+                let code = (error as! NSError).code
+               // guard (error?.code == NSURLErrorTimedOut) else {
+                guard (code == NSURLErrorTimedOut) else {
                     return
                 }
                 
@@ -149,91 +206,137 @@ class DBClient {
                 return
             }
             
-            
+ 
             checkForTimedOut()
-            
+            */
+            /*
             if error != nil
             {
                 sendError((error?.localizedDescription)!)
                 return
             }
+ */
             
+            guard (error == nil) else {
+                sendError((error?.localizedDescription)!)
+                return
+            }
             
+            /*
             if data == nil {
+                sendError("User / Password error ")
+                return
+            }
+ */
+            
+            guard (error == nil) else {
                 sendError("User / Password error ")
                 return
             }
             
             
-            let newData = data!.subdataWithRange(NSMakeRange(5, data!.length - 5) )
+            //let newData = data!.subdata(in: NSMakeRange(5, data!.count - 5) )
             
             
+            
+            //let newData = data!.subdata(in: 5..<data!.count - 5 )
+            
+            let newData = data!.subdata(in: 5..<data!.count )
+
             self.convertDataWithCompletionHandler(newData, completionHandlerForConvertData: completionHandlerForPOST)
             
             
-        }
+        }) 
         task.resume()
         return task
         
     }
     
     
-    func taskForGetUserID(userID: String, completionHandlerForGetUserID:(result: AnyObject!, error: NSError?) -> Void) -> NSURLSessionDataTask {
+    func taskForGetUserID(_ userID: String, completionHandlerForGetUserID:@escaping (_ result: AnyObject?, _ error: NSError?) -> Void) -> URLSessionDataTask {
         
-        let requestUserID = NSMutableURLRequest(URL:NSURL(string:"https://www.udacity.com/api/users/\(userID)")!)
+       // let requestUserID = NSMutableURLRequest(url:URL(string:"https://www.udacity.com/api/users/\(userID)")!)
+        
+        var requestUserID = URLRequest(url: URL(string: "https://www.udacity.com/api/users/\(userID)")!)
+
         print("requestUserID", requestUserID)
         
         
-        let task = session.dataTaskWithRequest(requestUserID) { data,response, error in
+        let task = session.dataTask(with: requestUserID, completionHandler: { data,response, error in
             
-            func sendError(error: String) {
+            
+            func sendError(_ error: String) {
 
                 let userInfo = [NSLocalizedDescriptionKey: error]
-                completionHandlerForGetUserID(result: nil, error:NSError( domain: "taskForGetUserID", code: 1, userInfo:userInfo))
+                completionHandlerForGetUserID(nil, NSError( domain: "taskForGetUserID", code: 1, userInfo:userInfo))
                 
             }
             
-            
+            /*
             if error != nil
             {
                 sendError((error?.localizedDescription)!)
                 return
             }
+ */
+            guard (error == nil) else {
+                sendError((error?.localizedDescription)!)
+                return
+            }
             
-            
+            /*
             if data == nil {
                 sendError("User / Password error ")
                 return
             }
+ */
             
-            let newData = data!.subdataWithRange(NSMakeRange(5, data!.length - 5) )
+            guard (error == nil) else {
+                sendError("User / Password error ")
+                return
+            }
+
+            
+           // let myRange = NSRange(location: 5, length: data!.count - 5)
+            
+           // let newData = data!.subdata(in: NSMakeRange(5, data!.count - 5) )
+            
+            //let range = Range(uncheckedBounds: 5, data!.count - 5)
+            let newData = data!.subdata(in: 5..<data!.count  )
+
             
             
             self.convertDataWithCompletionHandler(newData, completionHandlerForConvertData: completionHandlerForGetUserID)
             
             
-        }
+        }) 
         task.resume()
         return task
     }
     
     
-    private func convertDataWithCompletionHandler(data: NSData, completionHandlerForConvertData: (result: AnyObject!, error: NSError?) -> Void) {
+    fileprivate func convertDataWithCompletionHandler(_ data: Data, completionHandlerForConvertData: (_ result: AnyObject?, _ error: NSError?) -> Void) {
+        print("convertDataWithCompletionHandler")
 
-        var parsedResult: AnyObject!
+        //var parsedResult: AnyObject!
+        var parsedResult: [String:AnyObject]!
         
         do {
             
-             parsedResult = try NSJSONSerialization.JSONObjectWithData(data, options: .AllowFragments)
+            
+            parsedResult = try JSONSerialization.jsonObject(with: data, options: .allowFragments) as! [String:AnyObject]
             
             
         }
         catch {
-            let userInfo = [NSLocalizedDescriptionKey : "Could not parse the data as JSON: '\(data)'"]
-            completionHandlerForConvertData(result: nil, error: NSError(domain: "convertDataWithCompletionHandler", code: 1, userInfo: userInfo))
+            //let userInfo = [NSLocalizedDescriptionKey : "Could not parse the data as JSON: '\(data)'"]
+            
+            print("Could not parse the data as JSON: '\(data)'")
+            //completionHandlerForConvertData(nil, NSError(domain: "convertDataWithCompletionHandler", code: 1, userInfo: userInfo))
         }
         
-        completionHandlerForConvertData(result: parsedResult, error: nil)
+        //completionHandlerForConvertData(parsedResult as AnyObject?, nil)
+        completionHandlerForConvertData(parsedResult  as AnyObject?, nil)
 
     }
     

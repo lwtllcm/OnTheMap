@@ -26,7 +26,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         super.viewDidLoad()
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
         Students.allStudents.removeAll()
@@ -35,32 +35,39 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         self.mapView.removeAnnotations(allAnnotations)
         
         DBClient.sharedInstance().taskForGETMethod { (results, error) in
+            print("MapViewController finished taskForGETMethod")
             
             if (error != nil) {
-                NSOperationQueue.mainQueue().addOperationWithBlock {
+                OperationQueue.main.addOperation {
                     
                     let errorMsg  = error?.localizedDescription
                     
-                    let uiAlertController = UIAlertController(title: "download error", message: errorMsg, preferredStyle: .Alert)
-                    let defaultAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
+                    let uiAlertController = UIAlertController(title: "download error", message: errorMsg, preferredStyle: .alert)
+                    let defaultAction = UIAlertAction(title: "OK", style: .default, handler: nil)
                     uiAlertController.addAction(defaultAction)
-                    self.presentViewController(uiAlertController, animated: true, completion: nil)
+                    self.present(uiAlertController, animated: true, completion: nil)
                 }
             }
             
-            let results = results.objectForKey("results") as! NSArray
+            print("results ready to parse")
+            let results = results?.object(forKey: "results") as! NSArray
+            
+            print(results)
             
             if Students.allStudents.count == 0 {
                 for student in Student.studentFromResults(results as! [[String : AnyObject]]) {
                     
-                    self.setAnnotations(student)
+                    //self.setAnnotations(student)
+                    
+                    setAnnotations(student)
                 }
             }
             else {
                 
                 for student in Student.studentFromResults(results as! [[String : AnyObject]]) {
                     
-                    self.setAnnotations(student)
+                    //self.setAnnotations(student)
+                    setAnnotations(student)
                 }
                 
                 
@@ -71,17 +78,17 @@ class MapViewController: UIViewController, MKMapViewDelegate {
 }
     
     
-    func mapView(mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView? {
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         
         let reuseId = "pin"
         
-        var pinView = mapView.dequeueReusableAnnotationViewWithIdentifier(reuseId) as? MKPinAnnotationView
+        var pinView = mapView.dequeueReusableAnnotationView(withIdentifier: reuseId) as? MKPinAnnotationView
         
         if pinView == nil {
             pinView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: reuseId)
             pinView?.canShowCallout = true
-            pinView?.pinTintColor = UIColor.redColor()
-            pinView?.rightCalloutAccessoryView = UIButton(type: .DetailDisclosure)
+            pinView?.pinTintColor = UIColor.red
+            pinView?.rightCalloutAccessoryView = UIButton(type: .detailDisclosure)
         }
         else {
             pinView?.annotation = annotation
@@ -92,24 +99,31 @@ class MapViewController: UIViewController, MKMapViewDelegate {
  
     
     
-    func mapView(mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
+    func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
         if control == view.rightCalloutAccessoryView {
             
            
-            let url = NSURL(string: ((view.annotation?.subtitle)!)!)!
-            UIApplication.sharedApplication().openURL(url)
+            let url = URL(string: ((view.annotation?.subtitle)!)!)!
+            UIApplication.shared.openURL(url)
             
             
         }
     }
     
-     func performUIUpdatesOnMain(updates: () -> Void) {
-        dispatch_async(dispatch_get_main_queue()) {
-            updates()
+    // func performUIUpdatesOnMain(_ updates: @escaping @escaping @escaping @escaping @escaping @escaping @escaping @escaping @escaping @escaping () -> Void) {
+        
+       // func performUIUpdatesOnMain(_ updates: @escaping @escaping @escaping @escaping @escaping @escaping @escaping @escaping @escaping @escaping () -> Void) {
+            
+            func performUIUpdatesOnMain(_ updates: @escaping  () -> Void) {
+        //DispatchQueue.main.async {
+           // Closure use of non-escaping parameter 'updates'may allow it to escape
+            //parameter 'updates' is implicitly non-escaping
+            
+            //updates()
         }
     }
     
-    func setAnnotations (student:Student) {
+    func setAnnotations (_ student:Student) {
         var annotations = [MKPointAnnotation]()
         let lat1 = CLLocationDegrees(student.latitude)
         
@@ -125,47 +139,61 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         
         annotations.append(annotation)
         
-        dispatch_async(dispatch_get_main_queue()) {
-            self.mapView.addAnnotations(annotations)
+        DispatchQueue.main.async {
+            //self.mapView.addAnnotations(annotations)
+            let thisMapView = MKMapView()
+            thisMapView.addAnnotations(annotations)
+
+            
 
     }
     }
     
     // refreshAction
-    @IBAction func refreshAction(sender: AnyObject) {
+    
+    func refreshAction(_ sender: AnyObject) {
         
        Students.allStudents.removeAll()
         
-        let allAnnotations = self.mapView.annotations
-        self.mapView.removeAnnotations(allAnnotations)
+        //let allAnnotations = self.mapView.annotations
+        let allAnnotations = MKMapView.annotations
+        
+        //self.mapView.removeAnnotations(allAnnotations)
+        //mapView.removeAnnotations(allAnnotations)
+        
         
         DBClient.sharedInstance().taskForGETMethod { (results, error) in
         
         if (error != nil) {
-        NSOperationQueue.mainQueue().addOperationWithBlock {
+        OperationQueue.main.addOperation {
         
         let errorMsg  = error?.localizedDescription
         
-        let uiAlertController = UIAlertController(title: "download error", message: errorMsg, preferredStyle: .Alert)
-        let defaultAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
+        let uiAlertController = UIAlertController(title: "download error", message: errorMsg, preferredStyle: .alert)
+        let defaultAction = UIAlertAction(title: "OK", style: .default, handler: nil)
         uiAlertController.addAction(defaultAction)
-        self.presentViewController(uiAlertController, animated: true, completion: nil)
+        //self.present(uiAlertController, animated: true, completion: nil)
+            uiAlertController.present(uiAlertController, animated: true, completion: nil)
+            
+         
         }
         }
         
-        let results = results.objectForKey("results") as! NSArray
+        let results = results?.object(forKey: "results") as! NSArray
         
         if Students.allStudents.count == 0 {
         for student in Student.studentFromResults(results as! [[String : AnyObject]]) {
         
-        self.setAnnotations(student)
+        //self.setAnnotations(student)
+            setAnnotations(student)
         }
         }
         else {
         
         for student in Student.studentFromResults(results as! [[String : AnyObject]]) {
         
-        self.setAnnotations(student)
+        //self.setAnnotations(student)
+            setAnnotations(student)
         }
         
                
@@ -174,4 +202,4 @@ class MapViewController: UIViewController, MKMapViewDelegate {
 
 
     }
-}
+

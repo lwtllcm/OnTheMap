@@ -27,7 +27,7 @@ class TableViewController: UITableViewController {
         print("TableViewController")
     }
     
-    override func viewWillAppear(animated: Bool) {    
+    override func viewWillAppear(_ animated: Bool) {    
         super.viewWillAppear(animated)
         print("TableViewController viewWillAppear")
         
@@ -37,20 +37,20 @@ class TableViewController: UITableViewController {
  
            DBClient.sharedInstance().taskForGETMethod { (results, error) in
             print("taskForGetMethod")
-            print("results from taskForGETMethod", results)
-            print("error from taskForGETMethod", error)
+            print("results from taskForGETMethod", results as Any)
+            print("error from taskForGETMethod", error as Any)
             
             
             if (error != nil) {
                 
-                print(error?.localizedDescription)
+                print(error?.localizedDescription as Any)
                 let errorMsg  = error?.localizedDescription
         
-                NSOperationQueue.mainQueue().addOperationWithBlock {
-                let uiAlertController = UIAlertController(title: "download error", message: errorMsg, preferredStyle: .Alert)
-                let defaultAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
+                OperationQueue.main.addOperation {
+                let uiAlertController = UIAlertController(title: "download error", message: errorMsg, preferredStyle: .alert)
+                let defaultAction = UIAlertAction(title: "OK", style: .default, handler: nil)
                 uiAlertController.addAction(defaultAction)
-                self.presentViewController(uiAlertController, animated: true, completion: nil)
+                self.present(uiAlertController, animated: true, completion: nil)
             }
             }
             
@@ -70,7 +70,7 @@ class TableViewController: UITableViewController {
         
    }
     
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         print("numberOfRowsInSection")
         
         if Students.allStudents.count == 0 {
@@ -84,69 +84,73 @@ class TableViewController: UITableViewController {
             }
     }
     
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("StudentCell") as UITableViewCell!
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "StudentCell") as UITableViewCell!
 
         
         let individual = Students.allStudents[indexPath.row]
         
         performUIUpdatesOnMain { () -> Void in
             
-            cell.textLabel?.text = individual.firstName! + " " + individual.lastName! 
+            cell?.textLabel?.text = individual.firstName! + " " + individual.lastName! 
            
         }
         
-        return cell
+        return cell!
             }
 
   
     
-    func performUIUpdatesOnMain(updates: () -> Void) {
-        dispatch_async(dispatch_get_main_queue()) {
-            updates()
+    func performUIUpdatesOnMain(_ updates: @escaping () -> Void) {
+        DispatchQueue.main.async {
+            
+            // Closure use of non-escaping parameter 'updates'may allow it to escape
+            //parameter 'updates' is implicitly non-escaping
+
+            //updates()
         }
 }
     
 
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         print("didSelectRowAtIndexPath")
         
         let selectedStudentURL = Students.allStudents[indexPath.row].url
         
         
-        let url = NSURL(string: (selectedStudentURL!))!
+        let url = URL(string: (selectedStudentURL!))!
         
-        UIApplication.sharedApplication().openURL(url)
+        UIApplication.shared.openURL(url)
         
         
     }
     
-    @IBAction func refreshAction(sender: AnyObject) {
+    @IBAction func refreshAction(_ sender: AnyObject) {
         
         
         //Students.allStudents.removeAll()
 
         DBClient.sharedInstance().taskForGETMethod { (results, error) in
             print("taskForGetMethod")
-            print("results from taskForGETMethod", results)
-            print("error from taskForGETMethod", error)
+            print("results from taskForGETMethod", results as Any)
+            print("error from taskForGETMethod", error as Any)
             
             
             if (error != nil) {
                 
-                print(error?.localizedDescription)
+                print(error?.localizedDescription as Any)
                 let errorMsg  = error?.localizedDescription
                 
-                NSOperationQueue.mainQueue().addOperationWithBlock {
-                    let uiAlertController = UIAlertController(title: "download error", message: errorMsg, preferredStyle: .Alert)
-                    let defaultAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
+                OperationQueue.main.addOperation {
+                    let uiAlertController = UIAlertController(title: "download error", message: errorMsg, preferredStyle: .alert)
+                    let defaultAction = UIAlertAction(title: "OK", style: .default, handler: nil)
                     uiAlertController.addAction(defaultAction)
-                    self.presentViewController(uiAlertController, animated: true, completion: nil)
+                    self.present(uiAlertController, animated: true, completion: nil)
                 }
             }
             Students.allStudents.removeAll()
             print("allStudents count", Students.allStudents.count)
-            let results = results.objectForKey("results") as! NSArray
+            let results = results?.object(forKey: "results") as! NSArray
             
             for student in Student.studentFromResults(results as! [[String : AnyObject]]) {
                     

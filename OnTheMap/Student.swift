@@ -38,38 +38,48 @@ struct Student {
     
 
     
-    static func studentFromResults(results: [[String:AnyObject]] )-> [Student] {
+    static func studentFromResults(_ results: [[String:AnyObject]] )-> [Student] {
         print("Student studentFromResults")
 
         for result in results as NSArray {
             
             
-            let resultObjectId = result.objectForKey("objectId")
-            let resultUniqueKey = result.objectForKey("uniqueKey")
-            let resultFirstName = result.objectForKey("firstName")
-            let resultLastName = result.objectForKey("lastName")
-            let resultLocation = result.objectForKey("mapString")
-            let resultURL = result.objectForKey("mediaURL") as! String
-            let resultLatitude = result.objectForKey("latitude") as! CLLocationDegrees
-            let resultLongitude = result.objectForKey("longitude") as! CLLocationDegrees
-            let resultCreatedAt = result.objectForKey("createdAt")
-             let resultUpdatedAt = result.objectForKey("updatedAt")
+            if  let resultObjectId = (result as AnyObject).object(forKey: "objectId") {
+                if let resultUniqueKey = (result as AnyObject).object(forKey: "uniqueKey") {
+                    if let resultFirstName = (result as AnyObject).object(forKey: "firstName") {
+                        if  let resultLastName = (result as AnyObject).object(forKey: "lastName") {
+                            if     let resultLocation = (result as AnyObject).object(forKey: "mapString") {
+                                if let resultURL = (result as AnyObject).object(forKey: "mediaURL") as? String {
+                                    if  let resultLatitude = (result as AnyObject).object(forKey: "latitude") as? CLLocationDegrees {
+                                        if     let resultLongitude = (result as AnyObject).object(forKey: "longitude") as? CLLocationDegrees {
+                                            if   let resultCreatedAt = (result as AnyObject).object(forKey: "createdAt") {
+                                                if    let resultUpdatedAt = (result as AnyObject).object(forKey: "updatedAt") {
 
             
-            let newTestStudent = Student(dictionary: [DBClient.ParseResponseKeys.ObjectId:resultObjectId!,
-                DBClient.ParseResponseKeys.UniqueKey:resultUniqueKey!,
-                DBClient.ParseResponseKeys.FirstName:resultFirstName!,
-                DBClient.ParseResponseKeys.LastName:resultLastName!,
-                DBClient.ParseResponseKeys.MapString:resultLocation!,
-                DBClient.ParseResponseKeys.MediaURL:resultURL,
-                DBClient.ParseResponseKeys.Latitude:resultLatitude,
-                DBClient.ParseResponseKeys.Longitude:resultLongitude,
-                DBClient.ParseResponseKeys.CreatedAt:resultCreatedAt!,
-                DBClient.ParseResponseKeys.UpdatedAt:resultUpdatedAt!])
+            let newTestStudent = Student(dictionary: [DBClient.ParseResponseKeys.ObjectId:resultObjectId as AnyObject,
+                DBClient.ParseResponseKeys.UniqueKey:resultUniqueKey as AnyObject,
+                DBClient.ParseResponseKeys.FirstName:resultFirstName as AnyObject,
+                DBClient.ParseResponseKeys.LastName:resultLastName as AnyObject,
+                DBClient.ParseResponseKeys.MapString:resultLocation as AnyObject,
+                DBClient.ParseResponseKeys.MediaURL:resultURL as AnyObject,
+                DBClient.ParseResponseKeys.Latitude:resultLatitude as AnyObject,
+                DBClient.ParseResponseKeys.Longitude:resultLongitude as AnyObject,
+                DBClient.ParseResponseKeys.CreatedAt:resultCreatedAt as AnyObject,
+                DBClient.ParseResponseKeys.UpdatedAt:resultUpdatedAt as AnyObject])
 
             
            // print(Students.allStudents)
             Students.allStudents.append(newTestStudent)
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
             
         }
         return Students.allStudents

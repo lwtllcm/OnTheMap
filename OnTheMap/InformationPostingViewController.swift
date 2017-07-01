@@ -39,11 +39,11 @@ class InformationPostingViewController: UIViewController, MKMapViewDelegate, UIT
     override func viewDidLoad() {
         super.viewDidLoad()
         mapView.delegate = self
-        mapView.hidden = true
-        studentLocationPromptLabel.hidden = false
-        studentLinkText.hidden = true
-        submitButton.hidden = true
-        activityIndicator.hidden = true
+        mapView.isHidden = true
+        studentLocationPromptLabel.isHidden = false
+        studentLinkText.isHidden = true
+        submitButton.isHidden = true
+        activityIndicator.isHidden = true
         
         studentLocationText.delegate = self
         studentLinkText.delegate = self
@@ -51,7 +51,7 @@ class InformationPostingViewController: UIViewController, MKMapViewDelegate, UIT
         
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         print("InformationPostingViewController")
         
@@ -60,22 +60,22 @@ class InformationPostingViewController: UIViewController, MKMapViewDelegate, UIT
 
             }
     
-    override func viewWillDisappear(animated: Bool) {
+    override func viewWillDisappear(_ animated: Bool) {
         print("viewWillDisappear")
         super.viewWillDisappear(animated)
         unsubscribeFromKeyboardNotifications()
     }
     
-    @IBAction func studentLocationTextAction(sender: AnyObject) {
+    @IBAction func studentLocationTextAction(_ sender: AnyObject) {
         print("studentLocationText entered")
        
     }
     
-    @IBAction func findOnTheMapButtonPressed(sender: AnyObject) {
+    @IBAction func findOnTheMapButtonPressed(_ sender: AnyObject) {
         print("Find on the Map pressed")
         print(studentLocationText)
         
-        activityIndicator.hidden = false
+        activityIndicator.isHidden = false
         activityIndicator.alpha = 1.0
         
         activityIndicator.startAnimating()
@@ -90,12 +90,12 @@ class InformationPostingViewController: UIViewController, MKMapViewDelegate, UIT
                 print("geocoding error")
                 print(error?.localizedDescription)
                 let errorMsg  = error?.localizedDescription
-                let uiAlertController = UIAlertController(title: "geocoding error", message: errorMsg, preferredStyle: .Alert)
+                let uiAlertController = UIAlertController(title: "geocoding error", message: errorMsg, preferredStyle: .alert)
                 
                 
-                let defaultAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
+                let defaultAction = UIAlertAction(title: "OK", style: .default, handler: nil)
                 uiAlertController.addAction(defaultAction)
-                self.presentViewController(uiAlertController, animated: true, completion: nil)
+                self.present(uiAlertController, animated: true, completion: nil)
                 self.activityIndicator.alpha = 0.0
                 self.activityIndicator.stopAnimating()
 
@@ -134,12 +134,12 @@ class InformationPostingViewController: UIViewController, MKMapViewDelegate, UIT
             
             
                 
-           self.mapView.hidden = false
-           self.studentLocationPromptLabel.hidden = true
-                self.studentLocationText.hidden = true
-                self.findOnTheMapButton.hidden = true
-                self.studentLinkText.hidden = false
-                self.submitButton.hidden = false
+           self.mapView.isHidden = false
+           self.studentLocationPromptLabel.isHidden = true
+                self.studentLocationText.isHidden = true
+                self.findOnTheMapButton.isHidden = true
+                self.studentLinkText.isHidden = false
+                self.submitButton.isHidden = false
                 
             self.reloadInputViews()
                 
@@ -150,16 +150,16 @@ class InformationPostingViewController: UIViewController, MKMapViewDelegate, UIT
     }
     
     
-    @IBAction func submitButtonPressed(sender: AnyObject) {
-        print(studentLinkText.text)
+    @IBAction func submitButtonPressed(_ sender: AnyObject) {
+        print(studentLinkText.text as Any)
         print("submitButtonPressed")
         
         
-        let defaults = NSUserDefaults.standardUserDefaults()
+        let defaults = UserDefaults.standard
 
         let studentMediaURL = studentLinkText.text as String!
-        let studentFirstName = defaults.stringForKey("Udacity.FirstName")!
-        let studentLastName = defaults.stringForKey("Udacity.LastName")!
+        let studentFirstName = defaults.string(forKey: "Udacity.FirstName")!
+        let studentLastName = defaults.string(forKey: "Udacity.LastName")!
         let studentLatitude = self.latitude
         let studentLongitude = self.longitude
         let studentMapString = studentLocationText.text as String!
@@ -172,18 +172,18 @@ class InformationPostingViewController: UIViewController, MKMapViewDelegate, UIT
             print("taskForPostMethod")
             
             if (error != nil) {
-                print(error?.localizedDescription)
+                print(error?.localizedDescription as Any)
                 let errorMsg  = error?.localizedDescription
                 
-                let uiAlertController = UIAlertController(title: "post error", message: errorMsg, preferredStyle: .Alert)
-                let defaultAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
+                let uiAlertController = UIAlertController(title: "post error", message: errorMsg, preferredStyle: .alert)
+                let defaultAction = UIAlertAction(title: "OK", style: .default, handler: nil)
                 uiAlertController.addAction(defaultAction)
-                self.presentViewController(uiAlertController, animated: true, completion: nil)
+                self.present(uiAlertController, animated: true, completion: nil)
             }
             
             else {
                 
-                self.dismissViewControllerAnimated(true, completion: {})
+                self.dismiss(animated: true, completion: {})
 
             }
         }
@@ -192,19 +192,19 @@ class InformationPostingViewController: UIViewController, MKMapViewDelegate, UIT
         print("postStudentLocation completed")
     }
     
-    @IBAction func cancelButtonPressed(sender: AnyObject) {
+    @IBAction func cancelButtonPressed(_ sender: AnyObject) {
         print("cancelButtonPressed")
-        navigationController?.dismissViewControllerAnimated(true, completion: {})
+        navigationController?.dismiss(animated: true, completion: {})
     }
     
-    func keyboardWillShow(notification: NSNotification) {
-        if (studentLocationText.isFirstResponder()) {
+    func keyboardWillShow(_ notification: Notification) {
+        if (studentLocationText.isFirstResponder) {
             print("studentLocationText is FirstResponder")
           //  view.frame.origin.y = getKeyboardHeight(notification) * -1
         }
         //else
         
-            if (studentLinkText.isFirstResponder()) {
+            if (studentLinkText.isFirstResponder) {
                 print("studentLinkText is FirstResponder")
 
                 view.frame.origin.y = getKeyboardHeight(notification) * -0.1
@@ -213,58 +213,58 @@ class InformationPostingViewController: UIViewController, MKMapViewDelegate, UIT
 
     }
     
-    func keyboardWillHide(notification: NSNotification) {
-        if studentLocationText.isFirstResponder() {
+    func keyboardWillHide(_ notification: Notification) {
+        if studentLocationText.isFirstResponder {
             view.frame.origin.y = 0.0
         }
             
         else
-            if studentLinkText.isFirstResponder() {
+            if studentLinkText.isFirstResponder {
                 view.frame.origin.y = 0.0
         }
 
     }
-    func textFieldDidBeginEditing( textField: UITextField) {
+    func textFieldDidBeginEditing( _ textField: UITextField) {
         print("textFieldDidBeginEditing")
         if textField.text == "TOP" || textField.text == "BOTTOM" {
             textField.text = ""
         }
     }
-    func textFieldDidEndEditing(textField: UITextField) {
+    func textFieldDidEndEditing(_ textField: UITextField) {
         print("textFieldDidEndEditing")
     }
     
-    func textFieldShouldReturn(textField: UITextField) -> Bool {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         print("textFieldShouldReturn")
         textField.resignFirstResponder()
         return true
     }
     
-    func getKeyboardHeight(notification:NSNotification) -> CGFloat {
+    func getKeyboardHeight(_ notification:Notification) -> CGFloat {
         print("getKeyboardHeight")
         let userInfo = notification.userInfo
         let keyboardSize = userInfo![UIKeyboardFrameEndUserInfoKey] as! NSValue
-        return keyboardSize.CGRectValue().height
+        return keyboardSize.cgRectValue.height
     }
     
     func subscribeToKeyboardNotifications() {
         print("subscribeToKeyboardNotifications")
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillShow:", name: UIKeyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(InformationPostingViewController.keyboardWillShow(_:)), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
     }
     
     func subscribeToKeyboardWillHideNotifications() {
         print("subscribeToKeyboardNotifications")
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillHide:", name: UIKeyboardWillHideNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(InformationPostingViewController.keyboardWillHide(_:)), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
     }
     
     func unsubscribeFromKeyboardNotifications() {
         print("unsubscribeFromKeyboardNotifications")
-        NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillShowNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIKeyboardWillShow, object: nil)
     }
     
     func unsubscribeFromKeyboardWillHideNotifications() {
         print("unsubscribeFromKeyboardNotifications")
-        NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillHideNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIKeyboardWillHide, object: nil)
     }
     
     
