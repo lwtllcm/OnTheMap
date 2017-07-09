@@ -30,7 +30,7 @@ class DBClient {
        // var request = URLRequest(url: URL(string: "https://api.parse.com/1/classes/StudentLocation?limit=100&-order=updatedAt")!)
         
         //var request = URLRequest(url: URL(string: "https://parse.udacity.com/parse/classes/StudentLocation?limit=100&-order=updatedAt")!)
-        var request = URLRequest(url: URL(string: "https://parse.udacity.com/parse/classes/StudentLocation?limit=3")!)
+        var request = URLRequest(url: URL(string: "https://parse.udacity.com/parse/classes/StudentLocation?limit=20")!)
 
         
         request.addValue(ParseConstants.ParseParameterValues.ApplicationID, forHTTPHeaderField: "X-Parse-Application-Id")
@@ -182,7 +182,7 @@ class DBClient {
         let task = session.dataTask(with: request, completionHandler: { data, response, error in
             
             print("postUdacity error", error as Any)
-            print(response)
+            print(response as Any)
             
             
             func sendError(_ error: String) {

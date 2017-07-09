@@ -68,7 +68,7 @@ struct Student {
                 DBClient.ParseResponseKeys.UpdatedAt:resultUpdatedAt as AnyObject])
 
             
-           // print(Students.allStudents)
+           print(newTestStudent.location as Any)
             Students.allStudents.append(newTestStudent)
                                                 }
                                             }
@@ -82,6 +82,7 @@ struct Student {
             }
             
         }
+        print(Students.allStudents)
         return Students.allStudents
     }
 

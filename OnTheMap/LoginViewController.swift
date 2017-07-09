@@ -152,8 +152,8 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                             }
                             else {
                                 //print("results after taskForGetUserID", results)
-                                print("Udacity.first_name",(results?.value(forKey: "user") as AnyObject).value(forKey: "first_name"))
-                                print("Udacity.last_name",(results?.value(forKey: "user") as AnyObject).value(forKey: "last_name"))
+                                print("Udacity.first_name",(results?.value(forKey: "user") as AnyObject).value(forKey: "first_name") as Any)
+                                print("Udacity.last_name",(results?.value(forKey: "user") as AnyObject).value(forKey: "last_name") as Any)
                                 
                                 defaults.set((results?.value(forKey: "user") as AnyObject).value(forKey: "first_name"), forKey: "Udacity.FirstName")
                                 defaults.set((results?.value(forKey: "user") as AnyObject).value(forKey: "last_name"), forKey: "Udacity.LastName")
