@@ -105,7 +105,7 @@ class InformationPostingViewController: UIViewController, MKMapViewDelegate, UIT
             
             let thisPlacemark = placemarks![0]
             print(thisPlacemark)
-            print(thisPlacemark.location)
+            print(thisPlacemark.location as Any)
             let thisCoordinate:CLLocationCoordinate2D = (thisPlacemark.location?.coordinate)!
             
             self.latitude = thisCoordinate.latitude
@@ -157,19 +157,22 @@ class InformationPostingViewController: UIViewController, MKMapViewDelegate, UIT
         
         let defaults = UserDefaults.standard
 
-        let studentMediaURL = studentLinkText.text as String!
+              let studentMediaURL = studentLinkText.text! as String
         let studentFirstName = defaults.string(forKey: "Udacity.FirstName")!
         let studentLastName = defaults.string(forKey: "Udacity.LastName")!
         let studentLatitude = self.latitude
         let studentLongitude = self.longitude
-        let studentMapString = studentLocationText.text as String!
-    
+
+        let studentMapString = studentLocationText.text! as String
         
-       let jsonBody = "{\"uniqueKey\": \"1234\", \"\(DBClient.ParseResponseKeys.FirstName)\": \"\(studentFirstName)\", \"\(DBClient.ParseResponseKeys.LastName)\": \"\(studentLastName)\",\"\(DBClient.ParseResponseKeys.MapString)\": \"\(studentMapString)\", \"\(DBClient.ParseResponseKeys.MediaURL)\": \"\(studentMediaURL)\",\"\(DBClient.ParseResponseKeys.Latitude)\": \(studentLatitude), \"\(DBClient.ParseResponseKeys.Longitude)\": \(studentLongitude)}"
+        let jsonBody = "{\"uniqueKey\": \"1234\", \"\(DBClient.ParseResponseKeys.FirstName)\": \"\(studentFirstName)\", \"\(DBClient.ParseResponseKeys.LastName)\": \"\(studentLastName)\",\"\(DBClient.ParseResponseKeys.MapString)\": \"\(studentMapString)\", \"\(DBClient.ParseResponseKeys.MediaURL)\": \"\(studentMediaURL)\",\"\(DBClient.ParseResponseKeys.Latitude)\": \(studentLatitude),\"\(DBClient.ParseResponseKeys.Longitude)\": \(studentLongitude)}"
         
+        print(jsonBody)
+
         
         DBClient.sharedInstance().taskForPOSTMethod(jsonBody) { (results, error) in
             print("taskForPostMethod")
+            print(results as Any)
             
             if (error != nil) {
                 print(error?.localizedDescription as Any)

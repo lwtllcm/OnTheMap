@@ -105,7 +105,7 @@ class DBClient {
     
     //let request = NSMutableURLRequest(url: URL(string: "https://api.parse.com/1/classes/StudentLocation")!)
         
-        var request = URLRequest(url: URL(string: "https://api.parse.com/1/classes/StudentLocation")!)
+        var request = URLRequest(url: URL(string: "https://parse.udacity.com/parse/classes/StudentLocation")!)
 
     request.httpMethod = "POST"
         
@@ -114,7 +114,9 @@ class DBClient {
     
     request.addValue("application/json", forHTTPHeaderField: "Content-Type")
     
-    request.httpBody = jsonBody.data(using: String.Encoding.utf8)
+   request.httpBody = jsonBody.data(using: String.Encoding.utf8)
+        
+       // request.httpBody = "{\"uniqueKey\": \"1234\", \"firstName\": \"John\", \"lastName\": \"Doe\",\"mapString\": \"Mountain View, CA\", \"mediaURL\": \"https://udacity.com\",\"latitude\": 37.386052, \"longitude\": -122.083851}".data(using: String.Encoding.utf8)
         
     //let session = NSURLSession.sharedSession()
         
@@ -123,8 +125,13 @@ class DBClient {
         
         //let task = URLSession.shared.dataTask(with: request, completionHandler: { data, response, error in
 
-       let task = session.dataTask(with: request, completionHandler: { data, response, error in
+       //let task = session.dataTask(with: request, completionHandler: { data, response, error in
         
+        let task = session.dataTask(with: request as URLRequest) { data, response, error in
+
+        print(response as Any)
+            print(error as Any)
+            
         func sendError(_ error: String) {
             print(error)
             let userInfo = [NSLocalizedDescriptionKey: error]
@@ -149,14 +156,17 @@ class DBClient {
             return
         }
 */
-        guard (data == nil) else {
+       // guard (data == nil) else {
+            if data == nil {
+
             sendError("Parse update error ")
             return
         }
         
         self.convertDataWithCompletionHandler(data!, completionHandlerForConvertData: completionHandlerForPOST)
         
-        }) 
+       // })
+        }
         task.resume()
         return task
     }
