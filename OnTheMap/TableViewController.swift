@@ -107,7 +107,7 @@ class TableViewController: UITableViewController {
             // Closure use of non-escaping parameter 'updates'may allow it to escape
             //parameter 'updates' is implicitly non-escaping
 
-            //updates()
+            updates()
         }
 }
     
